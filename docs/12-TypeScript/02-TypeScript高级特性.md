@@ -57,4 +57,6 @@ function logger< T exteds LengthWise>(val:T)
 
   先内后外执行，先上后下
 
+### 类型兼容性
+
 ### 类型声明
