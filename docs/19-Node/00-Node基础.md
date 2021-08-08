@@ -2,13 +2,23 @@
 title: Node基础
 ---
 
+## 什么是 Node.js
+
+chrome 控制浏览器
+Node 控制计算机
+
 ## node 应用场景和作用
 
 ### 前端工程化
 
 - 受众群体：前端开发工程师
 - 特点：提升研发效率和保证工程质量
-- 具体应用：Webpack、Electron
+- 具体应用：Webpack、Goulp 、客户端应用（Electron）
+
+### 服务端渲染 SSR
+
+- 搜索引擎优化
+- 优化首屏加载速度
 
 ### 后端服务
 

@@ -14,6 +14,15 @@ title: TypeScript基础
 - bigint
 - 数组、元组
 
+## 特殊类型
+
+- any
+- unknown
+
+- void undefined null
+- never
+- object
+
 ## 枚举
 
 - 普通枚举
