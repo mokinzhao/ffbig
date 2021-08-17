@@ -9,6 +9,7 @@
     "deploy": "bash deploy.sh"
   },
   "devDependencies": {
+    "vuepress": "^1.8.2",
     "vuepress-plugin-autobar": "github:boboidream/vuepress-bar"
   }
 }
