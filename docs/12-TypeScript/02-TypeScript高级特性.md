@@ -12,6 +12,7 @@ title: TypeScript高级特性
 
 - 继承
   子类 使用父类属性和方法
+  
 - 多态
   不同的子类有不同的实现
 
@@ -19,7 +20,10 @@ title: TypeScript高级特性
 
 ### 特性
 
-泛型可以写多个
+1. 函数和类可以轻松地支持多钟类型，增强程序的扩展性
+2. 不必写多条函数重载，冗长的联合类型声明，增强代码可读性
+3. 灵活控制类型之间的约束
+4. 泛型可以写多个
 
 ### 泛型-类
 
@@ -35,10 +39,12 @@ title: TypeScript高级特性
 interface LengthWise={
 
 }
-function logger< T exteds LengthWise>(val:T)
+function logger< T extends LengthWise>(val:T)
 ```
 
 ### 类型别名
+
+- Type
 
 ## 装饰器
 
@@ -60,3 +66,8 @@ function logger< T exteds LengthWise>(val:T)
 ### 类型兼容性
 
 ### 类型声明
+
+::: tip
+React + TypeScript最佳实践 ⭐️
+<https://juejin.cn/post/6952696734078369828/>
+:::

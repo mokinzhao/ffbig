@@ -20,6 +20,10 @@ Anytime when you would like to start a new hotfix, you are supposed to start a n
 
 Suggest to keep develop branch a place for community developers and also team members to merge features.
 
+### Release
+
+Suggest Release and use. 
+
 ## 二、Code Commit Process
 
 1. Local test your code until you are sure it work as desired
@@ -58,4 +62,5 @@ Suggest to keep develop branch a place for community developers and also team me
 3. 当遇到合并冲突时候：
 
 - 解决方式一（基于当前分支解决）：在本地自己分支下拉取目标分支代码进行合并 ，只保留冲突文件，重置其他非冲突文件，处理完冲突文件后仅推送该冲突文件到自己分支（重要）,这时候方可再进行 merge request 流程。
+
 - 解决方式二（基于目标分支解决）：在本地基于目标分支上拉去自己分支进行合并。解决冲突文件，由 review 人员在旁观看（重要）,在 review 人员确认无误的情况下进行 push 代码到目标分支上。

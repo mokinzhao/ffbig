@@ -308,6 +308,6 @@ v-if 是“真正”的条件渲染，因为它会确保在切换过程中条件
 [https://juejin.im/post/5d9d386fe51d45784d3f8637#heading-50](https://juejin.im/post/5d9d386fe51d45784d3f8637#heading-50?fileGuid=HtKDCxcXdhJCcqy3)
 
 
-### JS 代码整洁之道：
+#### JS 代码整洁之道：
 
 [https://github.com/alivebao/clean-code-js](https://github.com/alivebao/clean-code-js?fileGuid=HtKDCxcXdhJCcqy3)

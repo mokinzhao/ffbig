@@ -263,6 +263,7 @@ class Foo extends React.Component {
 代码注释不是越多越好，保持必要的业务逻辑注释，至于函数的用途、代码逻辑等，要通过语义化的命令、简单明了的代码逻辑，来让阅读代码的人快速看懂。
 ```
 
-### JS 代码整洁之道：
-
-[https://github.com/alivebao/clean-code-js](https://github.com/alivebao/clean-code-js?fileGuid=HtKDCxcXdhJCcqy3)
+::: tip
+React + TypeScript最佳实践 ⭐️
+<https://juejin.cn/post/6952696734078369828/>
+:::
