@@ -65,8 +65,17 @@ const enum Gender {}
   void 和 never 的区别，void 可以赋值给 null undefined
 - Symbol
 
+### 交叉类型和联合类型
 
+- 交叉类型 & ；取所有类型的并集
 
+- 联合类型 ｜；取定义里面的合适类型
+
+### 索引类型
+
+### 映射类型
+
+### 条件类型
 ### 类型推导
 
 1.基础类型推断
@@ -122,6 +131,40 @@ type Name = "a" | "b" | "c";
 1. 结构之间兼容：成员少的兼容成员多的
 
 2. 函数之间兼容：参数多的兼容参数少的
+
+### 类型保护
+
+- instance 
+
+```ts
+if(lang instanceof Java){
+    lang.helloJava()
+}else{
+    lang.helloJavaScript()
+}
+```
+
+- in 
+
+```ts
+if(lang in Java){
+    lang.helloJava()
+}else{
+    lang.helloJavaScript()
+}
+```
+
+- typeof
+
+```ts
+if(typeof x === 'string'){
+    x.length()
+}else{
+    x.toFixed(2)
+}
+```
+
+- 自定义类型保护函数
 
 ### 函数
 
