@@ -1,5 +1,5 @@
 ---
-title: TypeScript高级特性
+title: TypeScript-进阶
 ---
 
 ## 抽象类、重载、重写、继承、多态

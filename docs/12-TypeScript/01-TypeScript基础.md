@@ -1,5 +1,5 @@
 ---
-title: TypeScript基础
+title: TypeScript-基础
 ---
 
 # 类型概述
