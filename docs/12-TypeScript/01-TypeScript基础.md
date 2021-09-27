@@ -35,18 +35,54 @@ JS 是一门动态弱类型语言
 - never
 - object
 
-## 枚举
+## 枚举（enum）
 
-- 普通枚举
+- 数字枚举
 
 ```ts
-enum Gender {}
+enum Gender {
+    ONE=1,
+    TWO,
+    THREE
+}
 ```
+
+- 字符串枚举
+
+```ts
+enum Gender {
+    ONE='one',
+    TWO='two',
+    THREE='three'
+}
+```
+
+- 异构枚举
+
+```ts
+enum Gender {
+    ONE='one',
+    TWO=2,
+    THREE
+}
+```
+
+- 联合枚举
+
+- 枚举成员
+
+- 枚举类型
 
 - 常量枚举
 
 ```ts
 const enum Gender {}
+```
+
+- 外部枚举
+
+```ts
+declare enum Gender {}
 ```
 
 不需要一个对象，只需要对象的值
@@ -71,11 +107,18 @@ const enum Gender {}
 
 - 联合类型 ｜取定义里面的合适类型
 
+- 类型缩减
+
+ 1. 1｜number 
+ 
+ 2. 不想被缩减 1｜number &{}
+
 ### 索引类型
 
 ### 映射类型
 
 ### 条件类型
+
 ### 类型推导
 
 1.基础类型推断
@@ -166,6 +209,8 @@ if(typeof x === 'string'){
 
 - 自定义类型保护函数
 
+### 类型守位
+
 ### 函数
 
 - 函数重载
@@ -176,33 +221,62 @@ add(name:number):void
 add(){}
 ```
 
+- is 类型缩窄
+
 - 参数修饰符
 
   readonly
   public
   protected
   private
-### 类
 
-- 类继承
+- 可选参数 x？:string
 
-  属性和方法
-  readonly
-  public
-  protected
-  private
+- 默认参数 x='2'
 
-- 抽象类
+- 剩余参数 ...2
+
+- this ,类型不固定,typeScript 会提升
+
+### 类(class)
+
+- 继承(extends)
+
+- 属性和方法 修饰符
+
+1. readonly 只读
+2. public 公共
+3. protected 子类 可用
+4. private 自己可用
+5. static 静态属性或方法
+
+- 存取器
+
+ 1. get
+ 2. set
+
+- 抽象类(abstract class)
+
+1. 可以定义派生类要实现的属性和方法
+
+2. 可以实现派生类需要继承的默认属性和方法
 
 - 多态
+
+但个继承 多个接口但实现
+
+- 类类型
+
+- 总结：实践oop思想离不开类的使用
 
 ### 接口
 
 - 特性
 
-  1.同名接口可以写多个 2.接口可以实现继承 3.函数类型接口
-  2.只能约束类的共有成员
-  3.接口也能继承类
+  1. 同名接口可以写多个 2.接口可以实现继承 3.函数类型接口
+  2. 只能约束类的共有成员
+  3. 接口也能继承
+  4. 强化面向接口编程
 
 - 可索引接口
 
@@ -213,6 +287,13 @@ add(){}
 - 接口 和 type 的区别
   能用接口不用 type
 
+type 能使用联合和交叉类型
+
+type 不能继承和重载
+
+interface 只能定义一个对象
+
+### 类型别名(type)
 
 ### TypeScript 文章推荐
 

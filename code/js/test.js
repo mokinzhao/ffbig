@@ -46,11 +46,25 @@ function thottle(fn, dealy) {
 const thottle = function (fn, dealy) {
   let timer = null;
   return function () {
-    if (!timer) {
+    if (timer) {
+      clearTimeout()
+    }
       timer = setTimeout(() => {
         fn.apply(this, arguments);
         timer = null;
       }, dealy);
-    }
+    
   };
 };
+
+const debounce =function (dealy,fn) {
+    let timer=null
+    return function () {
+        if(timer){
+            clearTimeout(timer)
+        }
+        setTimeout(() => {
+            fn.apply(this,arguments)
+        }, dealy);
+    }
+}
