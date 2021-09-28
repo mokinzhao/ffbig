@@ -10,5 +10,5 @@ title: TypeScript-高级
 
 
 
-## 使用TSConfig.json
+## 原理浅析
 

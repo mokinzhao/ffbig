@@ -1,13 +1,27 @@
 ---
 title: TypeScript + React 最佳实践
 ---
+### 知识准备
+
+- 建议熟读React和TypeScript官方文档
+
+- 建议开启 tsconfig.json中 "noImplicitAny": true
+
+放上两张TypeScript 知识脑图
+
+![00-TypeScript-基础应用 (2).png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7187768396984e57b9db27faa3f04840~tplv-k3u1fbpfcp-watermark.image?)
+
+
+![01-TypeScript-高级进阶.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ec29b321644a4758b67dfa2435dc941b~tplv-k3u1fbpfcp-watermark.image?)
+
+建立了一个全栈大前端技术交流群，加群请加微信：mokinzhao
 
 ### 组件引入方式
 
 - 函数组件
 
  ```js
-//推荐使用
+//推荐使用✅ better
 const WrapComponent: React.FC<ExtendedProps> = (props) => {
   // return ...
 };
@@ -24,12 +38,12 @@ export default function (props: React.PropsWithChildren<SpinProps>) {
 - 类组件
 
  ```js
-//推荐使用
+
 type IEProps {
   Cp?: React.ComponentClass<{ id?: number }>;
 }
 type IEState { id: number; }
-
+//推荐使用✅ better
 class ClassCpWithModifier extends React.Component<Readonly<IEProps>, Readonly<IEState>> {
   private gid: number = 1;
   public state: Readonly<IEState> = { id: 1 };
@@ -52,10 +66,10 @@ React.ComponentType<P> = React.ComponentClass<P> | React.FunctionComponent<P>;
 ```jsx
   // click 使用 React.MouseEvent 加 dom 类型的泛型
   // HTMLInputElement 代表 input标签 另外一个常用的是 HTMLDivElement
-  const onClick = (e: React.MouseEvent<HTMLInputElement>) => {};
+  const onClick = (e: React.MouseEvent<HTMLInputElement>) => {};✅ better
   // onChange使用 React.ChangeEvent 加 dom 类型的泛型
   // 一般都是 HTMLInputElement,HTMLSelectElement 可能也会使用
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {};✅ better
   return (
     <>
       {'ProForm 设置泛型可以约定 onFinish 等接口的参数类型'}
@@ -85,7 +99,7 @@ const App: React.FC = () => {
   const onChange: changeFn = e => {
     setState(e.currentTarget.value)
   }
-
+    ✅ better
   const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
     const target = e.target as typeof e.target & {
@@ -122,7 +136,7 @@ const [val, toggle] = useState(false);
 
 type AppProps = { message: string };
 const App = () => {
-    const [data] = useState<AppProps | null>(null);
+    const [data] = useState<AppProps | null>(null);✅ better
     // const [data] = useState<AppProps | undefined>();
     return <div>{data?.message}</div>;
 };
@@ -503,27 +517,188 @@ export declare interface AppProps {
 }
 ```
 
-- typeof and instanceof: 用于类型区分
-
-- keyof: 获取object的key
-
-- O[K]: 属性查找
-
-- [K in O]: 映射类型
-
-- +or - or readonly or ?: 加法、减法、只读和可选修饰符
-
-- x ? Y : Z: 用于泛型类型、类型别名、函数参数类型的条件类型
-
-- !: 可空类型的空断言
-
-- as: 类型断言
-
-- as const 常量断言
-
-- is: 函数返回类型的类型保护
-
 - 使用查找类型访问组件属性类型
+
+```ts
+// Great
+import Counter from './d-tips1'
+
+type PropsNew = React.ComponentProps<typeof Counter> & {
+
+  age: number
+
+}
+
+const App: React.FC<PropsNew> = props => {
+
+  return <Counter {...props} />
+
+}
+export default App
+
+```
+
+- Promise 类型
+
+```ts
+
+type IResponse<T> = {
+  message: string
+  result: T
+  success: boolean
+}
+
+async function getResponse(): Promise<IResponse<number[]>> {
+  return {
+    message: '获取成功',
+    result: [1, 2, 3],
+    success: true,
+  }
+}
+
+getResponse().then(response => {
+  console.log(response.result)
+})
+```
+
+- typeof/instanceof/in/is: 类型守卫用于类型区分
+
+```ts
+//typeof
+function doSome(x: number | string) {
+  if (typeof x === 'string') {
+    // 在这个块中，TypeScript 知道 `x` 的类型必须是 `string`
+    console.log(x.subtr(1)); // Error: 'subtr' 方法并没有存在于 `string` 上
+    console.log(x.substr(1)); // ok
+  }
+
+  x.substr(1); // Error: 无法保证 `x` 是 `string` 类型
+}
+
+//instanceof
+
+class Foo {
+  foo = 123;
+  common = '123';
+}
+class Bar {
+  bar = 123;
+  common = '123';
+}
+function doStuff(arg: Foo | Bar) {
+  if (arg instanceof Foo) {
+    console.log(arg.foo); // ok
+    console.log(arg.bar); // Error
+  }
+  if (arg instanceof Bar) {
+    console.log(arg.foo); // Error
+    console.log(arg.bar); // ok
+  }
+}
+doStuff(new Foo());
+doStuff(new Bar());
+
+//in
+
+interface A {
+  x: number;
+}
+
+interface B {
+  y: string;
+}
+
+function doStuff(q: A | B) {
+  if ('x' in q) {
+    // q: A
+  } else {
+    // q: B
+  }
+}
+
+//is
+
+function isString(test: any): test is string{
+    return typeof test === 'string';
+}
+
+function example(foo: number | string){
+    if(isString(foo)){
+        console.log('it is a string' + foo);
+        console.log(foo.length); // string function
+    }
+}
+example('hello world');
+// is 为关键字的「类型谓语」把参数的类型范围缩小了,当使用了 test is string 之后,我们通过 isString(foo) === true 明确知道其中的参数是 string,而 boolean 并没有这个能力,这就是 is 关键字存在的意义.
+
+```
+
+- 索引/映射/条件/断言 类型
+
+```ts
+
+//用extends 关键字判断两个类型的子类型关系
+  type isSubTyping<Child, Par> = Child extends Par ? true : false;
+  type isAssertable<T, S> = T extends S ? true :  S extends T ? true : false;
+  type isNumAssertable = isAssertable<1, number>; // true
+  type isStrAssertable = isAssertable<string, 'string'>; // true
+  type isNotAssertable = isAssertable<1, boolean>; // false
+
+//条件类型中的类型推断 infer
+{
+  type ElementTypeOfObj<T> = T extends { name: infer E; id: infer I } ? [E, I] : never;
+  type isArray = ElementTypeOfObj<{ name: 'name'; id: 1; age: 30 }>; // ['name', 1]
+  type isNever = ElementTypeOfObj<number>; // never
+}
+// keyof: 获取object的key
+  type MixedObjectKeys = keyof MixedObject; // string | number
+  type animalKeys = keyof animal; // 'type' | 'age'
+  type numberIndexKeys = keyof numberIndex; // "type" | "age" | "nickname"
+
+// O[K]: 属性查找
+class Images {
+    public src: string = 'https://www.google.com.hk/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
+    public alt: string = '谷歌'
+    public width: number = 500
+}
+type propsNames = keyof Images
+type propsType = Images[propsNames]
+
+// “[K in O]”: 映射类型
+  type SpecifiedKeys = 'id' | 'name';
+  type TargetType = {
+    [key in SpecifiedKeys]: any;
+  }; // { id: any; name: any; }
+  type TargetGeneric<O extends string | number | symbol> = {
+    [key in O]: any;
+  }
+  type TargetInstance = TargetGeneric<SpecifiedKeys>; // { id: any; name: any; }
+
+/* !: 非空断言-不建议用 */
+const data={
+    a:''
+    b:{c:''}
+} 
+  data!.a!.c
+/* as as : 双重断言*/
+
+function handler(event: Event) {
+  const element = (event as any) as HTMLElement; // ok
+}
+
+/* as const 常量断言*/
+
+// type '"hello"'
+let x = "hello" as const
+// type 'readonly [10, 20]'
+let y = [10, 20] as const
+// type '{ readonly text: "hello" }'
+let z = { text: "hello" } as const
+//优点：
+//1.对象字面量的属性，获得readonly的属性，成为只读属性
+//2.数组字面量成为readonly tuple只读元组
+//3.字面量类型不能被扩展（比如从hello类型到string类型）
+```
 
 #### 常用工具类型
 
