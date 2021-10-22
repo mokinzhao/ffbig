@@ -21,14 +21,8 @@ Function.prototype.call = function (context, ...args) {
   delete context["fn"];
   return result;
 };
-```
 
-```js
-/**- 简易版（不考虑 context 非对象情况，不考虑 Symbol\BigInt 不能 new.constructor( context )情况）
- * context: 要改变的函数中的this指向，写谁就是谁
- * args：传递给函数的实参信息
- * this：要处理的函数 fn
- */
+// 实现方式二
 Function.prototype.call = function (context, ...args) {
   //  null，undefined，和不传时，context为 window
   context = context == null ? window : context;
@@ -82,7 +76,6 @@ Function.prototype.mybind = function (context, ...args) {
 // 返回一个绑定函数
 // 当返回的绑定函数作为构造函数被new调用，绑定的上下文指向实例对象
 // 设置绑定函数的prototype 为原函数的prototype
-
 Function.prototype.mybind2 = function (context, ...args) {
   const fn = this;
   const bindFn = function (...newFnArgs) {
@@ -151,3 +144,6 @@ const is = (x, y) => {
 ```
 
 - Object.assign()
+
+
+

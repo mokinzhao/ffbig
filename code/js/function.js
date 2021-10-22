@@ -24,20 +24,30 @@ const debounce = (fn, dealy) => {
   };
 };
 
-const deounce = function (fn, dealy) {
-  let timer = null;
-  return function () {
-    if (timer) {
-      clearTimeout(timer);
+const debounce=function(fun,dealy){
+    let timer=null
+    return function () {
+        if(timer) clearTimeout(timer)
+        timer=setTimeout(() => {
+            fun.apply(this,arguments)
+        }, dealy);
     }
-    timer = setTimeout(() => {
-      fn.apply(this, arguments);
-    }, dealy);
-  };
-};
+} 
+
+
+const debounce= function (fun,dealy) {
+    let timer=null;
+    return function(){
+        if(timer)clearTimeout(timer)
+        timer =setTimeout(() => {
+            fun.apply(this,arguments)
+        }, dealy);
+    }
+    
+}
 
 //节流
-const thottle = (fn, dealy) => {
+const throttle = (fn, dealy) => {
   let timer = null;
   return () => {
     if (!timer) {
@@ -49,7 +59,7 @@ const thottle = (fn, dealy) => {
   };
 };
 
-const thottle = (fn, dealy) => {
+const throttle = (fn, dealy) => {
   let timer = null;
   return () => {
     if (!timer) {
@@ -60,26 +70,42 @@ const thottle = (fn, dealy) => {
     }
   };
 };
-const Thottle = function (fn, dealy) {
-  let timer = null;
-  return function () {
-    if (!timer) {
-      let timer = setTimeout(() => {
-        fn.apply(this, arguments);
-        timer = null;
-      }, dealy);
-    }
-  };
-};
+
+
 //防抖
-function debounce(fun, dealy) {
-  let timer = null;
-  return function () {
-    if (timer) {
-      clearTimeout(timer);
+function debounce(fun,dealy) {
+    let timer=null
+    return function(){
+        if(timer)clearTimeout(timer)
+        timer=setTimeout(() => {
+            fun.apply(this,arguments)
+        }, dealy);
+    }   
+}
+//节流
+function throttle(fun,dealy){
+    let timer=null
+    return function(){
+        if(!timer){
+            timer= setTimeout(() => {
+                fun.apply(this,arguments)
+                timer=null
+            }, dealy);
+        }
     }
-    timer = setTimeout(() => {
-      fun.apply(this, arguments);
-    }, dealy);
-  };
+}
+//函数克里化
+const curry = (func,...args)=>{
+    //获取函数的参数个数
+    const fnLen=func.length
+    return function(...innerArgs){
+        innerArgs=args.concat(innerArgs)
+        //参数未搜集足的话，继续递归收集
+        if(innerArgs.length<fn.length){
+            return curry.call(this,func,...innerArgs)
+        }else{
+            //否则拿着搜集的参数调用func
+            func.apply(this,innerArgs)
+        }
+    }
 }

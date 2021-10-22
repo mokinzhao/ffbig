@@ -8,13 +8,9 @@
 /*
 冒泡排序的思路：遍历数组，然后将最大数沉到最底部；
 循环数组，比较当前元素和下一个元素，如果当前元素比下一个元素大，向上冒泡。
-
 这样一次循环之后最后一个数就是本数组最大的数。
-
 下一次循环继续上面的操作，不循环已经排序好的数。
-
 优化：当一次循环没有发生冒泡，说明已经排序完成，停止循环。
-
 #
 时间复杂度：O(N^2)；
 空间复杂度：O(1)
@@ -75,7 +71,7 @@ function selectionSort(array) {
   }
 }
 
-//------快速排序-----
+//------快速排序-----常规实现
 /* 
 快速排序：通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据比另一部分的所有数据要小，再按这种方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，使整个数据变成有序序列。
 实现步骤：
@@ -100,4 +96,15 @@ function quickSort(array) {
     }
   }
   return [...quickSort(left), target, ...quickSort(right)];
+}
+//----快速排序----5行代码版本
+// 数组分成三部分left、pivot、right，使left<=pivot，right>pivot
+// 递归处理left
+// 递归处理right
+// 合并三者结果
+function quickSort(){
+    let pivot =array[array.length-1]
+    let left = array.filter((v, i) => v <= pivot && i != array.length -1)
+    let right =array.filter(v=>v>pivot)
+    return [...quickSort(left),pivot,...quickSort(right) ]
 }

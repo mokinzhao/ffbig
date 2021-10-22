@@ -110,4 +110,26 @@ Function.prototype.myNew = function () {
   return typeof ret === "object" ? ret : obj;
 };
 
-//函数柯理化
+//- 函数柯理化
+
+const curry=(func,...args)=>{
+    const fnLen= func.length
+
+    return function (...innerArgs){
+        innerArgs=arg.concat(innerArgs)
+        //参数未收集足的话，继续递归收集
+        if(innerArgs.length<fnLen){
+            return curry.call(this,func,...innerArgs)
+        }else{
+            func.apply(this,innerArgs)
+        }
+    }
+}
+//测试
+const add=curry((num1,num2,num3)=>{
+console.log(num1,num2,num3,num1+num2+num3)
+})
+
+add(1)(2)(3)
+add(1,2,3)
+add (1)(2,3)
