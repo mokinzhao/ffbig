@@ -72,28 +72,33 @@ const throttle = (fn, dealy) => {
 };
 
 
-//防抖
-function debounce(fun,dealy) {
-    let timer=null
-    return function(){
-        if(timer)clearTimeout(timer)
-        timer=setTimeout(() => {
-            fun.apply(this,arguments)
-        }, dealy);
-    }   
-}
 //节流
-function throttle(fun,dealy){
+
+const throttle=(fun,dealy)=>{
     let timer=null
-    return function(){
+    return ()=>{
         if(!timer){
-            timer= setTimeout(() => {
+            timer=setTimeout(() => {
                 fun.apply(this,arguments)
                 timer=null
             }, dealy);
         }
     }
 }
+
+//防抖
+
+const debounce=(fun,dealy)=>{
+    let timer=null
+    return function(){
+        if(timer) clearTimeout(timer)
+        timer=setTimeout(() => {
+            fun.apply(this,arguments)
+        }, dealy);
+    }
+}
+
+
 //函数克里化
 const curry = (func,...args)=>{
     //获取函数的参数个数

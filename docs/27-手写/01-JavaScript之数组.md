@@ -2,9 +2,20 @@
 title: JavaScript之数组
 ---
 
+### 手写数组内置函数
+
+- Array.isArray
+
+```js
+Array.myIsArray = function(o) {
+  returnObject.prototype.toString.call(Object(o)) === '[object Array]';
+};
+console.log(Array.myIsArray([])); // true
+```
+
 - map
 
-  ![](https://mmbiz.qpic.cn/mmbiz_jpg/q4qrl2ddrUvdZuoS9kmZeQVkcFCAVOOHXMnvbWnF9Y9ugoTjiauUsC2yKMuhyBdYYBSHUWjZnBFiaLUYibnEBbMxg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](https://mmbiz.qpic.cn/mmbiz_jpg/q4qrl2ddrUvdZuoS9kmZeQVkcFCAVOOHXMnvbWnF9Y9ugoTjiauUsC2yKMuhyBdYYBSHUWjZnBFiaLUYibnEBbMxg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 
 ```js
 Array.prototype.myMap = function(fn) {
@@ -165,3 +176,11 @@ Array.prototype.flat5 = function(deep = 1) {
     return result.reverse();
 }
 ``` 
+
+
+### 手写数组常用函数
+
+- 数组去重
+
+
+- 数组扁平化

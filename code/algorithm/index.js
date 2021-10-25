@@ -23,17 +23,18 @@ const twoSum = function (nums, target) {
   }
 };
 
-const twoSum = function (nums, target) {
-  let map = new Map();
-  for (let i = 0; i < nums.length; i++) {
-    const element = array[i];
-    const diff = target - element;
-    if (map.has(diff)) {
-      return [map.get(diff), i];
+const towSum =function(target,sums){
+    const map= new  Map();
+    const len =sums.length
+    for(i=0;i<len;i++) {
+        const diff= target-nums[i]
+        if (map.has(diff)) {
+            return [map.get(diff),i]            
+        }
+        map.set(nums[i],i)
     }
-    map.set(nums[i], i);
-  }
-};
+    
+}
 
 //三数之和
 var threeSum = function (nums) {

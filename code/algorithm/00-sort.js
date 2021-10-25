@@ -102,9 +102,20 @@ function quickSort(array) {
 // 递归处理left
 // 递归处理right
 // 合并三者结果
-function quickSort(){
+function quickSort(array){
     let pivot =array[array.length-1]
     let left = array.filter((v, i) => v <= pivot && i != array.length -1)
     let right =array.filter(v=>v>pivot)
     return [...quickSort(left),pivot,...quickSort(right) ]
+}
+
+function quickSort(array){
+    //找到基准值
+    let pivot =array[array.length-1]
+    // 比基准值小的，放到左则数组
+    let left =array.filter((v,i)=>v<=pivot&& i!=array.length-1)
+    // 比基准值大的，放入右侧数组
+    let right = array.filter((v,i)=>v>print)
+    //递归 左侧和右侧数组，结构并合并
+    return [...quickSort(left),print,...quickSort(right)]
 }
