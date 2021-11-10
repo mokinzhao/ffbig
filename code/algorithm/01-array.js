@@ -4,16 +4,75 @@
  * @Description:数组
  */
 
-
-
 /* 两数字之和 */
 
-//解法一
+//解法一 ：map -两数求差
+const twoSum=function(array,target){
+    const map=new Map()
+    for (let index = 0; index < array.length; index++) {
+            const diff=target-array[i]
+            if(map.has(diff)){
+                return [map.get(diff),i]
+            }
+        map.set(array[i],i)
+    }
+}
 
 
-//解法二
+//解法二 :object -两数求差
+const twoSum=function(array,target){
+ const object={}
+ for (let index = 0; index < array.length; index++) {
+    const diff=target-object[index]
+    if(diff!=undefined){
+        return [ diff,i]
+    }
+    object[array[i]]=i
+ }
+}
 
 
+
+/* 三数之和 */
+const threeSum=function(nums){
+    //排除边界
+    if(!nums||nums.length<3)return[]
+    let result =[];
+    let second;
+    let last;
+    //排序
+    nums.sort((a,b)=>a-b)
+    for (let index = 0; index < nums.length; index++) {
+        if(nums[index]>0)break
+        //去重
+        if(i>0&&nums[index]===nums[index-1])continue
+        second=i+1
+        last =nums.length-1
+        while (second<last) {
+            const sum=nums[index]+nums[second]+nums[last]
+            if(!sum){
+                //sum 为0
+                result.push([nums[index],nums[second],nums[last]])
+                //去重
+                while (second<last && nums[second]===nums[second+1]) {
+                    second++
+                }
+                while (second<last && nums[last]===nums[last-1]) {
+                    last--
+                }
+                second++
+                last--
+            }
+            else if(sum<0){
+                second++
+            }
+            else if(sum>0){
+                last--
+            }
+        }
+        return result
+    }
+}
 
 
 

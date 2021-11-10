@@ -4,7 +4,7 @@ title: Node基础
 
 ## 什么是 Node.js
 
-chrome 控制浏览器
+Chrome 控制浏览器
 Node 控制计算机
 
 ## node 应用场景和作用

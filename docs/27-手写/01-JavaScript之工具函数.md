@@ -61,23 +61,33 @@ const throttle = (fn, wait = 300) => {
 
 ### 函数克里化
 
+柯里化就是把接受「多个参数」的函数变换成接受一个「单一参数」的函数，并且返回接受「余下参数」返回结果的一种应用。
 原理是利用闭包把传入参数保存起来，当传入参数的数量足够执行函数时，就开始执行函数
 
 ```js
-const curry = (func,...args)=>{
-    //获取函数的参数个数
-    const fnLen=func.length
-    return function(...innerArgs){
-        innerArgs=args.concat(innerArgs)
-        //参数未搜集足的话，继续递归收集
-        if(innerArgs.length<fn.length){
-            return curry.call(this,func,...innerArgs)
-        }else{
-            //否则拿着搜集的参数调用func
-            func.apply(this,innerArgs)
-        }
+
+//写法一
+let currying = (fn, ...args) =>
+            fn.length > args.length ?
+            (...arguments) => currying(fn, ...args, ...arguments) :
+            fn(...args)
+
+//写法二
+const curry = (func, ...args) => {
+  // 获取函数的参数个数
+  const fnLen = func.length
+  return function (...innerArgs) {
+    innerArgs = args.concat(innerArgs)
+    // 参数未搜集足的话，继续递归搜集
+    if (innerArgs.length < fnLen) {
+      return curry.call(this, func, ...innerArgs)
+    } else {
+      // 否则拿着搜集的参数调用func
+      func.apply(this, innerArgs)
     }
+  }
 }
+
 // 测试
 const add=curry((num1,num2,num3)=>{
 console.log(num1+ num2+num3)
@@ -192,3 +202,6 @@ var obj1 = {
 var obj2 = _.cloneDeep(obj1);
 console.log(obj1.b.f === obj2.b.f);// false
 ```
+
+- 深拷贝(尤雨溪)
+

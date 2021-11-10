@@ -100,17 +100,41 @@ const debounce=(fun,dealy)=>{
 
 
 //函数克里化
-const curry = (func,...args)=>{
-    //获取函数的参数个数
-    const fnLen=func.length
-    return function(...innerArgs){
-        innerArgs=args.concat(innerArgs)
-        //参数未搜集足的话，继续递归收集
-        if(innerArgs.length<fn.length){
-            return curry.call(this,func,...innerArgs)
-        }else{
-            //否则拿着搜集的参数调用func
-            func.apply(this,innerArgs)
+const curry = (func, ...args) => {
+    // 获取函数的参数个数
+    const fnLen = func.length
+    return function (...innerArgs) {
+      innerArgs = args.concat(innerArgs)
+      // 参数未搜集足的话，继续递归搜集
+      if (innerArgs.length < fnLen) {
+        return curry.call(this, func, ...innerArgs)
+      } else {
+        // 否则拿着搜集的参数调用func
+        func.apply(this, innerArgs)
+      }
+    }
+  }
+
+const debounce=function(fun,dealy){
+    let timer=null;
+    return function(){
+        if(timer)clearTimeout(timer)
+        timer=setTimeout(() => {
+            fun.apply(this,arguments)
+        }, dealy);
+    }
+}
+
+const throttle=function(fun,dealy){
+    let timer=null
+    return function(){
+        if(!timer){
+            timer=setTimeout(() => {
+                fun.apply(this,arguments)
+                timer=null
+            }, dealy);
         }
     }
 }
+
+

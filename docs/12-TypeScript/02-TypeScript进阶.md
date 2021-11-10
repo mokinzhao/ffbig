@@ -66,7 +66,7 @@ class Memory<S>{
  }
 
  get store(){
-     return this.store
+    return this.store
  }
 }
 
