@@ -133,3 +133,40 @@ console.log(num1,num2,num3,num1+num2+num3)
 add(1)(2)(3)
 add(1,2,3)
 add (1)(2,3)
+
+
+class Scheduler {
+    constructor(maxLimit) {
+      this.maxLimit =  maxLimit
+      this.queue = [];  
+      this.processTasks = [];
+    }
+          
+      add(fn){
+        this.queue.push(fn);
+        this.run();
+      }
+     
+      run(){
+        while(this.processTasks.length < this.maxLimit && this.queue.length > 0){
+          let task = this.queue.shift();
+          let promise = task().then(() => {
+            this.processTasks.splice(this.processTasks.indexOf(promise), 1);
+            this.run();
+          });
+          this.processTasks.push(promise);
+        }
+      }
+  
+   }
+  const  task=(time,order)=>{
+    const fn = function(){
+        return new Promise(resolve => {
+           setTimeout(resolve, time)
+        }).then(() => console.log('执行完成',order))
+    }
+    return fn;
+  }
+const scheduler = new Scheduler(2);
+scheduler.add(task(200, '1'));
+scheduler.add(task(500, '2'));

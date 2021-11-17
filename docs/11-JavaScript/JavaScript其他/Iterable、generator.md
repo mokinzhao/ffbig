@@ -1,3 +1,3 @@
 ---
-title: Iterable/generator
+title: Iterable/Generator
 ---

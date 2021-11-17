@@ -64,6 +64,10 @@ const throttle = (fn, wait = 300) => {
 柯里化就是把接受「多个参数」的函数变换成接受一个「单一参数」的函数，并且返回接受「余下参数」返回结果的一种应用。
 原理是利用闭包把传入参数保存起来，当传入参数的数量足够执行函数时，就开始执行函数
 
+- 延迟计算 （用闭包把传入参数保存起来，当传入参数的数量足够执行函数时，开始执行函数）
+- 动态创建函数 （参数不够时会返回接受剩下参数的函数)
+- 参数复用（每个参数可以多次复用）
+
 ```js
 
 //写法一
@@ -73,6 +77,29 @@ let currying = (fn, ...args) =>
             fn(...args)
 
 //写法二
+function curry(func){
+    return function curried(...args){
+        //关键知识点：function.length 用来获取函数到形参个数
+        //补充：arguments.length 获取到是实参个数
+        if(args.length>=func.length){
+            return func.apply(this,args)
+        }
+        return function (...args2){
+            return curried.apply(this,args.concat(args2))
+        }
+    }
+}
+
+//-测试-
+function sum (a, b, c) {
+  return a + b + c
+}
+const curriedSum = curry(sum)
+console.log(curriedSum(1, 2, 3))
+console.log(curriedSum(1)(2,3))
+console.log(curriedSum(1)(2)(3))
+
+//写法三
 const curry = (func, ...args) => {
   // 获取函数的参数个数
   const fnLen = func.length
@@ -88,7 +115,7 @@ const curry = (func, ...args) => {
   }
 }
 
-// 测试
+// -测试-
 const add=curry((num1,num2,num3)=>{
 console.log(num1+ num2+num3)
 })
@@ -96,6 +123,9 @@ console.log(num1+ num2+num3)
 add(1)(2)(3）//6  
 add(1,2,3)  //6
 add(1)(2,3) //6
+
+
+
 
 ```
 
