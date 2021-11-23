@@ -4,59 +4,9 @@
  * @Description: 常用工具函数
  */
 
-//防抖
-const debounce = (fn, dealy) => {
-	let timer = null
-	return () => {
-		if (timer) clearTimeout(timer)
-		timer = setTimeout(() => {
-			fn.apply(this, arguments)
-		}, dealy)
-	}
-}
-const debounce = (fn, dealy) => {
-	let timer = null
-	return () => {
-		if (timer) clearTimeout(timer)
-		timer = setTimeout(() => {
-			fn.apply(this, arguments)
-		}, dealy)
-	}
-}
 
-const debounce = function(fun, dealy) {
-	let timer = null
-	return function() {
-		if (timer) clearTimeout(timer)
-		timer = setTimeout(() => {
-			fun.apply(this, arguments)
-		}, dealy)
-	}
-}
-
-const debounce = function(fun, dealy) {
-	let timer = null
-	return function() {
-		if (timer) clearTimeout(timer)
-		timer = setTimeout(() => {
-			fun.apply(this, arguments)
-		}, dealy)
-	}
-}
 
 //节流
-const throttle = (fn, dealy) => {
-	let timer = null
-	return () => {
-		if (!timer) {
-			timer = setTimeout(() => {
-				fn.apply(this, arguments)
-				timer = null
-			}, dealy)
-		}
-	}
-}
-
 const throttle = (fn, dealy) => {
 	let timer = null
 	return () => {
@@ -80,18 +30,7 @@ const debounce = (fun, dealy) => {
 	}
 }
 
-//节流
-const throttle = (fun, dealy) => {
-	let timer = null
-	return () => {
-		if (!timer) {
-			timer = setTimeout(() => {
-				fun.apply(this, arguments)
-				timer = null
-			}, dealy)
-		}
-	}
-}
+
 
 //函数克里化
 const curry = (func, ...args) => {
@@ -152,13 +91,43 @@ function curry(func) {
 	}
 }
 
-const curry=function(func){
-    return function curried (...args){
-        if(args.length<=func.length){
-            return func.apply(this,args)
-        }
-        return function(...args2){
-            return curried.apply(this,args2.concat(args))
+
+const debounce= function(func,dealy){
+    let timer=null
+    return function(){
+        if(timer)clearTimeout(timer)
+        timer=setTimeout(() => {
+            func.apply(this,arguments)
+        }, dealy);
+    }
+}
+
+const throttle=function(func,dealy){
+    let timer =null
+    return function(){
+        if(!timer){
+            timer= setTimeout(() => {
+                func.apply(this,arguments)
+            }, dealy);
         }
     }
 }
+
+const curry=function(func){
+    return function curried(...args){
+        if(args.length>func.length){
+          return func.apply(this,args)
+        }
+        return function(args2){
+            return curried.apply(this,args.concat(args2))
+        }
+    }
+}
+
+  function sum (a, b, c) {
+    return a + b + c
+  }
+  const curriedSum = curry(sum)
+  console.log(curriedSum(1, 2, 3))
+  console.log(curriedSum(1)(2,3))
+  console.log(curriedSum(1)(2)(3))
