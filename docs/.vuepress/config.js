@@ -176,26 +176,17 @@ module.exports = {
           },
         ],
       },
-      { text: "博客", link: "https://blog.csdn.net/z4909801" }, // 外部链接
-      // 下拉列表
-      // {
-      //   text: "他山之石",
-      //   items: [
-      //     { text: "木易杨前端进阶", link: "https://www.muyiy.cn/" },
-      //     {
-      //       text: "数据结构与算法",
-      //       link: "http://www.conardli.top/docs/"
-      //     },
-      //     {
-      //       text: "前端面试与进阶指南",
-      //       link: "https://www.cxymsg.com/"
-      //     },
-      //     {
-      //       text: "前端进阶之道",
-      //       link: "https://yuchengkai.cn/"
-      //     }
-      //   ]
-      // }
+      { text: "关于作者",items:[
+        {
+            text: "简介",
+            link: "/00-大纲",
+          },
+          {
+            text: "博客",
+            link: "https://blog.csdn.net/z4909801",
+          }
+      ] },
+
     ],
   },
 };
