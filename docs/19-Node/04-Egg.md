@@ -46,7 +46,7 @@ title: Egg
     // 应用中间件： router
     app
       .use(router.routes())
-      .use(router.allowedMethods());
+      .use(router.allowedMethods()); 
     app.listen(3000);
     <span class="copy-code-btn">复制代码</span>`</pre>
 ```

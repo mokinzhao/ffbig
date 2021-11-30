@@ -25,6 +25,22 @@ var b = Singleton.getInstance("seven2");
 
 console.log(a === b); //true
 
+
+// 单例类
+class SingleInstance {
+    static instance;
+    constructor(){}
+    static getInstance(){
+        if(!SingleInstance.instance){
+            SingleInstance.instance=new SingleInstance()
+        }
+        return SingleInstance.instance
+    }
+}
+
+export default SingleInstance.getInstance
+
+
 //发布订阅
 
 //观察者模式

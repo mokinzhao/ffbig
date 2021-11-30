@@ -4,8 +4,6 @@
  * @Description: 常用工具函数
  */
 
-
-
 //节流
 const throttle = (fn, dealy) => {
 	let timer = null
@@ -29,8 +27,6 @@ const debounce = (fun, dealy) => {
 		}, dealy)
 	}
 }
-
-
 
 //函数克里化
 const curry = (func, ...args) => {
@@ -124,10 +120,32 @@ const curry=function(func){
     }
 }
 
-  function sum (a, b, c) {
+function sum (a, b, c) {
     return a + b + c
-  }
+}
+
   const curriedSum = curry(sum)
   console.log(curriedSum(1, 2, 3))
   console.log(curriedSum(1)(2,3))
   console.log(curriedSum(1)(2)(3))
+
+const curry=function(func){
+    return function curried(...args){
+        if(args.length>func.length){
+          return func.apply(this,args)
+        }
+        return function(...args2){
+           return curried.apply(this,args.concat(args2))
+        }
+    }
+} 
+
+const add=function(a,b,c){
+   return a+b+c
+}
+
+const curryNums =curry(add)
+console.log(curryNums(1,2,3))
+console.log(curryNums(1),2,3)
+console.log(curryNums(1)(2)(3))
+

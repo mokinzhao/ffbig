@@ -31,7 +31,6 @@ const twoSum=function(array,target){
 }
 
 
-
 /* 三数之和 */
 const threeSum=function(nums){
     //排除边界
@@ -73,70 +72,45 @@ const threeSum=function(nums){
     }
 }
 
-const threeSum=function(sums){
-    const result =[]
-    nums.sort((a,b)=>a-b);
+
+/* 三数之和 */
+const threeSums=function(nums){
+    //边界
+    if(!nums||nums.length<3)return[]
+    //排序
+    nums.sort((a,b)=>a-b)
+    //遍历
     for(let i=0;i<nums.length;i++){
         //跳过重复数字
         if(i&&nums[i]===nums[i-1]){
-            continue;
+            continue
         }
-        let left=i+1;
-        let right =nums.length-1;
+        let left=i+1 //左指针
+        let right=nums.length-1//右指针
         while (left<right) {
-            const sum=nums[i]+nums[left]+nums[right];
+            const sum=nums[i]+nums[left]+nums[right]
+            //大于0移动右指针
             if(sum>0){
                 right--
-            }else if(sum<0){
+            }//小于0移动左指针
+            else if(sum<0){
                 left++
-            }else{
-                result.push([nums[i],nums[left++],nums[right--]])
-                //跳过重复数字
-                while (nums[left]===nums[left-1]) {
-                    left++;
-                }
-                // 跳过重复数字
-                while (nums[right]===nums[right+1]){
-                    right--;
-                }
             }
-        }
-    }
-    return result
-}
-
-
-const threeSum=function(nums){
-    if(nums.length<3)return nums
-    nums.sort((a,b)=>a-b);
-    for(let i = 0; i<nums.length;i++ ){
-        //跳过重复数字
-        if(i&&nums[i]===nums[i-1]){
-            continue;
-        }
-        let left =i+1;
-        let right=nums.length-1
-        while (left<right) {
-            const sum =nums[i]+nums[left]+nums[right];
-            if(sum>0){
-                right--;
-            } else if(sum<0){
-                left++;
-            }else{
-                result.push([nums[i],nums[left++],nums[right--]])
+            else{
+                result.push([nums[i],nums[left++],nums[right--]]);
                 //跳过重复数字
                 while (nums[left]===nums[left-1]) {
-                    left++;
+                    left++
                 }
-                //跳过重复数字
                 while (nums[right]===nums[right+1]) {
-                    right--;
+                    right--
                 }
             }
         }
+        return result
     }
-    return result
 }
+
 
 
 //#20.有效的括号
