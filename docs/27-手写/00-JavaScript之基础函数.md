@@ -4,7 +4,7 @@ title: JavaScript之基础函数
 
 ## JavaScript 之基础函数
 
-- Call
+### Call
 
 ```js
 /**- 简易版（不考虑 context 非对象情况，不考虑 Symbol\BigInt 不能 new.constructor( context )情况）
@@ -40,7 +40,7 @@ Function.prototype.call = function (context, ...args) {
 };
 ```
 
-- Apply
+### Apply
 
 ```js
 Function.prototype.apply = function (context, arr) {
@@ -62,7 +62,7 @@ Function.prototype.apply = function (context, arr) {
 };
 ```
 
-- Bind
+### Bind
 
 ```js
 //bind实现版本一
@@ -90,7 +90,7 @@ Function.prototype.mybind2 = function (context, ...args) {
 };
 ```
 
-- New
+### New
 
 ```js
 Function.prototype.myNew = function () {
@@ -107,7 +107,7 @@ Function.prototype.myNew = function () {
 };
 ```
 
-- Object.create
+### Object.create
 
 ```js
 function create(proto) {
@@ -123,7 +123,7 @@ let demo = {
 let cc = Object.create(demo);
 ```
 
-- Object.is
+### Object.is
 
 Object.is 解决主要这两个问题：
 
@@ -143,9 +143,9 @@ const is = (x, y) => {
 };
 ```
 
-- Object.assign()
+### Object.assign()
 
-- typeOf
+### typeOf
 
 typeof 可以正确识别：Undefined、Boolean、Number、String、Symbol、Function 等类型的数据，但是对于其他的都会认为是 object，比如 Null、Date 等，所以通过 typeof 来判断数据类型会不准确。但是可以使用 Object.prototype.toString 实现。
 
@@ -160,7 +160,7 @@ typeOf({})        // 'object'
 typeOf(new Date)  // 'date'
 ```
 
-- instanceOf
+### instanceOf
 
 
 

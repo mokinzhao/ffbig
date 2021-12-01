@@ -1,9 +1,6 @@
 ---
 title: JavaScript之工具函数
 ---
-
-## JavaScript JavaScript 之工具函数
-
 ### 防抖(debounce)
 
 ![](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/1/4/16f6eba8e2d1fc04~tplv-t2oaga2asx-watermark.awebp)

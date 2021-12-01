@@ -171,9 +171,9 @@ if (!Array.isArray) {
 
 数组的基本概念到这里基本讲得差不多了，下面我们就来看看让人眼花缭乱的 30 多个数组的基本方法。
 
-##### 改变自身的方法
+##### 改变自身的9个方法
 
-基于 ES6，会改变自身值的方法一共有 9 个，分别为 pop、push、reverse、shift、sort、splice、unshift，以及两个 ES6 新增的方法 copyWithin 和 fill。
+基于 ES6，会改变自身值的方法一共有 9 个,分别为 pop、push、reverse、shift、sort、splice、unshift,以及两个 ES6 新增的方法 copyWithin 和 fill。
 
 接下来我们看一段代码，快速了解这些方法最基本的用法。
 

@@ -2,7 +2,7 @@
 title: JavaScript之异步
 ---
 
-### Promise
+## Promise
 
 ### Generator
 
