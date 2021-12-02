@@ -1,10 +1,8 @@
 ---
-title: 常见设计模式
+title: JavaScript之设计模式
 ---
 
-## JavaScript 手写之设计模式
-
-- 单例模式(支持饿汉模式)
+## 单例模式(支持饿汉模式)
 
 ```js
 class SingleInstance {
@@ -25,7 +23,7 @@ class SingleInstance {
 export default SingleInstance.getInstance();
 ```
 
-- 发布订阅模式
+## 发布订阅模式
 
 ```js
 class EventEmitter {
@@ -70,7 +68,7 @@ em.emit("love");
 em.emit("work");
 ```
 
-- 观察者模式
+## 观察者模式
 
 ```js
 //被观察者

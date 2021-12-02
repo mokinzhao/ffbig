@@ -109,25 +109,6 @@ const throttle=function(func,dealy){
     }
 }
 
-const curry=function(func){
-    return function curried(...args){
-        if(args.length>func.length){
-          return func.apply(this,args)
-        }
-        return function(args2){
-            return curried.apply(this,args.concat(args2))
-        }
-    }
-}
-
-function sum (a, b, c) {
-    return a + b + c
-}
-
-  const curriedSum = curry(sum)
-  console.log(curriedSum(1, 2, 3))
-  console.log(curriedSum(1)(2,3))
-  console.log(curriedSum(1)(2)(3))
 
 const curry=function(func){
     return function curried(...args){
@@ -146,6 +127,25 @@ const add=function(a,b,c){
 
 const curryNums =curry(add)
 console.log(curryNums(1,2,3))
-console.log(curryNums(1),2,3)
+console.log(curryNums(1)(2,3))
 console.log(curryNums(1)(2)(3))
 
+
+const curry=function (fun){
+    return function curried(...args){
+        if(args.length>=fun.length){
+            return  fun.apply(this,args)
+        }
+    return function(...args2){
+            return curried.apply(this,args.concat(args2))
+    }
+  }
+}
+
+const add =function(a,b,c){
+    return a+b+c
+}
+
+const curryNums=curry(add)
+
+console.log(curryNums(1,2,3))

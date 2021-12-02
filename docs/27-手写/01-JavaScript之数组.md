@@ -2,7 +2,7 @@
 title: JavaScript之数组
 ---
 
-## 手写数组内置函数
+## 内置函数
 
 ### Array.isArray
 
@@ -304,7 +304,7 @@ Array.prototype.flat5 = function(deep = 1) {
 }
 ```
 
-## 手写数组常用函数
+## 常用函数
 
 ### 数组去重
 
