@@ -181,17 +181,6 @@ const fourSum = function(nums,target){
     return result
 }
 
-// 接雨水
-let max = 0;
-for (let i = 0; i < height.length; i++) {
-  for (let j = i + 1; j < height.length; j++) {
-    const currentArea = Math.abs(i - j) * Math.min(height[i], height[j]);
-    if (currentArea > max) {
-      max = currentArea;
-    }
-  }
-}
-return max;
 
 
 //#20.有效的括号

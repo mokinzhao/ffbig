@@ -233,5 +233,16 @@ var obj2 = _.cloneDeep(obj1);
 console.log(obj1.b.f === obj2.b.f);// false
 ```
 
+- 深拷贝(面试可用版)
+
+
+
+
 - 深拷贝(尤雨溪)
+
+
+
+
+- 深拷贝(完美版)
+
 

@@ -160,3 +160,6 @@ typeOf(new Date)  // 'date'
 
 ## instanceOf
 
+
+
+

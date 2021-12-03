@@ -237,7 +237,7 @@ Array.prototype.myReduce = function(fn) {
 }
 ```
 
-### flat
+### flat (扁平化)
 
 ```js
 // 使用reduce和concat
@@ -308,4 +308,175 @@ Array.prototype.flat5 = function(deep = 1) {
 
 ### 数组去重
 
+- 方法一：Set（ES6）
+
+```js
+function unique(arr) {
+    return Array.from(new Set(arr))
+}
+// 或者
+var unique = arr => [...new Set(arr)]
+
+// 测试
+var arr = [1, 2, 2, 3]
+unique(arr); // [1, 2, 3]
+
+```
+
+- 方式二：reduce
+
+```js
+function unique (arr) {
+    return arr.sort().reduce((acc, cur) => {
+    	if (acc.length === 0 || acc[acc.length - 1] !== cur) {
+        	acc.push(cur);
+    	}
+    	return acc
+	}, [])
+}
+
+// 测试
+var arr = [1, 2, 2, 3]
+unique(arr); // [1, 2, 3]
+
+```
+
+- 方法三：filter
+
+```js
+function unique(arr) { 
+    return arr.filter( (element, index, array) => {
+    	return array.indexOf(element) === index
+	})
+}
+
+// 测试
+var arr = [1, 2, 2, 3]
+unique(arr); // [1, 2, 3]
+
+```
+
 ### 数组扁平化
+
+- 使用 reduce 方法
+
+```js
+function flattenDeep(arr) { 
+    return Array.isArray(arr)
+      ? arr.reduce( (acc, cur) => [...acc, ...flattenDeep(cur)] , [])
+      : [arr]
+}
+
+// 测试
+var animals = ["🐷", ["🐶", "🐂"], ["🐎", ["🐑", ["🐲"]], "🐛"]]
+flattenDeep(animals)
+// ["🐷", "🐶", "🐂", "🐎", "🐑", "🐲", "🐛"]
+
+```
+
+- 实现 flat 函数
+
+```js
+function flat(arr, depth = 1) {
+    return depth > 0
+        ? arr.reduce((acc, cur) => {
+        if(Array.isArray(cur)) {
+            return [...acc, ...flat(cur, depth-1)]
+        }
+        return [...acc, cur]
+    } , [])
+      : arr
+}
+
+// 测试
+var animals = ["🐷", ["🐶", "🐂"], ["🐎", ["🐑", ["🐲"]], "🐛"]]
+// 不传参数时，默认扁平化一层
+flat(animals)
+// ["🐷", "🐶", "🐂", "🐎", ["🐑", ["🐲"]], "🐛"]
+
+// 传入一个整数参数，整数即扁平化的层数
+flat(animals, 2)
+// ["🐷", "🐶", "🐂", "🐎", "🐑", ["🐲"], "🐛"]
+
+// Infinity 关键字作为参数时，无论多少层嵌套，都会转为一维数组
+flat(animals, Infinity)
+// ["🐷", "🐶", "🐂", "🐎", "🐑", "🐲", "🐛"]
+
+// 传入 <=0 的整数将返回原数组，不扁平化
+flat(animals, 0)
+flat(animals, -10)
+// ["🐷", ["🐶", "🐂"], ["🐎", ["🐑", ["🐲"]], "🐛"]];
+
+// 如果原数组有空位，flat()方法会跳过空位。
+var arr = ["🐷", "🐶", "🐂", "🐎",,]
+flat(arr)
+// ["🐷", "🐶", "🐂", "🐎"]
+```
+
+- 栈
+
+```js
+unction flattenDeep(arr) {
+  const result = [] 
+  // 将数组元素拷贝至栈，直接赋值会改变原数组
+  const stack = [...arr]
+  // 如果栈不为空，则循环遍历
+  while (stack.length !== 0) {
+    const val = stack.pop() 
+    if (Array.isArray(val)) {
+      // 如果是数组再次入栈，并且展开了一层
+      stack.push(...val) 
+    } else {
+      // 如果不是数组，就用头插法插入到结果数组中
+      result.unshift(val)
+    }
+  }
+  return result
+}
+
+// 测试
+var animals = ["🐷", ["🐶", "🐂"], ["🐎", ["🐑", ["🐲"]], "🐛"]]
+flattenDeep(animals)
+// ["🐷", "🐶", "🐂", "🐎", "🐑", "🐲", "🐛"]
+
+```
+
+- 给定两个数组，编写一个函数来计算它们的交集
+
+解题思路：
+
+1. filter 过滤
+2. Set 去重
+
+```js
+//示例 1:
+输入: nums1 = [1,2,2,1], nums2 = [2,2]
+输出: [2]
+
+const intersection = function(nums1, nums2) {
+    return [...new Set(nums1.filter((item)=>nums2.includes(item)))]
+};
+
+```
+
+- 编写一个函数计算多个数组的交集
+
+```js
+const intersection = function(...args) {
+    if (args.length === 0) {
+    return []
+  }
+  if (args.length === 1) {
+    return args[0]
+  }
+  return [...new Set(args.reduce((result, arg) => {
+    return result.filter(item => arg.includes(item))
+  }))]
+};
+
+```
+
+## 参考
+
+[JavaScript数组去重（12种方法，史上最全）](https://segmentfault.com/a/1190000016418021)
+[js 数组详细操作方法及解析合集](https://juejin.cn/post/6844903614918459406#heading-4)

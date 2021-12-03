@@ -85,28 +85,7 @@ module.exports = {
       },
       {
         text: "数据结构与算法",
-        items: [
-          {
-            text: "一文概览数据结构与算法",
-            link: "https://mp.weixin.qq.com/s/EFil0A_ylv_PCreVj-SebA",
-          },
-          {
-            text: "数据结构与算法必会的50个代码实现",
-            link: "https://github.com/wangzheng0822/algo",
-          },
-          {
-            text: "算法专栏",
-            link: "http://www.conardli.top/docs/dataStructure/",
-          },
-          {
-            text: "力扣加加",
-            link: "https://leetcode-solution-leetcode-pp.gitbook.io/leetcode-solution/",
-          },
-          {
-            text: "labuladong的算法小抄",
-            link: "https://labuladong.github.io/algo/",
-          },
-        ],
+        link:'/26-算法/00-练习大纲'
       },
 
       {
