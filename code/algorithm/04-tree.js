@@ -72,3 +72,60 @@ var isMirror = function (t1, t2) {
     isMirror(t1.left, t2.right)
   );
 };
+
+
+
+
+// 给定一个树，给定一个节点id，返回从root到该节点的path（从跟节点到查询节点的路径上所有节点的id，
+// 以短横线连接）、以及该节点的所有子孙节点中是叶子节点的节点id数组
+
+const exampleTree = {
+    _id: 1,
+    children: [{
+      _id: 2,
+      children: [{
+        _id: 4,
+        children: [{
+          _id: 7,
+          children: []
+        }]
+      }, {
+        _id: 5,
+        children: []
+      }]
+    }, {
+      _id: 3,
+      children: [{
+        _id: 6,
+        children: [{
+          _id: 8,
+          children: [{
+            _id: 10,
+            children: []
+          }]
+        }, {
+          _id: 9,
+          children: []
+        }]
+      }]
+    }]
+  }
+  
+  
+  const exampleId = 6
+  const exampleResult = {
+    path: '1-3-6',
+    leaves: [9, 10]
+  }
+
+
+  const getNode = (exampleId,tree)=>{
+    
+    if(!tree. '[object Object]') return null
+    let path=''
+    let leaves=[]
+    //递归遍历
+    
+
+  }
+
