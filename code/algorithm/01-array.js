@@ -110,26 +110,27 @@ const threeSums=function(nums){
     }
 }
 
+
 const threeSum= function(nums){
-    if(!nums||nums.length<3){
-        return []
-    }
-    let result=[];
+    //边界判断
+    if(!nums&&nums.length<3)return []
+    const result=[];
     nums.sort((a,b)=>a-b);
-    for(let i=0;i<nums.length;i++){
-        //跳过重复数字
-        if(i&&nums[i]===nums[i-1]){
+    for (let i=0;i<nums.length;i++){
+        //跳过重复对数
+        if(i&nums[i]===nums[i-1])
+        {
             continue
         }
-        let left =i+1;
-        let right =nums.length-1;
+        let left=i+1;
+        let right=nums.length-1;
         while (left<right) {
             const sum=nums[i]+nums[left]+nums[right]
+            //大于0移动右指针
             if(sum>0){
-                right--;
-            }
-            else if(sum<0){
-                left++;
+                right--
+            }else if(sum<0){
+                left++
             }
             else{
                 result.push([nums[i],nums[left++],nums[right--]]);
@@ -137,50 +138,51 @@ const threeSum= function(nums){
                 while (nums[left]===nums[left-1]) {
                     left++;
                 }
-                while(nums[right]===nums[right+1]){
+                while (nums[right]===nums[right+1]) {
                     right--;
                 }
             }
         }
+      
     }
     return result
 }
 
+
 /* 四数之和 */
 
-const fourSum = function(nums,target){
-    if(!nums&&nums.length<4)return []
-    let result =[];
+const fourSum=function(nums,target){
+    if(!nums&&nums.length<4)return[]
+    const result=[];
     nums.sort((a,b)=>a-b);
-    for(let i=0;i<nums.length-3;i++){
+    for(let i =0;i<nums.length-3;i++){
         if(i>0&&nums[i]===nums[i-1]){
             continue
         }
         if(nums[i]+nums[i+1]+nums[i+2]+nums[i+3]>target){
             break
         }
-        for(let j=i+1;j<nums.length-2;j++){
-            if(j>i+1&&nums[i]===nums[j-1]){
-                continue;
+        for(let j= i+1;j<nums.length-2;j++){
+            if(j>i+1&&nums[j]===nums[j-1]){
+                continue
             }
-            let left =j+1;
-            let right=nums.length-1;
+            let left=j+1;
+            let right =nums.length-1
             while (left<right) {
-                const sum=nums[i]+nums[j]+nums[left]+nums[right];
+                const sum =nums[i]+nums[j]+nums[left]+nums[right];
                 if(sum===target){
-                    result.push([nums[i],nums[j],nums[left],nums[right]])
+                    result.push([nums[i],nums[j],nums[left],nums[right]]);
                 }
                 if(sum<=target){
                     while (nums[left]===nums[++left]);
                 }else{
-                    while (nums[left]===nums[--right]);
+                    while (nums[right]===nums[--right]);
                 }
+             }
             }
-        }
     }
     return result
 }
-
 
 
 //#20.有效的括号
