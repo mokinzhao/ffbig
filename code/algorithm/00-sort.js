@@ -194,7 +194,6 @@ const mergeSort=function(arr){
     return sort(arr)
 }
 
-
 //------快速排序-----常规实现
 /* 
 快速排序：通过一趟排序将要排序的数据分割成独立的两部分，其中一部分的所有数据比另一部分的所有数据要小，再按这种方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，使整个数据变成有序序列。
@@ -206,8 +205,8 @@ const mergeSort=function(arr){
 时间复杂度: O(nlogn)
 空间复杂度: O(nlogn)
 不稳定
-
 */
+
 function quickSort(array) {
   if (array.length < 2) {
     return array;
@@ -226,9 +225,8 @@ function quickSort(array) {
   return [...quickSort(left), target, ...quickSort(right)];
 }
 
-
 function quickSort(array){
-const pivot=arr[array.length-1]
+const pivot=array[array.length-1]
 const left=[]
 const right=[]
 for (let index = 0; index < array.length; index++) {
@@ -239,7 +237,7 @@ for (let index = 0; index < array.length; index++) {
        right.push(curr)
    }    
 }
-return[...quickSort(left),pivot,...quickSort(right)]
+    return[...quickSort(left),pivot,...quickSort(right)]
 }
 
 //----快速排序----5行代码版本
@@ -268,6 +266,16 @@ function quickSort(arr){
     const pivot =arr[array.length-1]
     const left= array.filter((v,i)=>v<=pivot&& i!=array.length-1)
     const right= array.filter(v=>v>pivot)
+    return [...quickSort(left),pivot,...quickSort(right)]
+}
+
+const quickSort= function (array){
+    if(array.length<2){
+        return array
+    }
+    const pivot= array.length-1
+    const left = array.filter((v,i)=>v<=pivot&& i!=array.length-1)
+    const right =array.filter((v,i)=>v<pivot)
     return [...quickSort(left),pivot,...quickSort(right)]
 }
 
