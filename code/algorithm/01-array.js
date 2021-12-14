@@ -217,6 +217,30 @@ const isValid = function (string) {
 };
 
 
+//数组中重复的数字（简单）
+const findRepeatNumber = function(nums){
+    for(let i =0; i<nums.length;i++){
+        let cur =nums[i]
+        while (cur!==i) {
+            if(nums[i]===nums[cur]){
+                return cur
+            }
+            nums[i]=nums[cur]
+            nums[cur]=cur
+        }
+    }
+    return null
+}
 
+const findRepeatNumber = function (nums){
+    const map =new Map()
+    for( let i of nums){
+        if(map.has(i)){
+            return i
+        }
+        map.set(i,true)
+    }
+    return null
+}
 
 

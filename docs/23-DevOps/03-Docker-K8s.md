@@ -42,7 +42,6 @@ Docker 这个新的容器管理引擎大大降低了使用容器技术的门槛�
 ### Dockerfile
 
 
-
 ## Kubernetes(K8s)
 
 - 容器调度平台
@@ -71,4 +70,3 @@ Kubernetes的目标就是消除编排物理或者虚拟计算、网络和存储�
 
 3. 在Kubernetes 中，可以使用集群来组织服务器，集群会存在一个master节点,该节点是
 Kubernetes集群的控制节点，负责调度集群中其他服务器的资源，其他节点被称为Node
-
