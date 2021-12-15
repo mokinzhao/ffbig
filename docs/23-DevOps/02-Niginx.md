@@ -51,6 +51,7 @@ nginx 现在几乎是众多大型网站的必用技术，大多数情况下，�
 ![image](https://lsqimg-1257917459.cos-website.ap-beijing.myqcloud.com/blog/nginx1.png)
 
 ```
+
 events {
 
 }

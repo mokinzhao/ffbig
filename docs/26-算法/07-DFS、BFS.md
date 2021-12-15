@@ -6,20 +6,15 @@ title: DFS、BFS
  
 - 一个分枝走到底
 
-
-
-
-
-
-
-
-
-
 ## BFS(广度优先遍历)
 
 - 逐层遍历
 
 
+
+## 高频题
+
+![](https://vp-blog-img.oss-cn-shanghai.aliyuncs.com/2021/algorithm/leetcode/bfs-dfs.png)
 
 ### 二叉树的层次遍历（中等）
 
