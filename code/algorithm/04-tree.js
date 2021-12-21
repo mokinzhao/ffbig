@@ -129,3 +129,20 @@ const exampleTree = {
 
   }
 
+
+
+  //反转二叉树
+  const invertTree =function (root){
+        if(root ===null){
+            return null
+        }
+        invertTree(root.left)
+        invertTree(root.right) 
+        const temp =root.left
+        root.left= root.right
+        root.right =temp
+        return root
+  }
+
+  //判断两颗树是否相同
+  
