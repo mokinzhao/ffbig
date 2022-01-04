@@ -68,3 +68,26 @@ const debounce =function (dealy,fn) {
         }, dealy);
     }
 }
+
+const debounce =function (dealy,fun){
+    let timer =null
+    return function () {
+        if(timer)clearTimeout(timer)
+        timer=setTimeout(() => {    
+            fun.apply(this,arguments)
+        }, dealy);
+    }
+}
+
+
+const throttle =function (timeout,fun){
+    let timer =null
+    return function  () {
+        if(!timer){
+            timer=setTimeout(() => {
+                fun.apply(this,arguments)
+                timer=null
+            }, timeout);
+        }
+    }
+}
