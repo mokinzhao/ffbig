@@ -1,7 +1,6 @@
 ---
 title: React-组件复用
 ---
-
 ## React 组件复用指南
 
 本文来源于 2 篇文章:
@@ -25,7 +24,7 @@ hocFactory:: W: React.Component => E: React.Component
 
 我们有意模糊了定义中“包裹”的概念，因为它可能会有以下两种不同的含义之一：
 
-1. 属性代理(Props Proxy)： HOC 对传给 WrappedComponent W 的 porps 进行操作，
+1. 属性代理(Props Proxy)： HOC 对传给 WrappedComponent W 的 porps 进行操作。
 2. 反向继承(Inheritance Inversion)： HOC 继承 WrappedComponent W。
 
 我们会深入地探究这两种模式。
@@ -630,3 +629,68 @@ const withMouse = (Component) => {
   };
 };
 ```
+
+### mixin、hoc、render props、react-hooks 的优劣如何？
+
+- Mixin 的缺陷：
+
+组件与 Mixin 之间存在隐式依赖（Mixin 经常依赖组件的特定方法，但在定义组件时并不知道这种依赖关系）
+
+多个 Mixin 之间可能产生冲突（比如定义了相同的 state 字段）
+
+Mixin 倾向于增加更多状态，这降低了应用的可预测性（The more state in your application, the harder it is to reason about it.），导致复杂度剧增
+
+隐式依赖导致依赖关系不透明，维护成本和理解成本迅速攀升：
+
+难以快速理解组件行为，需要全盘了解所有依赖 Mixin 的扩展行为，及其之间的相互影响
+
+组价自身的方法和 state 字段不敢轻易删改，因为难以确定有没有 Mixin 依赖它
+
+Mixin 也难以维护，因为 Mixin 逻辑最后会被打平合并到一起，很难搞清楚一个 Mixin 的输入输出
+
+- HOC 相比 Mixin 的优势:
+
+HOC 通过外层组件通过 Props 影响内层组件的状态，而不是直接改变其 State 不存在冲突和互相干扰,这就降低了耦合度
+不同于 Mixin 的打平+合并，HOC 具有天然的层级结构（组件树结构），这又降低了复杂度
+
+- HOC 的缺陷:
+
+扩展性限制: HOC 无法从外部访问子组件的 State 因此无法通过 shouldComponentUpdate 滤掉不必要的更新,React 在支持 ES6 Class 之后提供了 React.PureComponent 来解决这个问题
+Ref 传递问题: Ref 被隔断,后来的 React.forwardRef 来解决这个问题
+Wrapper Hell: HOC 可能出现多层包裹组件的情况,多层抽象同样增加了复杂度和理解成本
+命名冲突: 如果高阶组件多次嵌套,没有使用命名空间的话会产生冲突,然后覆盖老属性
+不可见性: HOC 相当于在原有组件外层再包装一个组件,你压根不知道外层的包装是啥,对于你是黑盒
+
+- Render Props 优点:
+
+上述 HOC 的缺点 Render Props 都可以解决
+
+- Render Props 缺陷:
+
+使用繁琐: HOC 使用只需要借助装饰器语法通常一行代码就可以进行复用,Render Props 无法做到如此简单
+嵌套过深: Render Props 虽然摆脱了组件多层嵌套的问题,但是转化为了函数回调的嵌套
+
+- React Hooks 优点:
+
+简洁: React Hooks 解决了 HOC 和 Render Props 的嵌套问题,更加简洁
+解耦: React Hooks 可以更方便地把 UI 和状态分离,做到更彻底的解耦
+组合: Hooks 中可以引用另外的 Hooks 形成新的 Hooks,组合变化万千
+函数友好: React Hooks 为函数组件而生,从而解决了类组件的几大问题
+
+this 指向容易错误
+分割在不同声明周期中的逻辑使得代码难以理解和维护
+代码复用成本高（高阶组件容易使代码量剧增）
+
+- React Hooks 缺陷:
+
+额外的学习成本（Functional Component 与 Class Component 之间的困惑）
+
+写法上有限制（不能出现在条件、循环中），并且写法限制增加了重构成本
+
+破坏了 PureComponent、React.memo 浅比较的性能优化效果（为了取最新的 props 和 state，每次 render()都要重新创建事件处函数）
+
+在闭包场景可能会引用到旧的 state、props 值
+
+内部实现上不直观（依赖一份可变的全局状态，不再那么“纯”）
+
+React.memo 并不能完全替代 shouldComponentUpdate（因为拿不到 state change，只针对 props change）
