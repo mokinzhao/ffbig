@@ -22,7 +22,7 @@ hocFactory:: W: React.Component => E: React.Component
 
 其中 W (WrappedComponent) 指被包裹的 React.Component，E (EnhancedComponent) 指返回类型为 React.Component 的新的 HOC。
 
-我们有意模糊了定义中“包裹”的概念，因为它可能会有以下两种不同的含义之一：
+我们有意模糊了定义中“包裹”的概念，因为它可能会有以下两种不同的含义之一:
 
 1. 属性代理(Props Proxy)： HOC 对传给 WrappedComponent W 的 porps 进行操作。
 2. 反向继承(Inheritance Inversion)： HOC 继承 WrappedComponent W。

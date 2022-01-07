@@ -16,6 +16,7 @@ function debounce(fn, dealy) {
     }, dealy);
   };
 }
+
 //防抖
 const debounce = function (fn, dealy) {
   let timer = null;
@@ -53,7 +54,6 @@ const thottle = function (fn, dealy) {
         fn.apply(this, arguments);
         timer = null;
       }, dealy);
-    
   };
 };
 
@@ -82,7 +82,7 @@ const debounce =function (dealy,fun){
 
 const throttle =function (timeout,fun){
     let timer =null
-    return function  () {
+    return function () {
         if(!timer){
             timer=setTimeout(() => {
                 fun.apply(this,arguments)
@@ -91,3 +91,27 @@ const throttle =function (timeout,fun){
         }
     }
 }
+
+// 函数柯理化
+function curry(func) {
+    return function curried(...args){
+        if(args.length>=func.length){
+            return func.apply(this,args)
+        }
+        return function(...args2){
+            return curried.apply(this,args.concat(args2))
+        }
+    }
+}
+
+function sum(a,b,c){
+    return a+b+c
+}
+
+const curriedSum =curry(sum)
+console.log(curriedSum(1,2,3))
+console.log(curriedSum(1)(2)(3))
+console.log(curriedSum(1)(2,3))
+
+
+
