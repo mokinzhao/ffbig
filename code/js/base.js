@@ -134,19 +134,17 @@ add(1)(2)(3)
 add(1,2,3)
 add (1)(2,3)
 
-
+//任务调度器
 class Scheduler {
     constructor(maxLimit) {
       this.maxLimit =  maxLimit
       this.queue = [];  
       this.processTasks = [];
     }
-          
       add(fn){
         this.queue.push(fn);
         this.run();
       }
-     
       run(){
         while(this.processTasks.length < this.maxLimit && this.queue.length > 0){
           let task = this.queue.shift();
@@ -170,3 +168,18 @@ class Scheduler {
 const scheduler = new Scheduler(2);
 scheduler.add(task(200, '1'));
 scheduler.add(task(500, '2'));
+
+//实现instanceOf
+function _instanceOf(instanceObject,classFunc){
+    let classFunc =classFunc.prototype //取得当前类的原型
+    let proto =Object.getPrototypeOf(instanceObject)//取得当前实例对象的原型链上的属性
+    while (true) {
+        if(proto ===null){
+            return false
+        };
+        if(proto ===classFunc){
+            return true
+        }
+        proto =Object.getPrototypeOf(proto)
+    }
+}

@@ -356,9 +356,52 @@ unique(arr); // [1, 2, 3]
 
 ```
 
+- 方法四：include
+
+```js
+const unique3 = arr => {
+  const res = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (!res.includes(arr[i])) res.push(arr[i]);
+  }
+  return res;
+}
+
+```
+
+- 方法五：map
+
+```js
+const unique5 = arr => {
+  const map = new Map();
+  const res = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (!map.has(arr[i])) {
+      map.set(arr[i], true)
+      res.push(arr[i]);
+    }
+  }
+  return res;
+}
+
+```
+
+- 方法六：indexOf
+
+```js
+const unique2 = arr => {
+  const res = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (res.indexOf(arr[i]) === -1) res.push(arr[i]);
+  }
+  return res;
+}
+
+```
+
 ### 数组扁平化
 
-- 使用 reduce 方法
+- 方法一：使用 reduce 方法
 
 ```js
 function flattenDeep(arr) { 
@@ -371,6 +414,13 @@ function flattenDeep(arr) {
 var animals = ["🐷", ["🐶", "🐂"], ["🐎", ["🐑", ["🐲"]], "🐛"]]
 flattenDeep(animals)
 // ["🐷", "🐶", "🐂", "🐎", "🐑", "🐲", "🐛"]
+
+```
+
+- 方法二：使用flat()
+
+```js
+const res1 = arr.flat(Infinity);
 
 ```
 
@@ -413,7 +463,7 @@ flat(arr)
 // ["🐷", "🐶", "🐂", "🐎"]
 ```
 
-- 栈
+- 方法三：使用栈
 
 ```js
 unction flattenDeep(arr) {
@@ -440,6 +490,70 @@ flattenDeep(animals)
 // ["🐷", "🐶", "🐂", "🐎", "🐑", "🐲", "🐛"]
 
 ```
+
+- 方法四：正则
+
+```js
+
+//但数据类型都会变为字符串
+const res2 = JSON.stringify(arr).replace(/\[|\]/g, '').split(',');
+
+//改良版本
+const res3 = JSON.parse('[' + JSON.stringify(arr).replace(/\[|\]/g, '') + ']');
+
+```
+
+- 方法五： 函数递归
+
+```js
+const res5 = [];
+const fn = arr => {
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      fn(arr[i]);
+    } else {
+      res5.push(arr[i]);
+    }
+  }
+}
+fn(arr);
+
+```
+
+
+### 类数组转化为数组
+
+类数组是具有length属性，但不具有数组原型上的方法。常见的类数组有arguments、DOM操作方法返回的结果。
+
+- 方法一：Array.from
+
+```js
+Array.from(document.querySelectorAll('div'))
+
+```
+
+- 方法二：Array.prototype.slice.call()
+
+```js
+Array.prototype.slice.call(document.querySelectorAll('div'))
+
+```
+
+- 方法三：扩展运算符
+
+```js
+[...document.querySelectorAll('div')]
+
+```
+
+- 方法四：利用concat
+
+```js
+Array.prototype.concat.apply([], document.querySelectorAll('div'));
+
+```
+
+### 数组考题
 
 - 给定两个数组，编写一个函数来计算它们的交集
 

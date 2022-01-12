@@ -12,9 +12,9 @@ title: JavaScript之工具函数
 
 ```js
 const debounce = (fn, delay = 1000) => {
-  let timer= null;
-  return () => {
-    if (timer) clearTimeout(timer);
+  let timer
+  return function (){
+    clearTimeout(timer);
     timer = setTimeout(() => {
       fn.apply(this, arguments);
     }, delay);
@@ -126,6 +126,11 @@ add(1)(2,3) //6
 
 ```
 
+## 深浅拷贝
+
+- [浅拷贝与深拷贝](https://juejin.cn/post/6844904197595332622#heading-13)
+- [leader：深拷贝有这5个段位，你只是青铜段位？还想涨薪？](https://juejin.cn/post/7017991655009566728)
+
 ### 浅拷贝
 
 - Object.assign()
@@ -192,7 +197,7 @@ console.log(obj1.b.f === obj2.b.f);// true
 
 ### 深拷贝
 
-- JSON.parse(JSON.stringify())
+#### JSON.parse(JSON.stringify())
 
 利用JSON.stringify将对象转成JSON字符串，再用JSON.parse把字符串解析成对象，一去一来，新的对象产生了，而且对象会开辟新的栈，实现深拷贝。
 这种方法虽然可以实现数组或对象深拷贝,但不能处理函数和正则，因为这两者基于JSON.stringify和JSON.parse处理后，得到的正则就不再是正则（变为空对象），得到的函数就不再是函数（变为null）了。
@@ -215,7 +220,7 @@ console.log(arr, arr4)
 
 ```
 
-- 函数库lodash的_.cloneDeep方法
+#### 函数库lodash的_.cloneDeep方法
 
 该函数库也有提供_.cloneDeep用来做 Deep Copy
 
@@ -230,12 +235,33 @@ var obj2 = _.cloneDeep(obj1);
 console.log(obj1.b.f === obj2.b.f);// false
 ```
 
-- 深拷贝(面试可用版)
+#### 深拷贝(面试可用版)
+
+- 判断类型是否为原始类型，如果是，无需拷贝，直接返回
+- 为避免出现循环引用，拷贝对象时先判断存储空间中是否存在当前对象，如果有就直接返回
+- 开辟一个存储空间，来存储当前对象和拷贝对象的对应关系
+- 对引用类型递归拷贝直到属性为原始类型
+
+```js
+const deepClone = (target, cache = new WeakMap()) => {
+    if(target === null || typeof target !== 'object') {
+        return target
+    }
+    if(cache.get(target)) {
+        return target
+    }
+    const copy = Array.isArray(target) ? [] : {}
+    cache.set(target, copy)
+    Object.keys(target).forEach(key => copy[key] = deepClone(target[key], cache))
+    return copy
+}
+
+```
+
+- 缺点：无法拷贝函数、Map、Set、正则等其他类型
 
 
-
-
-- 深拷贝(尤雨溪)
+#### 深拷贝(尤雨溪)
 
 ```js
 function find(list, f) {
@@ -266,8 +292,354 @@ function deepCopy(obj, cache = []) {
 
 ```
 
+#### 深拷贝(考虑Date、RegExp等对象)
+
+```js
+const isObject = (target) => (typeof target === "object" || typeof target === "function") && target!== null;
+
+function deepClone(target, map = new WeakMap()) {
+    // 先判断该引用类型是否被 拷贝过
+    if (map.get(target)) {
+        return target;
+    }
+    // 获取当前值的构造函数：获取它的类型
+    let constructor = target.constructor;
+    // 检测当前对象target是否与正则、日期格式对象匹配
+    if (/^(RegExp|Date)$/i.test(constructor.name)) {
+        // 创建一个新的特殊对象(正则类/日期类)的实例
+        return new constructor(target);  
+    }
+    if (isObject(target)) {
+        map.set(target, true);  // 为循环引用的对象做标记
+        const cloneTarget = Array.isArray(target) ? [] : {};
+        for (let prop in target) {
+            if (target.hasOwnProperty(prop)) {
+                cloneTarget[prop] = deepClone(target[prop], map);
+            }
+        }
+        return cloneTarget;
+    } else {
+        return target;
+    }
+}
+
+```
+
+#### 深拷贝(复杂版)
+
+[如何写出一个惊艳面试官的深拷贝?](https://segmentfault.com/a/1190000020255831)
+
+```js
+const mapTag = '[object Map]';
+const setTag = '[object Set]';
+const arrayTag = '[object Array]';
+const objectTag = '[object Object]';
+const argsTag = '[object Arguments]';
+
+const boolTag = '[object Boolean]';
+const dateTag = '[object Date]';
+const numberTag = '[object Number]';
+const stringTag = '[object String]';
+const symbolTag = '[object Symbol]';
+const errorTag = '[object Error]';
+const regexpTag = '[object RegExp]';
+const funcTag = '[object Function]';
+
+const deepTag = [mapTag, setTag, arrayTag, objectTag, argsTag];
 
 
-- 深拷贝(完美版)
+function forEach(array, iteratee) {
+    let index = -1;
+    const length = array.length;
+    while (++index < length) {
+        iteratee(array[index], index);
+    }
+    return array;
+}
 
+function isObject(target) {
+    const type = typeof target;
+    return target !== null && (type === 'object' || type === 'function');
+}
 
+function getType(target) {
+    return Object.prototype.toString.call(target);
+}
+
+function getInit(target) {
+    const Ctor = target.constructor;
+    return new Ctor();
+}
+
+function cloneSymbol(targe) {
+    return Object(Symbol.prototype.valueOf.call(targe));
+}
+
+function cloneReg(targe) {
+    const reFlags = /\w*$/;
+    const result = new targe.constructor(targe.source, reFlags.exec(targe));
+    result.lastIndex = targe.lastIndex;
+    return result;
+}
+
+function cloneFunction(func) {
+    const bodyReg = /(?<={)(.|\n)+(?=})/m;
+    const paramReg = /(?<=\().+(?=\)\s+{)/;
+    const funcString = func.toString();
+    if (func.prototype) {
+        const param = paramReg.exec(funcString);
+        const body = bodyReg.exec(funcString);
+        if (body) {
+            if (param) {
+                const paramArr = param[0].split(',');
+                return new Function(...paramArr, body[0]);
+            } else {
+                return new Function(body[0]);
+            }
+        } else {
+            return null;
+        }
+    } else {
+        return eval(funcString);
+    }
+}
+
+function cloneOtherType(targe, type) {
+    const Ctor = targe.constructor;
+    switch (type) {
+        case boolTag:
+        case numberTag:
+        case stringTag:
+        case errorTag:
+        case dateTag:
+            return new Ctor(targe);
+        case regexpTag:
+            return cloneReg(targe);
+        case symbolTag:
+            return cloneSymbol(targe);
+        case funcTag:
+            return cloneFunction(targe);
+        default:
+            return null;
+    }
+}
+
+function clone(target, map = new WeakMap()) {
+
+    // 克隆原始类型
+    if (!isObject(target)) {
+        return target;
+    }
+
+    // 初始化
+    const type = getType(target);
+    let cloneTarget;
+    if (deepTag.includes(type)) {
+        cloneTarget = getInit(target, type);
+    } else {
+        return cloneOtherType(target, type);
+    }
+
+    // 防止循环引用
+    if (map.get(target)) {
+        return map.get(target);
+    }
+    map.set(target, cloneTarget);
+
+    // 克隆set
+    if (type === setTag) {
+        target.forEach(value => {
+            cloneTarget.add(clone(value, map));
+        });
+        return cloneTarget;
+    }
+
+    // 克隆map
+    if (type === mapTag) {
+        target.forEach((value, key) => {
+            cloneTarget.set(key, clone(value, map));
+        });
+        return cloneTarget;
+    }
+
+    // 克隆对象和数组
+    const keys = type === arrayTag ? undefined : Object.keys(target);
+    forEach(keys || target, (value, key) => {
+        if (keys) {
+            key = value;
+        }
+        cloneTarget[key] = clone(target[key], map);
+    });
+
+    return cloneTarget;
+}
+
+```
+
+#### 深拷贝（高性能版）
+
+[头条面试官：你知道如何实现高性能版本的深拷贝嘛？](https://juejin.cn/post/6844904021627502599)
+
+```js
+const MY_IMMER = Symbol('my-immer1')
+
+const isPlainObject = value => {
+  if (
+    !value ||
+    typeof value !== 'object' ||
+    {}.toString.call(value) != '[object Object]'
+  ) {
+    return false
+  }
+  var proto = Object.getPrototypeOf(value)
+  if (proto === null) {
+    return true
+  }
+  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor
+  return (
+    typeof Ctor == 'function' &&
+    Ctor instanceof Ctor &&
+    Function.prototype.toString.call(Ctor) ===
+      Function.prototype.toString.call(Object)
+  )
+}
+
+const isProxy = value => !!value && !!value[MY_IMMER]
+
+function produce(baseState, fn) {
+  const proxies = new Map()
+  const copies = new Map()
+
+  const objectTraps = {
+    get(target, key) {
+      if (key === MY_IMMER) return target
+      const data = copies.get(target) || target
+      return getProxy(data[key])
+    },
+    set(target, key, val) {
+      const copy = getCopy(target)
+      const newValue = getProxy(val)
+      // 这里的判断用于拿 proxy 的 target
+      // 否则直接 copy[key] = newValue 的话外部拿到的对象是个 proxy
+      copy[key] = isProxy(newValue) ? newValue[MY_IMMER] : newValue
+      return true
+    }
+  }
+
+  const getProxy = data => {
+    if (isProxy(data)) {
+      return data
+    }
+    if (isPlainObject(data) || Array.isArray(data)) {
+      if (proxies.has(data)) {
+        return proxies.get(data)
+      }
+      const proxy = new Proxy(data, objectTraps)
+      proxies.set(data, proxy)
+      return proxy
+    }
+    return data
+  }
+
+  const getCopy = data => {
+    if (copies.has(data)) {
+      return copies.get(data)
+    }
+    const copy = Array.isArray(data) ? data.slice() : { ...data }
+    copies.set(data, copy)
+    return copy
+  }
+
+  const isChange = data => {
+    if (proxies.has(data) || copies.has(data)) return true
+  }
+
+  const finalize = data => {
+    if (isPlainObject(data) || Array.isArray(data)) {
+      if (!isChange(data)) {
+        return data
+      }
+      const copy = getCopy(data)
+      Object.keys(copy).forEach(key => {
+        copy[key] = finalize(copy[key])
+      })
+      return copy
+    }
+    return data
+  }
+
+  const proxy = getProxy(baseState)
+  fn(proxy)
+  return finalize(baseState)
+}
+
+```
+
+### 实现一个 compose 函数
+
+```js
+// 用法如下:
+function fn1(x) {
+  return x + 1;
+}
+function fn2(x) {
+  return x + 2;
+}
+function fn3(x) {
+  return x + 3;
+}
+function fn4(x) {
+  return x + 4;
+}
+const a = compose(fn1, fn2, fn3, fn4);
+console.log(a(1)); // 1+4+3+2+1=11
+
+```
+
+- 实现方式
+
+```js
+function compose(...fn) {
+  if (!fn.length) return (v) => v;
+  if (fn.length === 1) return fn[0];
+  return fn.reduce(
+    (pre, cur) =>
+      (...args) =>
+        pre(cur(...args))
+  );
+}
+```
+
+### 用正则实现 trim()
+
+- 去掉首尾空格
+
+```js
+String.prototype.trim = function(){
+    return this.replace(/^\s+|\s+$/g, '')
+}
+//或者 
+function trim(string){
+    return string.replace(/^\s+|\s+$/g, '')
+}
+
+```
+
+### 解析 url 参数
+
+- 根据name获取url上的search参数值
+
+```js
+
+const getQueryByName = (name) => {
+  const queryNameRegex = new RegExp(`[?&]${name}=([^&]*)(&|$)`)
+  const queryNameMatch = window.location.search.match(queryNameRegex)
+  // 一般都会通过decodeURIComponent解码处理
+  return queryNameMatch ? decodeURIComponent(queryNameMatch[1]) : ''
+}
+
+// https://www.baidu.com/?name=%E5%89%8D%E7%AB%AF%E8%83%96%E5%A4%B4%E9%B1%BC&sex=boy
+
+console.log(getQueryByName('name'), getQueryByName('sex')) // 前端胖头鱼 boy
+
+```

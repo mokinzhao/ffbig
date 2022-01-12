@@ -399,7 +399,7 @@ typeOf(new Date)  // 'date'
 2. 函数类型：转换之后是 undefined
 
 3. 如果是对象类型(非函数)
-    - 如果是一个数组：如果属性值中出现了 undefined、任意的函数以及 symbol，转换成字符串 "null" ；
+    - 如果是一个数组：如果属性值中出现了 undefined、任意的函数以及 symbol，转换成字符串 "null"
     - 如果是 RegExp 对象：返回 {} (类型是 string)；
     - 如果是 Date 对象，返回 Date 的 toJSON 字符串值；
     - 如果是普通对象；
@@ -600,6 +600,80 @@ console.log(str.sx_sunstring(2)) // nshine_lin
 console.log(str.sx_sunstring(-2)) // in
 console.log(str.sx_sunstring(-9, 10)) // shine_l
 console.log(str.sx_sunstring(5, 1)) // unsh
+```
+
+### 将一个字符串转换为驼峰形式
+
+```js
+//方式一：操作字符串数组
+function transformStr2Hump1(str) {
+    if(str == null) {
+        return "";
+    }
+    var strArr = str.split('-');
+    for(var i = 1; i < strArr.length; i++) {
+        strArr[i] = strArr[i].charAt(0).toUpperCase() + strArr[i].substring(1);
+    }
+    return strArr.join('');
+}
+
+//方式二：操作字符数组
+function transformStr2Hump2(str) {
+    if(str == null) {
+        return "";
+    }
+    var strArr  =str.split('');
+    for(var i = 0; i < strArr.length; i++) {
+        if(strArr[i] == "-"){
+            //删除-
+            strArr.splice(i, 1);
+            //将该处改为大写
+            if(i < strArr.length) {
+                strArr[i] = strArr[i].toUpperCase();
+            }
+        }
+    }
+    return strArr.join("");
+}
+
+//方式三：利用正则
+function transformStr2Hump3(str) {
+    if(str == null) {
+        return "";
+    }
+    var reg = /-(\w)/g;//匹配字母或数字或下划线或汉字
+    return str.replace(reg, function($0, $1) {
+        return $1.toUpperCase();
+    })
+}
+```
+
+## camelCase和snake_case互转
+
+- snake_case转换为camelCase
+
+```js
+/**
+ * @param {string} str
+ * @return {string}
+ */
+function snakeToCamel(str) {
+  const reg = /([^_])_([^_])/g
+  return str.replaceAll(reg, (_, p1, p2) => `${p1}${p2.toUpperCase()}`)
+}
+```
+
+- camelCase转换为snake_case
+
+```js
+/*
+ * @param {string} str
+ * @return {string}
+ */
+function camelToSnake(str) {
+  const reg = /\B(\w)([A-Z])\B/g
+  return str.replaceAll(reg, (_, p1, p2) => `${p1}_${p2.toLowerCase()}`)
+}
 ```
 
 ## ES6函数
