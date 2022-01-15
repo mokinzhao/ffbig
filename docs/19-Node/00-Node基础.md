@@ -277,7 +277,7 @@ const b = Buffer.concat([b1, b2]);
 console.log(b.isBuffer());
 ```
 
-### 自定义实现 Buffer 的 split 操作
+#### 自定义实现 Buffer 的 split 操作
 
 ```js
 ArrayBuffer.prototype.split = function (sep) {
@@ -299,4 +299,174 @@ let bufArr = buf.split("爱");
 
 // ["我", "唱歌，", "跳舞，", "音乐，", "蹦跶", ""];
 console.log(bufArr);
+```
+
+### fs
+
+提供文件系统操作的 API
+
+#### 常用 API
+
+```js
+const fs = require("fs");
+const path = require("path");
+
+// readFile: 从指定文件中读取数据
+fs.readFile(path.resolve("data.txt"), "utf-8", (err, data) => {
+	console.log(err);
+	if (err === null) {
+		console.log(data);
+	}
+});
+
+// writeFile: 向指定文件写入数据
+fs.writeFile("data.txt", "hello", err => {
+	if (!err) {
+		fs.readFile("data.txt", "utf-8", (err, data) => {
+			console.log(data);
+		});
+	}
+});
+
+// appendFile: 追加的方式向指定文件中写入数据
+fs.appendFile("data.txt", " world", err => {
+	if (!err) {
+		console.log("追加写入成功！");
+	}
+});
+
+// copyFile: 拷贝指定文件数据到另一文件
+fs.copyFile("data.txt", "copy.txt", err => {
+	if (!err) {
+		console.log("拷贝成功！");
+	}
+});
+
+// watchFile: 对指定文件进行监控
+fs.watchFile("data.txt", { interval: 20 }, (curr, prev) => {
+	if (curr.mtime !== prev.mtime) {
+		console.log("文件被修改了");
+		// 取消监控
+		fs.unwatchFile("data.txt");
+	}
+});
+```
+
+#### 文件打开/关闭、读/写、大文件拷贝
+
+```js
+const fs = require("fs");
+
+// 打开
+fs.open(path.resolve("data.txt"), "r", (err, fd) => {
+	console.log("文件操作符：" + fd);
+	// 关闭
+	fs.close(fd, err => {
+		!err && console.log("文件关闭成功！");
+	});
+});
+
+// 读: 从文件读取数据并写入buffer中
+let buf = Buffer.alloc(10);
+fs.open(path.resolve("data.txt"), "r", (err, rfd) => {
+	/**
+	 * fd: 当前文件操作符
+	 * buf: 当前缓冲区
+	 * offset: 从 buf 的哪个位置开始写入
+	 * length: 当前次写入长度
+	 * position: 从文件的哪个位置开始读
+	 * err: 错误信息
+	 * readBytes: 当前次读入数据的长度
+	 * data: 当前次写入的数据内容
+	 */
+	fs.read(rfd, buf, 0, 3, 0, (err, readBytes, data) => {});
+});
+
+// 写: 向文件写入从buffer中读到的数据
+buf = Buffer.from("1234567890");
+fs.open("test.txt", "w", (err, wfd) => {
+	/**
+	 * fd: -
+	 * buf: -
+	 * offset: 从 buf 的哪个位置开始读
+	 * length: 当前次读入长度
+	 * position: 从文件的哪个位置开始写，一般为0
+	 * err: -
+	 * written: 实际写入的字节数
+	 * buffer: 当前缓冲区对象
+	 */
+	fs.write(wfd, buf, 0, 3, 0, (err, written, buffer) => {});
+});
+```
+
+```js
+// 大文件拷贝
+const fs = require("fs");
+let buf = Buffer.alloc(10);
+
+const BUFFER_SIZE = buf.length;
+const readOffet = 0;
+fs.open("a.txt", "r", (err, rfd) => {
+	fs.open("b.txt", "w", (err, wfd) => {
+		function next() {
+			fs.read(rfd, buf, 0, BUFFER_SIZE, readOffet, (err, readBytes) => {
+				if (readBytes === 0) {
+					// 读取完毕
+					fs.close(rfd, err => {});
+					fs.close(wfd, err => {});
+					console.log("拷贝完成");
+				}
+				readOffset += readBytes;
+				// readBytes: 每次读多少就写多少
+				fs.write(wfd, buf, 0, readBytes, 0, (err, written) => {
+					// 递归执行
+					next();
+				});
+			});
+		}
+		next();
+	});
+});
+```
+
+#### 操作目录常用的 API
+
+```js
+const fs = require("fs");
+
+// access: 判断文件或目录是否有操作权限(也可用来判断文件/目录是否存在)
+fs.access("a.txt", err => {
+	if (err) {
+		console.log(err);
+	} else {
+		console.log("有操作权限");
+	}
+});
+
+// stat: 获取文件或目录信息
+fs.stat("a.txt", (err, statObj) => {
+	console.log(statObj.size); // 字节数
+	console.log(statObj.isFile()); // 是否文件
+	console.log(statObj.isDirectory()); // 是否目录
+});
+
+// mkdir: 创建目录
+fs.mkdir("a/b/c", err => {}); // 只会创建c，如果a、b不存在，报错
+fs.mkdir("a/b/c", { recursive: true }, err => {}); // 递归创建
+
+// rmdir: 删除目录
+fs.rmdir("a/b", err => {}); // 只会删除b目录，如果b不为空则报错
+fs.rmdir("a", { recursive: true }, err => {}); // 递归删除a及其下边所有文件和目录
+
+// readdir: 读取目录中内容
+fs.readdir("a", (err, files) => {
+	console.log(files); // 返回字符串数组
+});
+
+// unlink: 删除指定文件
+fs.unlink("a/a.txt", err => {
+	if (!err) {
+		console.log("删除成功");
+	}
+});
 ```
