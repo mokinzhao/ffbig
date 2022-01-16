@@ -470,3 +470,197 @@ fs.unlink("a/a.txt", err => {
 	}
 });
 ```
+
+### NodeJS 中的模块化
+
+#### 模块化历程
+
+- CommonJS 规范：同步加载，主要用于 nodejs 中
+- AMD 规范：异步加载，为了实现在浏览器中的模块化而产生，代表库 require.js
+- CMD 规范：结合了 CommonJS 规范和 AMD 规范特点而生成的一种加载方式，代表库 sea.js
+- ES modules 规范：ES6 中推出的前端原生模块化规范
+
+#### CommonJS 中的 module
+
+任意一个文件就是一个模块，可以使用 module 属性
+
+- id: 返回模块标识符，一般是一个绝对路径
+- filename: 返回文件模块的绝对路径
+- loaded: 表示模块是否加载完成
+- parent: 返回调用当前模块的模块对象
+- children: 返回调用的其他模块的数组
+- exports: 返回当前模块需要暴露的内容
+- paths: 返回不同目录下 node_modules 位置的数组(加载模块时的查找策略数组)
+
+::: warning
+module.exports 和 exports 有什么区别?
+exports 指向了 module.exports 的内存地址, 目的是为了方便操作.
+需要注意的是, exports 不可直接使用 "=" 赋值.
+:::
+
+#### CommonJS 中的 require
+
+读入并且执行一个文件
+
+- resolve: 返回模块文件的绝对路径
+- extensions: 依据不同后缀名执行解析操作
+- main: 返回模块主对象
+
+#### 模块分类及模块加载流程
+
+模块分类
+
+- 内置模块: Node 源码编译时写入到二进制文件中
+- 文件模块: 代码运行时, 动态加载
+
+加载流程
+
+- 路径分析: 依据标识符确定模块位置, 标识符一般分为路径标识符和非路径标识符(常见于核心模块, 如 path, fs)
+- 文件定位: 确定目标模块中具体的文件及文件类型, 查找顺序是 .js -> .json -> .node -> package.json -> main.(js/json/node) -> index.(js/json/node) -> 抛出异常
+- 编译执行: 采用对应的方式完成文件的编译执行, 不同的文件编译执行方式不同, 如:
+  - js 文件是读入内容之后, 进行包装生成一个可执行的函数并进行调用, 调用的时候传入 exports、module、require 等属性值
+  - json 文件是将读入的内容通过 JSON.parse()进行解析
+
+::: warning
+缓存优先原则: 为了提高模块加载速度, 会优先从缓存中去读, 如果不存在, 则在模块加载完成后使用路径作为索引进行缓存
+:::
+
+### events: 事件模块(了解)
+
+- nodejs 是基于事件驱动的异步操作架构, 内置 events 模块
+- events 模块提供了 EventEmitter 类
+- nodejs 中很多内置核心模块都继承自 EventEmitter 类, 比如 fs、net、http 等
+
+#### EventEmitter 常见 API
+
+```js
+const EventEmitter = require("events");
+
+// 一般建议使用类继承EventEmitter
+// class MyEmitter extends EventEmitter {}
+const ev = new EventEmitter();
+
+// on: 添加事件触发时的回调函数
+ev.on("事件1", () => {
+	console.log("事件1执行了 - 1");
+});
+ev.on("事件1", () => {
+	console.log("事件1执行了 - 2");
+});
+
+const cbFn = () => {
+	console.log("事件2执行了");
+};
+ev.on("事件2", cbFn);
+
+ev.once("事件3", () => {
+	console.log("事件3执行了");
+});
+
+// emit: 触发事件, 按照注册顺序调用
+ev.emit("事件1"); // 事件1执行了 - 1 事件1执行了 - 2
+ev.emit("事件2"); // 事件2执行了
+
+// once: 添加事件首次触发的回调函数
+ev.emit("事件3"); // 事件3执行了
+ev.emit("事件3"); // 空
+
+// off: 移除特定监听器
+ev.off("事件2", cbFn);
+```
+
+#### 浏览器中的事件环
+
+- 执行时机: 同步任务 > 微任务 > 宏任务
+- 每一个宏任务执行完毕, 都会去清空微任务队列
+- 常见宏任务: setTimeout、setInterval
+- 常见微任务: Promise、async await
+
+```js
+setTimeout(() => {
+	console.log("s1");
+	Promise.resolve().then(() => {
+		console.log("p2");
+	});
+	Promise.resolve().then(() => {
+		console.log("p3");
+	});
+});
+
+Promise.resolve().then(() => {
+	console.log("p1");
+	setTimeout(() => {
+		console.log("s2");
+	});
+	setTimeout(() => {
+		console.log("s3");
+	});
+});
+```
+
+::: tip 输出结果
+p1, s1, p2, p3, s2, s3
+:::
+
+#### NodeJS 中的事件环
+
+- nodejs 中的宏任务事件队列:
+  1. timers: 执行 setTimeout、setInterval 回调 (常用)
+  2. pending callbacks: 执行系统操作的回调, 例如 tcp udp
+  3. idle, prepare: 只在系统内部进行使用
+  4. poll: 执行与 I/O 相关的回调 (常用)
+  5. check: 执行 setImmediate 中的回调 (常用)
+  6. close callbacks: 执行 close 事件的回调
+- 执行时机:
+  1. 执行同步任务, 并把不同任务添加到相应的队列
+  2. 执行满足条件的微任务 (nextTick > Promise)
+  3. 从 timers 开始依次执行宏任务队列
+  4. 每一个队列执行完后, 会去清空微任务队列, 再执行下一个宏任务队列
+     ::: warning
+     node11 版本之后, macro task 和 micro task 的执行时机和浏览器中相同
+     :::
+
+```js
+setTimeout(() => {
+	console.log("s1");
+	Promise.resolve().then(() => {
+		console.log("p1");
+	});
+	process.nextTick(() => {
+		console.log("t1");
+	});
+});
+
+Promise.resolve().then(() => {
+	console.log("p2");
+});
+
+console.log("start");
+
+setTimeout(() => {
+	console.log("s2");
+	Promise.resolve().then(() => {
+		console.log("p3");
+	});
+	process.nextTick(() => {
+		console.log("t2");
+	});
+});
+
+console.log("end");
+```
+
+::: tip 输出结果
+node 11 之前: start, end, p2, s1, s2, t1, p1, t2, p2<br />
+node 11 之后: start, end, p2, s1, t1, p1, s2, t2, p2
+:::
+
+#### NodeJS 与浏览器事件环区别
+
+- 任务队列数不同: 浏览器只有 2 个, NodeJS 中有 6 个
+- 微任务执行时机不同: nodejs 11 版本之前 是 执行完宏任务队列才去清空微任务队列, nodejs 11 之后与浏览器保持一致
+- 微任务优先级不同: 浏览器中先进先出, NodeJS 中 process.nextTick 先于 promise.then 执行
+
+::: warning setTimeout 与 setImmediate
+setTimeout 第二个参数为 0 时, 可能会产生一些延时, 导致 setImmediate 先于 setTimeout 执行
+:::
