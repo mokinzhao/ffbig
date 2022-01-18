@@ -159,7 +159,7 @@ Object.is = function (x, y) {
 - assign返回一个对象，这个对象 === 第一个对象
 
 ```js
-Object.prototype.sx_assign = function (target, ...args) {
+Object.prototype.assign = function (target, ...args) {
     if (target === null || target === undefined) {
         throw new TypeError('Cannot convert undefined or null to object')
     }
@@ -648,7 +648,7 @@ function transformStr2Hump3(str) {
 }
 ```
 
-## camelCase和snake_case互转
+### camelCase和snake_case互转
 
 - snake_case转换为camelCase
 

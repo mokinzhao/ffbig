@@ -485,3 +485,46 @@ const formatPrice = (number) => {
 console.log(formatPrice(123456789.3343)) // 123,456,789.3343
 
 ```
+
+## settimeout 模拟实现 setinterval(带清除定时器的版本)
+
+- 题目描述:setinterval 用来实现循环定时调用 可能会存在一定的问题 能用 settimeout 解决吗
+
+```js
+function mySetinterval (fn, t) {
+  let timer = null;
+  function interval() {
+    fn();
+    timer = setTimeout(interval, t);
+  }
+  interval();
+  return {
+    cancel:()=>{
+      clearTimeout(timer)
+    }
+  }
+}
+// let a=mySettimeout(()=>{
+//   console.log(111);
+// },1000)
+// let b=mySettimeout(() => {
+//   console.log(222)
+// }, 1000)
+
+```
+
+- setinterval 模拟实现 settimeout
+
+```js
+const mySetTimeout = (fn, time) => {
+  const timer = setInterval(() => {
+    clearInterval(timer);
+    fn();
+  }, time);
+};
+// mySetTimeout(()=>{
+//   console.log(1);
+// },1000)
+```
+
+- [为什么要用 setTimeout 模拟 setInterval ？](https://zhuanlan.zhihu.com/p/342261518)

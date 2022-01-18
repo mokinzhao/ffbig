@@ -37,7 +37,7 @@ document.addEventListener('mouseup', function(e){
 // <img src="default.png" data-src="https://xxxx/real.png">
 function isVisible(el) {
   const position = el.getBoundingClientRect()
-  //可视区域高度
+  // 可视区域高度
   const windowHeight = document.documentElement.clientHeight
   // 顶部边缘可见
   const topVisible = position.top > 0 && position.top < windowHeight;
@@ -63,6 +63,68 @@ window.addEventListener('load', imageLazyLoad)
 window.addEventListener('scroll', imageLazyLoad)
 // or
 window.addEventListener('scroll', throttle(imageLazyLoad, 1000))
+
+```
+
+### 滚动加载
+
+- 原理就是监听页面滚动事件，分析clientHeight、scrollTop、scrollHeight三者的属性关系。
+
+```js
+window.addEventListener('scroll', function() {
+  const clientHeight = document.documentElement.clientHeight;
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight;
+  if (clientHeight + scrollTop >= scrollHeight) {
+    // 检测到滚动至页面底部，进行后续操作
+    // ...
+  }
+}, false);
+
+```
+
+### 渲染大数据不卡住页面
+
+- 合理使用createDocumentFragment和requestAnimationFrame
+
+```js
+setTimeout(() => {
+  // 插入十万条数据
+  const total = 100000;
+  // 一次插入的数据
+  const once = 20;
+  // 插入数据需要的次数
+  const loopCount = Math.ceil(total / once);
+  let countOfRender = 0;
+  const ul = document.querySelector('ul');
+  // 添加数据的方法
+  function add() {
+    const fragment = document.createDocumentFragment();
+    for(let i = 0; i < once; i++) {
+      const li = document.createElement('li');
+      li.innerText = Math.floor(Math.random() * total);
+      fragment.appendChild(li);
+    }
+    ul.appendChild(fragment);
+    countOfRender += 1;
+    loop();
+  }
+  function loop() {
+    if(countOfRender < loopCount) {
+      window.requestAnimationFrame(add);
+    }
+  }
+  loop();
+}, 0)
+
+```
+
+### 打印出当前网页使用了多少种HTML元素
+
+```js
+const fn = () => {
+  return [...new Set([...document.querySelectorAll('*')].map(el => el.tagName))].length;
+}
 
 ```
 
@@ -148,6 +210,8 @@ io.observe(document.getElementById('box1'))
 io.observe(document.getElementById('box2'))
 
 ```
+
+
 
 ### 将虚拟 Dom 转化为真实 Dom
 

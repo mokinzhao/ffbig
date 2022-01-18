@@ -9,7 +9,8 @@ title: JavaScript-继承
 构造函数、原型和实例之间的关系：每个构造函数都有一个原型对象，原型对象都包含一个指向构造函数的指针，而实例都包含一个原型对象的指针。
 
 继承的本质就是复制，即重写原型对象，代之以一个新类型的实例。
-![png](https://user-gold-cdn.xitu.io/2018/10/30/166c2c0107fd80c7?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
+![png](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/3/21/170fd251c0a7bd89~tplv-t2oaga2asx-watermark.awebp)
 
 ```js
 function fatherFn() {
@@ -29,8 +30,6 @@ sonFn.prototype.sonFnSome = "子类原型对象的属性或者方法"; //子类�
 const sonFnInstace = new sonFn();
 console.log("子类的实例", sonFnInstace);
 ```
-
-![png](https://user-gold-cdn.xitu.io/2020/3/21/170fc7d0f9e3af5b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 
 - 优点：
   继承了父类的模板，又继承了父类的原型对象
@@ -77,6 +76,8 @@ alert(instance2.color); //'red','green','blue'
 ### 组合继承 (call+new)
 
 原理：使用原型链继承(new)将 this 和 prototype 声明的属性/方法继承至子类的 prototype 上，使用借用构造函数来继承父类通过 this 声明属性和方法至子类实例的属性上。
+
+![png](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/3/21/170fd28ceb233b57~tplv-t2oaga2asx-watermark.awebp)
 
 ```js
 function fatherFn(...arr) {
@@ -191,6 +192,8 @@ anotherPerson.sayHi(); //"hi"
 1. 使用借用构造函数(call)来继承父类 this 声明的属性/方法
 2. 通过寄生式封装函数设置父类 prototype 为子类 prototype 的原型来继承父类的 prototype 声明的属性/方法。
 
+![extends](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/3/21/170fd2bbd607befc~tplv-t2oaga2asx-watermark.awebp)
+
 ```js
 function inheritprototype(subType, SuperType) {
   var prototype = Object.create(subType.prototype); //创建对象，创建父类原型的一个副本
@@ -224,11 +227,11 @@ instance1.colors.push("2"); // ["red", "blue", "green", "2"]
 instance1.colors.push("3"); // ["red", "blue", "green", "3"]
 ```
 
-![extends](https://user-gold-cdn.xitu.io/2018/10/30/166c2c0109df5438?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
 这个例子的高效率体现在它只调用了一次 SuperType  构造函数，并且因此避免了在 SubType.prototype  上创建不必要的、多余的属性。于此同时，原型链还能保持不变；因此，还能够正常使用 instanceof  和 isPrototypeOf()
 
 这是最成熟的方法，也是现在库实现的方法
-![](https://user-gold-cdn.xitu.io/2020/3/21/170fd2bbd607befc?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
 
 - 寄生组合继承算是 ES6 之前一种比较完美的继承方式吧。
 
@@ -241,6 +244,8 @@ instance1.colors.push("3"); // ["red", "blue", "green", "3"]
 3. 能够正常的使用 instanceOf 和 isPrototypeOf 方法
 
 ### 混入方式继承(Object.assign())
+
+![](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/3/21/170fd2eac722e13d~tplv-t2oaga2asx-watermark.awebp)
 
 ```js
 function MyClass() {
@@ -261,7 +266,6 @@ MyClass.prototype.myMethod = function () {
 ```
 
 Object.assign 会把 OtherSuperClass 原型上的函数拷贝到 MyClass 原型上，使 MyClass 的所有实例都可用 OtherSuperClass 的方法。
-![](https://user-gold-cdn.xitu.io/2020/3/21/170fd12e435d5d4b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 
 ### ES6 extends 继承
 
@@ -322,5 +326,9 @@ console.log(square.area);
 ### 参考
 
 [JS 基础-完美掌握继承知识点](https://juejin.cn/post/6844903950538260494#heading-23)
+
 [JavaScript 常用八种继承方案](https://juejin.cn/post/6844903696111763470#heading-6)
+
 [做完这 48 道题彻底弄懂 JS 继承](https://juejin.cn/post/6844904098941108232#heading-38)
+
+[JS 继承的 六 种实现方式](https://juejin.cn/post/6844903929763856397#heading-7)

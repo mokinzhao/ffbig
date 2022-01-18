@@ -90,3 +90,41 @@ function inheritPrototype(child, parent) {
 
 inheritPrototype();
 /*-----------------ES6---------------*/
+
+
+
+
+
+
+//ES5寄生组合继承
+
+function Parent(){
+    this.name =name;
+    this.say=()=>{
+        console.log('say ')
+    }
+}
+
+Parent.prototype.play=()=>{
+    console.log('play ')
+}
+
+function Children(name){
+    Parent.call(this)
+    this.name =name
+}
+
+const ParentPrototype=Object.create(Parent.prototype)
+ParentPrototype.constructor =Children
+Children.prototype =ParentPrototype
+
+Children.prototype.open=function(){
+    console.log('open')
+}
+
+//测试
+let child =new Children('小盆友')
+console.log('name:',child.name)
+child.say()
+child.play()
+child.open()

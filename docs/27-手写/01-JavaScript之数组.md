@@ -99,6 +99,8 @@ Array.prototype.myFilter = function (fn) {
 
 ### some
 
+- 只要数组有一项符合处理条件。返回true，都不满足返回false
+
 ```js
 Array.prototype.mySome = function (callback, thisArg) {
     if (this == undefined) {

@@ -24,7 +24,7 @@ const debounce = (fn, delay = 1000) => {
 
 ### 节流(throttle)
 
-函数节流指的是规定某个时间内只能执行一次函数。
+函数节流指的是规定某个时间内只能执行一次函数
 
 ```js
 //- 定时器
@@ -69,7 +69,6 @@ const throttle = (fn, wait = 300) => {
 - 参数复用（每个参数可以多次复用）
 
 ```js
-
 //写法一
 let currying = (fn, ...args) =>
             fn.length > args.length ?
@@ -575,7 +574,7 @@ function produce(baseState, fn) {
 
 ```
 
-### 实现一个 compose 函数
+## 实现一个 compose 函数
 
 ```js
 // 用法如下:
@@ -610,7 +609,7 @@ function compose(...fn) {
 }
 ```
 
-### 用正则实现 trim()
+## 用正则实现 trim()
 
 - 去掉首尾空格
 
@@ -625,7 +624,7 @@ function trim(string){
 
 ```
 
-### 解析 url 参数
+## 解析 url 参数
 
 - 根据name获取url上的search参数值
 
