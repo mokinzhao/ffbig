@@ -764,9 +764,9 @@ function asyncToGenerator(generatorFunc) {
         function step(key, arg) {
           let generatorResult
           try {
-            generatorResult = gen[key](arg "key")
+            generatorResult = gen[key](arg "key") // 这里有可能会执行返回reject状态的Promise
           } catch (error) {
-            return reject(error)
+            return reject(error) // 报错的话会走catch，直接reject
           }
           const { value, done } = generatorResult
           if (done) {
@@ -780,4 +780,3 @@ function asyncToGenerator(generatorFunc) {
     }
 }
 ```
-

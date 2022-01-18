@@ -128,3 +128,52 @@ console.log('name:',child.name)
 child.say()
 child.play()
 child.open()
+
+
+
+//原型继承
+
+Children.prototype=new Parent()
+
+//借用构造函数继承
+function Children(){
+    Parent.call(this)
+}
+
+//组合继承
+function Children(){
+    Parent.call(this)
+}
+Children.prototype =new Parent()
+
+//原型式继承
+
+Object.prototype.create=function (obj){
+    function F(){}
+    F.prototype=obj;
+    F.prototype.constructor=F;
+    return new F();
+}
+
+//寄生式继承
+
+function createAnother(original){
+    const clone =Object.create(original)
+    clone.sayHi=function(){
+        console.log('hi')
+    }
+    return clone
+}
+
+
+//寄生组合继承
+function Children(name){
+    Parent.call(this)
+    this.name=name
+}
+
+const prototype=Object.create(Parent.prototype)
+prototype.constructor=Children
+Children.prototype=prototype
+
+

@@ -12,6 +12,16 @@ title: Javascript异步-Async/Await
 
 这篇文章的目的就是带大家理解清楚 async 和 generator 之间到底是如何相互协作，管理异步的。
 
+- await只能在async函数中使用，不然会报错
+- async函数返回的是一个Promise对象，有无值看有无return值
+- await后面最好是接Promise，虽然接其他值也能达到排队效果
+- async/await作用是用同步方式，执行异步操作
+
+### 什么是语法糖？
+
+async/await是一种语法糖，诶！好多同学就会问，啥是语法糖呢？我个人理解就是，语法糖就是一个东西，这个东西你就算不用他，你用其他手段也能达到这个东西同样的效果，但是可能就没有这个东西这么方便了。
+async/await是一种语法糖，那就说明用其他方式其实也可以实现他的效果，我们今天就是讲一讲怎么去实现async/await，用到的是ES6里的迭代函数——generator函数
+
 #### 示例
 
 ```js
@@ -202,9 +212,7 @@ function asyncToGenerator(generatorFunc) {
 }
 ```
 
-不多不少，22 行。
-
-接下来逐行讲解。
+- 接下来逐行讲解
 
 ```js
 function asyncToGenerator(generatorFunc) {
