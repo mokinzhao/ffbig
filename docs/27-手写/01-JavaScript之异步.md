@@ -20,7 +20,7 @@ title: JavaScript之异步
 
     2. Promise 有个静态方法叫then,用以处理resolved或rejected状态下的值,支持链式调用
         - then方法接收两个参数onFulfilled和onRejected，这两个参数变量类型是函数，如果不是函数将会被忽略，并且这两个参数都是可选的。
-        - then方法必须返回一个新的promise，记作promise2，这也就保证了then方法可以在同一个promise上多次调用。（ps：规范只要求返回promise，并没有明确要求返回一个新的promise，这里为了跟ES6实现保持一致，我们也返回一个新promise） 
+        - then方法必须返回一个新的promise，记作promise2，这也就保证了then方法可以在同一个promise上多次调用。（ps：规范只要求返回promise，并没有明确要求返回一个新的promise，这里为了跟ES6实现保持一致，我们也返回一个新promise）
         - onResolved/onRejected有返回值则把返回值定义为x，并执行[[Resolve]](promise2, x);
         - onResolved/onRejected运行出错，则把promise2设置为rejected状态；
         - onResolved/onRejected不是函数，则需要把promise1的状态传递下去。
@@ -706,8 +706,7 @@ scheduler.taskStart();
 
 [手把手一行一行代码教你“手写Promise“](https://juejin.cn/post/7043758954496655397#heading-1)
 
-[来45道Promise面试题一次爽到底(1.1w字用心整理)](https://mp.weixin.qq.com/s?__biz=MzkzNTIwNTAwOA==&mid=2247487580&idx=1&sn=373b4c4a33e6597cfd77381de4444acc&
-source=41#wechat_redirect)
+[来45道Promise面试题一次爽到底(1.1w字用心整理)](https://mp.weixin.qq.com/s?__biz=MzkzNTIwNTAwOA==&mid=2247487580&idx=1&sn=373b4c4a33e6597cfd77381de4444acc&source=41#wechat_redirect)
 
 ## Generator
 
