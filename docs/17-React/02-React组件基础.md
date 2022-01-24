@@ -120,10 +120,6 @@ class ErrorBoundary extends React.Component {
 
 ```
 
-
-
-
-
 ### 类组件的通信方式
 
 - 父子（props+callback）
@@ -142,6 +138,40 @@ class ErrorBoundary extends React.Component {
     - 状态管理工具(Redux/Mobx/Dva/Recoil)
 
 ### 类组件的State
+
+React 项目中 UI 的改变来源于 state 改变，类组件中 setState 是更新组件，渲染视图的主要方式。
+
+#### 基本用法
+
+```js
+setState(obj,callback)
+
+/* 第一个参数为function类型 */
+this.setState((state,props)=>{
+    return { number:1 } 
+})
+/* 第一个参数为object类型 */
+this.setState({ number:1 },()=>{
+    console.log(this.state.number) //获取最新的number
+})
+
+```
+
+- 第一个参数：当 obj 为一个对象，则为即将合并的 state ；如果 obj 是一个函数，那么当前组件的 state 和 props 将作为参数，返回值用于合并新的 state。
+
+- 第二个参数 callback ：callback 为一个函数，函数执行上下文中可以获取当前 setState 更新后的最新 state 的值，可以作为依赖 state 变化的副作用函数，可以用来做一些基于 DOM 的操作。
+
+#### 在 React 底层主要做了那些事
+
+- 首先，setState 会产生当前更新的优先级（老版本用 expirationTime ，新版本用 lane ）。
+- 接下来 React 会从 fiber Root 根部 fiber 向下调和子节点，调和阶段将对比发生更新的地方，更新对比 expirationTime ，找到发生更新的组件，合并 state，然后触发 render 函数，得到新的 UI 视图层，完成 render 阶段。
+- 接下来到 commit 阶段，commit 阶段，替换真实 DOM ，完成此次更新流程。
+- 此时仍然在 commit 阶段，会执行 setState 中 callback 函数,如上的()=>{ console.log(this.state.number) }，到此为止完成了一次 setState 全过程。
+
+### 类组件如何限制 state 更新视图
+
+1. pureComponent 可以对 state 和 props 进行浅比较，如果没有发生变化，那么组件不更新。
+2. shouldComponentUpdate 生命周期可以通过判断前后 state 变化来决定组件需不需要更新，需要更新返回true，否则返回false。
 
 ## 函数组件
 
@@ -205,13 +235,135 @@ console.log('这里基本等价于 componentWillUnmount');
 
 ### 函数组件的useState
 
+React-hooks 正式发布以后， useState 可以使函数组件像类组件一样拥有 state，也就说明函数组件可以通过 useState 改变 UI 视图。那么 useState 到底应该如何使用，底层又是怎么运作的呢，首先一起看一下 useState 。
 
+- useState用法
+
+```js
+ [ ①state , ②dispatch ] = useState(③initData)
+
+```
+
+- ① state，目的提供给 UI ，作为渲染视图的数据源。
+- ② dispatch 改变 state 的函数，可以理解为推动函数组件渲染的渲染函数。
+- ③ initData 有两种情况，第一种情况是非函数，将作为 state 初始化的值。 第二种情况是函数，函数的返回值作为 useState 初始化的值。
+
+- initData 为非函数的情况:
+
+```js
+/* 此时将把 0 作为初使值 */
+const [ number , setNumber ] = React.useState(0)
+```
+
+- initData 为函数的情况:
+
+```js
+ const [ number , setNumber ] = React.useState(()=>{
+       /*  props 中 a = 1 state 为 0-1 随机数 ， a = 2 state 为 1 -10随机数 ， 否则，state 为 1 - 100 随机数   */
+       if(props.a === 1) return Math.random() 
+       if(props.a === 2) return Math.ceil(Math.random() * 10 )
+       return Math.ceil(Math.random() * 100 ) 
+    })
+```
+
+- 对于 dispatch的参数,也有两种情况：
+
+1. 第一种非函数情况，此时将作为新的值，赋予给 state，作为下一次渲染使用;
+
+2. 第二种是函数的情况，如果 dispatch 的参数为一个函数，这里可以称它为reducer，reducer 参数，是上一次返回最新的 state，返回值作为新的 state。
 
 ## 掌握props
 
+首先应该明确一下什么是 props ，对于在 React 应用中写的子组件，无论是函数组件 FunComponent ，还是类组件 ClassComponent ，父组件绑定在它们标签里的属性/方法，最终会变成 props 传递给它们。但是这也不是绝对的，对于一些特殊的属性，比如说 ref 或者 key ，React 会在底层做一些额外的处理。首先来看一下 React 中 props 可以是些什么东西？
 
+```js
+/* children 组件 */
+function ChidrenComponent(){
+    return <div> In this chapter, let's learn about react props ! </div>
+}
+/* props 接受处理 */
+class PropsComponent extends React.Component{
+    componentDidMount(){
+        console.log(this,'_this')
+    }
+    render(){
+        const {  children , mes , renderName , say ,Component } = this.props
+        const renderFunction = children[0]
+        const renderComponent = children[1]
+        /* 对于子组件，不同的props是怎么被处理 */
+        return <div>
+            { renderFunction() }
+            { mes }
+            { renderName() }
+            { renderComponent }
+            <Component />
+            <button onClick={ () => say() } > change content </button>
+        </div>
+    }
+}
+/* props 定义绑定 */
+class Index extends React.Component{
+    state={  
+        mes: "hello,React"
+    }
+    node = null
+    say= () =>  this.setState({ mes:'let us learn React!' })
+    render(){
+        return <div>
+            <PropsComponent  
+               mes={this.state.mes}  // ① props 作为一个渲染数据源
+               say={ this.say  }     // ② props 作为一个回调函数 callback
+               Component={ ChidrenComponent } // ③ props 作为一个组件
+               renderName={ ()=><div> my name is alien </div> } // ④ props 作为渲染函数
+            >
+                { ()=> <div>hello,world</div>  } { /* ⑤render props */ }
+                <ChidrenComponent />             { /* ⑥render component */ }
+            </PropsComponent>
+        </div>
+    }
+}
+```
 
+1. props 作为一个子组件渲染数据源。
+2. props 作为一个通知父组件的回调函数。
+3. props 作为一个单纯的组件传递。
+4. props 作为渲染函数。
+5. render props ， 和4的区别是放在了 children 属性上。
+6. render component 插槽组件。
 
+在标签内部的属性和方法会直接绑定在 props 对象的属性上，对于组件的插槽会被绑定在 props 的 Children 属性中
+
+### 如何定义的props？
+
+- 在 React 组件层级 props 充当的角色
+
+一方面父组件 props 可以把数据层传递给子组件去渲染消费。另一方面子组件可以通过 props 中的 callback ，来向父组件传递信息。还有一种可以将视图容器作为 props 进行渲染。
+
+- 从 React 更新机制中 props 充当的角色
+
+在 React 中，props 在组件更新中充当了重要的角色，在 fiber 调和阶段中，diff 可以说是 React 更新的驱动器，熟悉 vue 的同学都知道 vue 中基于响应式，数据的变化，就会颗粒化到组件层级，通知其更新，但是在 React 中，无法直接检测出数据更新波及到的范围，props 可以作为组件是否更新的重要准则，变化即更新，于是有了 PureComponent ，memo 等性能优化方案。
+
+- 从React插槽层面props充当的角色
+
+React 可以把组件的闭合标签里的插槽，转化成 Children 属性，一会将详细介绍这个模式。
+
+### 如何监听props改变
+
+- 类组件中
+
+componentWillReceiveProps 可以作为监听props的生命周期，但是 React 已经不推荐使用 componentWillReceiveProps ，未来版本可能会被废弃，因为这个生命周期超越了 React 的可控制的范围内，可能引起多次执行等情况发生。于是出现了这个生命周期的替代方案 getDerivedStateFromProps ，在下一章节，会详细介绍 React 生命周期。
+
+- 函数组件中
+
+函数组件中同理可以用 useEffect 来作为 props 改变后的监听函数。(不过有一点值得注意, useEffect 初始化会默认执行一次)
+
+```js
+React.useEffect(()=>{
+    // props 中number 改变，执行这个副作用。
+    console.log('props改变：' ，props.number  )
+},[ props.number ])
+
+```
 
 ## 问答环节
 
@@ -246,9 +398,9 @@ React 的异步请求到底应该放在哪个生命周期里,有人认为在`com
 :::
 
 ::: tip 答
-先给出答案: 有时表现出异步,有时表现出同步
+事实上，componentWillMount 的存在不仅“鸡肋”而且危险，因此它并不值得被“代替”，它就应该被废弃。 在 Fiber 带来的异步渲染机制下，可能会导致非常严重的 Bug, componentWillUpdate 里滥用 setState 导致重复渲染死循环的
 
-
+而 getDerivedStateFromProps 这个 API，其设计的初衷不是试图替换掉 componentWillMount，而是试图替换掉 componentWillReceiveProps，因此它有且仅有一个用途：使用 props 来派生/更新 state。
 :::
 
 ::: warning 问
@@ -256,9 +408,9 @@ React 的异步请求到底应该放在哪个生命周期里,有人认为在`com
 :::
 
 ::: tip 答
-先给出答案: 有时表现出异步,有时表现出同步
+它相对于早期的 componentWillReceiveProps 来说，正是做了“合理的减法”。而做这个减法的决心之强烈，从 getDerivedStateFromProps 直接被定义为 static 方法这件事上就可见一斑—— static 方法内部拿不到组件实例的 this，这就导致你无法在 getDerivedStateFromProps 里面做任何类似于 this.fetch()、不合理的 this.setState（会导致死循环的那种）这类可能会产生副作用的操作。
 
-
+因此，getDerivedStateFromProps 生命周期替代 componentWillReceiveProps 的背后，是 React 16 在强制推行“只用 getDerivedStateFromProps 来完成 props 到 state 的映射”这一最佳实践。意在确保生命周期函数的行为更加可控可预测，从根源上帮开发者避免不合理的编程方式，避免生命周期的滥用；同时，也是在为新的 Fiber 架构铺路
 :::
 
 ::: warning 问
@@ -273,7 +425,25 @@ setState 到底是异步还是同步?
 3. **`setState`  的批量更新优化也是建立在“异步”（合成事件、钩子函数）之上的，在原生事件和 setTimeout 中不会批量更新，在“异步”中如果对同一个值进行多次`setState`，`setState`的批量更新策略会对其进行覆盖，取最后一次的执行，如果是同时`setState`多个不同的值，在更新时会对其进行合并批量更新。**
 :::
 
+::: warning 问
+类组件中的 setState 和函数组件中的 useState 有什么异同？
+:::
 
+::: tip 答
 
+- 相同点:
+首先从原理角度出发，setState和 useState 更新视图，底层都调用了 scheduleUpdateOnFiber 方法，而且事件驱动情况下都有批量更新规则。
 
+- 不同点
 
+1. 在不是 pureComponent 组件模式下， setState 不会浅比较两次 state 的值，只要调用 setState，在没有其他优化手段的前提下，就会执行更新。但是 useState 中的 dispatchAction 会默认比较两次 state 是否相同，然后决定是否更新组件。
+
+2. setState 有专门监听 state 变化的回调函数 callback，可以获取最新state；但是在函数组件中，只能通过 useEffect 来执行 state 变化引起的副作用。
+
+3. setState 在底层处理逻辑上主要是和老 state 进行合并处理，而 useState 更倾向于重新赋值。
+
+:::
+
+## 参考资料
+
+- React进阶实践指南
