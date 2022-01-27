@@ -8,8 +8,6 @@ title: React组件-复用
 - 高阶组件: 来源于 franleplant 的文章[React Higher Order Components in depth](https://medium.com/@franleplant/react-higher-order-components-in-depth-cf9032ee6c3e),我们对少部分内容做了删减和修改
 - 渲染属性: 来源于 Michael Jackson(是的,franleplant 的文章中就提到了此人)的文章[Use a Render Prop!](https://cdb.reacttraining.com/use-a-render-prop-50de598f11ce),react 官网关于 Render Prop 的部分就是他的 pr,此文包含了大量作者的主观观点,我们会在后文进行相对客观的比较.
 
-
-
 ## 类组件继承
 
 对于类组件的强化，首先想到的是继承方式，之前开发的开源项目 react-keepalive-router 就是通过继承 React-Router 中的 Switch 和 Router ，来达到缓存页面的功能的。因为 React 中类组件，有良好的继承属性，所以可以针对一些基础组件，首先实现一部分基础功能，再针对项目要求进行有方向的改造、强化、添加额外功能。
@@ -741,7 +739,6 @@ this 指向容易错误
 内部实现上不直观（依赖一份可变的全局状态，不再那么“纯”）
 
 React.memo 并不能完全替代 shouldComponentUpdate（因为拿不到 state change，只针对 props change）
-
 
 ## 问答环节
 

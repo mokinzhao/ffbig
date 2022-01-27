@@ -235,7 +235,7 @@ console.log('这里基本等价于 componentWillUnmount');
 
 ### 函数组件的useState
 
-React-hooks 正式发布以后， useState 可以使函数组件像类组件一样拥有 state，也就说明函数组件可以通过 useState 改变 UI 视图。那么 useState 到底应该如何使用，底层又是怎么运作的呢，首先一起看一下 useState 。
+React-hooks 正式发布以后， useState 可以使函数组件像类组件一样拥有 state，也就说明函数组件可以通过 useState 改变 UI 视图。那么 useState 到底应该如何使用，底层又是怎么运作的呢，首先一起看一下 useState
 
 - useState用法
 
