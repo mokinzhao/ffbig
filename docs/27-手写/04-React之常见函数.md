@@ -5,7 +5,6 @@ title: React之常见函数
 ## miniReact
 
 ```js
-sadsda
 
 ```
 

@@ -2,7 +2,6 @@
 title: CSS之常见手写
 ---
 
-
 ## 水平垂直居中
 
 - 水平居中
@@ -71,7 +70,6 @@ div{
      width: 200px;
      height: 200px;
      background: green;
-
      position:absolute;
      left:50%;    /* 定位父级的50% */
      top:50%;
