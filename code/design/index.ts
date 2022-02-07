@@ -41,6 +41,24 @@ class SingleInstance {
 export default SingleInstance.getInstance
 
 
+class SingleInstance2 {
+    static instance :SingleInstance;
+    constructor (isLazy?){
+        if(isLazy){
+            SingleInstance2.instance=new SingleInstance2()
+        }
+    }
+    static getInstance(){
+        if(!SingleInstance2.instance){
+            SingleInstance2.instance=new SingleInstance2()
+        }
+        return SingleInstance2.instance
+    }
+}
+
+export default SingleInstance2.instance();
 //发布订阅
+
+
 
 //观察者模式

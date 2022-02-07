@@ -1,5 +1,5 @@
 ---
-title: Proxy比defineproperty优劣对比
+title: Proxy和DefineProperty优劣对比
 ---
 
 ## 前言
@@ -21,7 +21,7 @@ title: Proxy比defineproperty优劣对比
 我们可以通过下图清楚看到以上两种方法在**双向绑定**体系中的关系.
 ![](https://user-gold-cdn.xitu.io/2018/5/1/1631801840069098?w=1012&h=234&f=png&s=35400)
 
-> 基于数据劫持的当然还有已经凉透的`Object.observe`方法,已被废弃。
+> 基于数据劫持的当然还有已经凉透的`Object.observe`方法,已被废弃.
 
 > **提前声明:** 我们没有对传入的参数进行及时判断而规避错误,仅仅对核心方法进行了实现.
 

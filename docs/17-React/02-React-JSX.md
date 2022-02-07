@@ -183,8 +183,8 @@ export function createElement(type, config, children) {
 
     - children：以对象形式传入，它记录的是组件标签之间嵌套的内容，也就是所谓的“子节点”“子元素”。
 
-
 ```js
+
 React.createElement("ul", {
   // 传入属性键值对
   className: "list"
