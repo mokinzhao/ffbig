@@ -1,0 +1,44 @@
+<div id="test" style="width: 0px; height: 12px; line-height: 12px; margin-bottom: 5px; background: rgb(185, 236, 243);"></div>
+当前进度：<span id="progress">0%</span>
+<button id="btn">开启</button>
+<script>
+const btn = document.getElementById('btn');
+//使用 requestAnimationFrame 实现
+btn.onclick = function() {
+  var timer = requestAnimationFrame(function fn() {
+    if (parseInt(test.style.width) < 300) {
+      test.style.width = parseInt(test.style.width) + 3 + 'px';
+      progress.innerHTML = parseInt(test.style.width) / 3 + '%';
+      timer = requestAnimationFrame(fn);
+    } else {
+      cancelAnimationFrame(timer);
+    }
+  });
+}
+//使用 setInterval 实现
+// btn.onclick = function() {
+//   var timer = setInterval(function () {
+//     if (parseInt(test.style.width) < 300) {
+//       test.style.width = parseInt(test.style.width) + 3 + 'px';
+//       progress.innerHTML = parseInt(test.style.width) / 3 + '%';
+//     } else {
+//       clearInterval(timer);
+//     }
+//   }, 17);
+// }
+
+//使用 setTimeout 实现
+//btn.onclick = function() {
+//     var timer = setTimeout(function fn() {
+//     if (parseInt(test.style.width) < 300) {
+//       test.style.width = parseInt(test.style.width) + 3 + 'px';
+//       progress.innerHTML = parseInt(test.style.width) / 3 + '%';
+//       timer = setTimeout(fn, 17);
+//     } else {
+//       clearTimeout(timer);
+//     }
+//   }, 17);
+// }
+
+
+</script>
