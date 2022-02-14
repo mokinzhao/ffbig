@@ -786,3 +786,57 @@ ws.on("error", err => {
 	console.log("出错了", err);
 });
 ```
+
+#### 控制写入速度
+
+```js
+let fs = require("fs");
+
+let ws = fs.createWriteStream("test.txt", { highWaterMark: 3 });
+let dataSource = "控制速度".split("");
+let num = 0;
+let flag = true;
+
+function executeWrite() {
+	flag = true;
+	while (num !== 4 && flag) {
+		flag = rs.write(dataSource[num]);
+		num++;
+	}
+}
+
+executeWrite();
+// 当写入的值达到水位线时，执行（继续生产数据）
+ws.on("drain", () => {
+	console.log("drain执行了");
+	executeWrite();
+});
+```
+
+#### 背压机制
+
+通过把流动模式切换到暂定模式实现
+
+```js
+let fs = require("fs");
+
+let rs = fs.createReadStream("test.txt", {
+	highWaterMark: 4
+});
+let ws = fs.createWriteStream("test-new.txt", {
+	highWaterMark: 1
+});
+
+let flag = true;
+rs.on("data", chunk => {
+	flag = ws.write(chunk, () => {
+		console.log("写完了这一块");
+	});
+	if (!flag) {
+		rs.pause();
+	}
+});
+ws.on("drain", () => {
+	rs.resume();
+});
+```
