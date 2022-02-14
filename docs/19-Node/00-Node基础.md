@@ -664,3 +664,125 @@ node 11 之后: start, end, p2, s1, t1, p1, s2, t2, p2
 ::: warning setTimeout 与 setImmediate
 setTimeout 第二个参数为 0 时, 可能会产生一些延时, 导致 setImmediate 先于 setTimeout 执行
 :::
+
+### stream
+
+stream 模块是流操作的抽象接口集合，Node 中很多对象实现了这个接口。例如，对 http 服务器发起请求的 request 对象就是一个 stream，还有 stdout，fs，net，http 等。
+<br />
+stream 流有四种体现：
+
+- Readable: 可读流，能够实现数据的读取
+- Writeable: 可写流，能够实现数据的写操作
+- Duplex: 双工流，既可读又可写
+- Transform: 转换流，可读可写，还能实现数据转换
+
+所有流都继承自 EventEmitter，常用的事件有：
+
+- data: 当有数据可读时触发
+- end: 没有更多数据可读时触发
+- error: 在读/写过程中发生错误触发
+- finish: 所有数据已被写入完成时触发
+
+```js
+// 使用流进行文件拷贝
+const fs = require("fs");
+
+let rs = fs.createReadStream("test.txt");
+let ws = fs.createWriteStream("test-new.txt");
+
+rs.pipe(ws);
+```
+
+#### 文件可读流创建和消费
+
+```js
+const fs = require("fs");
+
+const rs = fs.createReadStream("test.txt", {
+	flags: "r", // 打开方式
+	encoding: null, // 编码格式，默认null返回Buffer
+	fd: null, // 文件标识符（类似id），默认从3开始（0 1 2 被系统占用）
+	mode: 438, // 权限位
+	autoClose: true, // 自动关闭文件
+	start: 0, // 从哪个位置开始读
+	end: 3, // 读到哪个位置结束
+	highWaterMark: 2 // 水位线
+});
+
+// 消费数据的两种方式：data & readable
+rs.on("data", chunk => {
+	console.log(chunk.toString());
+	rs.pause(); // 切换到暂停状态
+	setTimeout(() => {
+		rs.resume(); // 切换到流动状态
+	}, 1000);
+});
+rs.on("readable", () => {
+	let chunk;
+	while ((chunk = rs.read()) !== null) {
+		console.log(chunk.toString());
+		console.log(rs._readableState.length); // 打印缓存区剩余长度, highWaterMark控制缓存区大小
+	}
+});
+
+// 常用监听事件
+rs.on("open", fd => {
+	console.log(fd, "文件被打开了");
+});
+rs.on("close", () => {
+	console.log("文件关闭了");
+});
+rs.on("end", () => {
+	console.log("文件被清空了");
+});
+rs.on("error", err => {
+	console.log("文件出错了", err);
+});
+
+// 一般使用方式
+let bufferArr = [];
+rs.on("data", chunk => {
+	bufferArr.push(chunk);
+});
+rs.on("end", () => {
+	const str = Buffer.concat(bufferArr).toString();
+	console.log(str);
+});
+```
+
+#### 文件可写流
+
+```js
+const fs = require("fs");
+
+const ws = fs.createWriteStream("text-new.txt", {
+	flags: "w",
+	mode: 438,
+	fd: null,
+	encoding: "utf-8",
+	start: 0,
+	highWaterMark: 3
+});
+
+// 写入的过程是异步操作串行执行，文件可写流只能传入 字符串 或 buffer
+ws.write("写点东西", () => {
+	console.log("ok1");
+});
+ws.write("再写点东西", () => {
+	console.log("ok2");
+});
+
+// 常用事件
+ws.on("open", fd => {
+	console.log("文件打开了", fd);
+});
+ws.write("aaa");
+ws.end(); // end执行之后，就代表数据写入操作完成了，触发close
+ws.on("close", () => {
+	console.log("文件关闭");
+});
+ws.write("bbb"); // 报错，走error(文件被关闭)
+ws.on("error", err => {
+	console.log("出错了", err);
+});
+```
