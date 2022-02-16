@@ -71,7 +71,16 @@ function curry(func){
 const currying=(fn,...args)=>fn.length>args.length?(...arguments)=>currying(fn,...args,...arguments):fn(...args)
 
 
-
+function curry(func){
+    return function curried(...args){
+        if(args.length>=func.length){
+            return func.apply(this,args)
+        }
+        return function (...args2){
+            return curried.apply(this,args.concat(args2))
+        }
+    }
+}
 //LRUCache
 
 //最近最少使用原则，使用就更新，不使用就排在队列后面
