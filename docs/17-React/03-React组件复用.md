@@ -1,5 +1,5 @@
 ---
-title: React组件-复用
+title: React基础-组件复用
 ---
 ## React 组件复用指南
 

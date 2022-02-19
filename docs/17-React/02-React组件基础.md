@@ -1,5 +1,5 @@
 ---
-title: React组件-基础
+title: React基础-组件应用
 ---
 
 ![](https://vp-blog-img.oss-cn-shanghai.aliyuncs.com/2021/react/02.React-Component.png)
