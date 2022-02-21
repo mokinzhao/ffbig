@@ -996,3 +996,204 @@ console.log(queue.deQueue());
 ```
 
 ## Node 中的网络通信
+
+### 通信基础
+
+#### 通信的必要条件：
+
+- 主机之间需要有传输介质（网线、光纤、蓝牙、WiFi）并处于联通状态
+- 主机上必须有网卡设备：信号的调制与解调制（二进制与高低电压互转）
+- 主机之间需要协商网络速率
+
+#### 网络通讯方式
+
+- 交换机通讯（局域网）
+  - 通过 Mac 地址来唯一标识一台主机；
+  - 交换机接口数量有限；
+  - 容易造成广播风暴；
+- 路由器通讯（城域网、广域网、万维网、因特网、互联网）
+  - Mac 地址 + IP 地址 + 其他
+
+### 网络层次模型（OSI 七层模型和 TCP 四层模型）
+
+#### OSI 七层模型：
+
+- 应用层：用户与网络的接口，比如 http 协议、ftp 协议、ssh 协议等；
+- 表示层：数据加密、转换、压缩；
+- 会话层：控制网络连接建立和终止；
+- 传输层：控制数据传输可靠性，基于端口的协议层，比如 TCP 协议、UDP 协议；
+- 网络层：确定目标网络，比如 IP 协议；
+- 数据链路层：确定目标主机，比如 ARP 寻址协议（寻找 MAC 地址）；
+- 物理层：各种物理设备和标准；
+
+#### TCP 四层模型：
+
+- 应用层：七层模型中合并前三层（应用层 + 表示层 + 会话层）
+- 传输层：不变
+- 主机层：网络层改名得来
+- 接入层：数据链路层 + 物理层
+
+### 数据封装与解封
+
+<br/>
+<img src="./images/数据封装与解封.jpg" />
+<br/>
+
+### TCP 三次握手和四次挥手
+
+常见控制字段
+
+- SYN = 1：表示请求建立连接
+- FIN = 1：表示请求断开连接
+- ACK = 1：表示数据信息确认
+
+<br/>
+<img src="./images/三次握手与四次挥手.jpg" />
+<br/>
+
+### 创建 TCP 通信
+
+```js
+/**
+ * 服务端
+ */
+const net = require("net");
+
+// 创建服务端实例
+const server = net.createServer();
+
+const PORT = 1234;
+const HOST = "localhost";
+
+server.listen(PORT, HOST);
+
+server.on("listening", () => {
+	console.log(`服务端开启在${HOST}:${PORT}`);
+});
+
+server.on("connection", socket => {
+	socket.on("data", chunk => {
+		const msg = chunk.toString();
+		console.log(msg);
+		// 回数据
+		socket.write(`你好，${msg}`);
+	});
+});
+
+server.on("close", () => {
+	console.log("服务端关闭了");
+});
+
+server.on("error", err => {
+	if (err.code == "EADDRINUSE") {
+		console.log("地址已经被使用");
+	} else {
+		console.log(err);
+	}
+});
+```
+
+```js
+/**
+ * 创建客户端
+ */
+const net = require("net");
+
+const client = net.createConnection({
+	host: "127.0.0.1",
+	prot: 1234
+});
+
+client.on("connct", () => {
+	client.write("客户端");
+});
+
+// 粘包模拟
+// client.on("connct", () => {
+// 	client.write("客户端1");
+// 	client.write("客户端2");
+// 	client.write("客户端3");
+// 	client.write("客户端4");
+// });
+
+// 粘包解决：弊端 - 降低了数据的传输效率
+// let dataArr = ["客户端1", "客户端2", "客户端3", "客户端4"];
+// client.on("connct", () => {
+// 	for (let i = 0; i < dataArr.length; i++) {
+// 		(function (val, index) {
+// 			setTimeout(() => {
+// 				client.write(val);
+// 			}, 1000 * index);
+// 		})(dataArr[i], i);
+// 	}
+// });
+
+client.on("data", chunk => {
+	console.log(chunk.toString());
+});
+
+client.on("error", err => {
+	console.log(err);
+});
+
+client.on("close", () => {
+	console.log("客户端断开连接");
+});
+```
+
+### 数据粘包：使用封包拆包解决
+
+```js
+/**
+ * 自定义编码解码类
+ */
+class MyTransformCode {
+	constructor() {
+		// 规定当前header总长度为4个字节
+		this.packageHeaderLen = 4;
+		// 当前包的编号
+		this.serialNum = 0;
+		// header总共4个字节，需要存储"当前编号"和"想要获取的消息体长度"，拆分后为2
+		this.serialLen = 2;
+	}
+
+	// 编码: writeInt16BE - 将value从指定位置写入
+	encode(data, serialNum) {
+		const body = Buffer.form(data);
+		// 为header申请空间
+		const headerBuf = Buffer.alloc(this.packageHeaderLen);
+		// 写入头部信息
+		headerBuf.writeInt16BE(serialNum || this.serialNum);
+		headerBuf.writeInt16BE(body.length, this.serialLen);
+		// 保证每一个数据包都有一个单独的编号使用
+		if (serialNum === undefined) {
+			this.serialNum++;
+		}
+		return Buffer.concat([headerBuf, body]);
+	}
+
+	// 解码
+	decode(buffer) {
+		const headerBuf = buffer.slice(0, this.packageHeaderLen);
+		const bodyBuf = buffer.slice(this.packageHeaderLen);
+
+		// readInt16BE：从指定位置开始读数据
+		return {
+			serialNum: headerBuf.readInt16BE(),
+			bodyLength: headerBuf.readInt16BE(this.serialLen),
+			body: bodyBuf.toString()
+		};
+	}
+
+	// 获取包长度
+	getPackageLen(buffer) {
+		if (buffer.length < this.packageHeaderLen) {
+			return 0;
+		} else {
+			return this.packageHeaderLen + buffer.readInt16BE(this.serialLen);
+		}
+	}
+}
+
+module.exports = MyTransformCode;
+```
