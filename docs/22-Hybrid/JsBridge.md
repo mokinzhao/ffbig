@@ -79,8 +79,10 @@ JavaScript 是运行在一个单独的 JS Context 中（例如，WebView 的 Web
     }
 ```
 
+```js
     // 前端调用方式：
     window.webkit.messageHandlers.nativeBridge.postMessage(message);
+```
 
 ###### 1.2 拦截 URL SCHEME
 

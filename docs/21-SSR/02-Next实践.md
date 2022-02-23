@@ -1,6 +1,8 @@
 ---
-title: NextJS+TailwindCss+AntdMobile入门实践
+title: Next实践
 ---
+
+## NextJS+TailwindCss+AntdMobile入门实践
 
 ## 背景
 

@@ -2,7 +2,7 @@
 title: 微前端之SingleSpa
 ---
 
-### single-spa 微前端四大特性:
+### single-spa 微前端四大特性
 
 - 受路由控制渲染的子应用（applications）
 - 不受路由控制的组件（parcels）
