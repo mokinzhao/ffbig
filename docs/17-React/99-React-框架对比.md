@@ -12,23 +12,21 @@ title: React扩展-框架对比
 
 
 
-## 类React框架
 
 
-
-### Preact
-
-
-
-
-
-### Solid
+## Preact
 
 
 
 
 
-## Svelte
+## Solid
+
+
+
+
+
+### Svelte
 
 在《Stack Overflow 于 2021 年准备的最新调查》中，71.47% 的受访者将 Svelte 选为最受欢迎的框架，领先于 React.js 的 69.28% 和 Vue 的 64.41%。而在 JS 现状 2020 调查 中，Svelte 在用户满意度 89%、兴趣度 66% 均取得了第一的成绩表现。Svelte 从一诞生，就用来对标 React/Vue 等框架，我们也看到了关于 Svelte 与 React 的争论，看到了 19 年尤大回复的《如何看待 Svelte 这个前端框架》以及 21 年 vue-Svelte-size-analysis 评测，足见 Svelte 的发展态势。
 
@@ -55,43 +53,45 @@ title: React扩展-框架对比
 
 虽然我们看到 Svelte 深受开发者的喜欢，但是到目前为止，仍然很难看到有大型应用在使用 Svelte，其性能优势、体积优势等并没有在大型应用中得到验证。由于 React/Vue/Angular 先入为主，尤其是在大公司，已经有非常完备成体系的配套方案，成熟的体系基本上很难去改动，后起之秀也很难有如 React 等框架活跃的社区，Svelte 要走的路还是很长。但是我们观察到，包括阿里、字节、腾讯等大公司也都在新业务中尝试使用 Svelte 开发，在中小型应用、h5 应用、Web Components 等方面确实有它的优势所在，也值得尝试。尽管 Svelte 有很多优势，但想以一己之力挑战 React/Vue/Angular 的江湖地位，目前来看还是需要静待标杆大型应用，静待各大大公司推出基于 Svelte 开发的 UI 库，或许 Svelte 大放异彩的时机就会到来。
 
+[一文详解 Svelte](https://mp.weixin.qq.com/s/pUCk75aKfyvCSyT28HpwKQ)
 
-## Angular
-
-
-
-主题
-React
-Angular
-
-
-
+## React VS Angular
 
 1. 体系结构
-只有 MVC 中的 View
-完整的 MVC
 
+React : 只有 MVC 中的 View
+
+Angular: 完整的 MVC
 
 2. 渲染
 可以在服务器端渲染
-客户端渲染
 
+客户端渲染
 
 3. DOM
 使用 virtual DOM
+
 使用 real DOM
 
-
 4. 数据绑定
+
 单向数据绑定
+
 双向数据绑定
 
-
 5. 调试
+
 编译时调试
+
 运行时调试
 
-
 6. 作者
+
 Facebook
+
 Google
+
+
+## 参考
+
+[框架究竟解决了啥问题？我们可以脱离它们吗](https://mp.weixin.qq.com/s/J_Fs2jrhOsGdAxlBnJKYCw)

@@ -21,7 +21,6 @@
    15   7
 返回它的最大深度 3
  */
-
 var maxDepth = function (root) {
   if (!root) {
     return 0;
@@ -44,8 +43,6 @@ var maxDepth = function (root) {
   2   2
  / \ / \
 3  4 4  3
- 
-
 但是下面这个 [1,2,2,null,3,null,3] 则不是镜像对称的:
 
     1
@@ -54,7 +51,6 @@ var maxDepth = function (root) {
    \   \
    3    3
 */
-
 var isSymmetric = function (root) {
   return isMirror(root, root);
 };
@@ -72,6 +68,26 @@ var isMirror = function (t1, t2) {
     isMirror(t1.left, t2.right)
   );
 };
+
+// 二叉树的层序遍历
+
+const levelOrder =function (root){
+    if(!root) return []
+    const res =[]
+    dfs(root,0,res)
+    return res
+}
+
+const dfs =function (root,depth,res){
+     if(!root) return 
+     if(!res[depth]) {
+         res[depth]=[]
+     }
+     res[depth].push(root.val)//存入每层的节点值
+     dfs(root.left,depth +1,res)
+     dfs(root.right,depth +1,res)
+}
+
 
 
 
@@ -119,30 +135,5 @@ const exampleTree = {
   }
 
 
-  const getNode = (exampleId,tree)=>{
-    
-    if(!tree. '[object Object]') return null
-    let path=''
-    let leaves=[]
-    //递归遍历
-    
-
-  }
 
 
-
-  //反转二叉树
-  const invertTree =function (root){
-        if(root ===null){
-            return null
-        }
-        invertTree(root.left)
-        invertTree(root.right) 
-        const temp =root.left
-        root.left= root.right
-        root.right =temp
-        return root
-  }
-
-  //判断两颗树是否相同
-  

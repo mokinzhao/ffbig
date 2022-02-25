@@ -211,8 +211,6 @@ io.observe(document.getElementById('box2'))
 
 ```
 
-
-
 ### 将虚拟 Dom 转化为真实 Dom
 
 - 题目：JSON 格式的虚拟 Dom 怎么转换成真实 Dom
