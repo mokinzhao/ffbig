@@ -401,10 +401,12 @@ http 的整个流程，涉及 tcp/ip 协议
 
 ---
 
-参考：
+## 参考
 
 - 图解 HTTP
 - HTTP 权威指南
 - [HTTP 缓存策略](https://foofish.net/http-cache-policy.html)
+- [神三元-HTTP灵魂之问，巩固你的 HTTP 知识体系](https://juejin.cn/post/6844904100035821575)
+- [天天-「查缺补漏」巩固你的HTTP知识体系](https://juejin.cn/post/6857287743966281736#heading-38)
 
 ---

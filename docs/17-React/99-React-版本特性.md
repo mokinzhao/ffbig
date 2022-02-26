@@ -67,3 +67,11 @@ React 17 只在事件回调中 batching，React 18 则会对任何来源的 setS
 - useInsertionEffect：用于插入全局 DOM 节点。
 
 React 18 将在明年与新的 React Native 架构（可用 React 18 特性）一起发布。
+
+
+
+## 参考链接
+
+[React 18 中新的 Suspense SSR 架构](https://mp.weixin.qq.com/s/XY0ko6MFy0ag3e_QGF6JDg)
+
+

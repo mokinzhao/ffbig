@@ -8,6 +8,10 @@ title: React之常见函数
 
 ```
 
+- react的diff算法优化方式 怎么从o(n)3 优化到o(n) 怎么优化的element diff
+
+- react的fiber为什么要用链表
+
 ## Render
 
 ## Hooks

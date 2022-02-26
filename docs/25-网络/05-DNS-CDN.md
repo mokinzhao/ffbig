@@ -1,3 +1,12 @@
 ---
-title: DNS/CDN详解
+title: DNS/CDN
 ---
+
+
+## DNS
+
+
+
+
+## CDN
+

@@ -2,6 +2,7 @@
 title: TypeScript-工程化
 ---
 
+## 工程配置
 
 ### tsconfig.json 速查表
 
@@ -73,3 +74,21 @@ title: TypeScript-工程化
   "references": [],  // 一个对象数组，指定要引用的项目
 }
 ```
+
+## JS项目 迁移至 TS
+
+
+
+
+## 自动化测试
+
+
+- mocha
+
+
+- jest
+
+
+
+
+
