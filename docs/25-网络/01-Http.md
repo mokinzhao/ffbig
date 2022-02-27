@@ -2,7 +2,7 @@
 title: HTTP协议
 ---
 
-## Http 协议的历史演变
+## Http 版本演变
 
 - Http1.0 到 Http1.1
   主要实现了对 TCP 链接的复用

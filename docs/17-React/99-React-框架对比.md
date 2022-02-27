@@ -2,10 +2,12 @@
 title: React扩展-框架对比
 ---
 
-## React 和Vue的区别
+## VS Vue
 
 
 ### 技术区别
+
+- 设计理念
 
 
 ### 生态区别
@@ -55,7 +57,7 @@ title: React扩展-框架对比
 
 [一文详解 Svelte](https://mp.weixin.qq.com/s/pUCk75aKfyvCSyT28HpwKQ)
 
-## React VS Angular
+## VS Angular
 
 1. 体系结构
 

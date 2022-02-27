@@ -69,3 +69,10 @@ Kubernetes的目标就是消除编排物理或者虚拟计算、网络和存储�
 
 3. 在Kubernetes 中，可以使用集群来组织服务器，集群会存在一个master节点,该节点是
 Kubernetes集群的控制节点，负责调度集群中其他服务器的资源，其他节点被称为Node
+
+
+## 参考
+
+[写给前端的 K8S 上手指南](https://mp.weixin.qq.com/s/0Il5o9CRgZI3LbuR0LjAtQ)
+
+[写给前端的 Docker 上手指南](https://mp.weixin.qq.com/s/5LLX__x-yamgR83e0NKAtA)

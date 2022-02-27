@@ -111,3 +111,29 @@ class LRU{
     }
 }
 
+//EventEmitter
+
+class EventEmitter{
+    constructor(){
+        this.events={}
+    }
+    on(eventName,callback){
+
+    }
+
+    emit(eventName){
+
+    }
+
+    once(eventName,callback){
+
+    }
+
+    remove(eventName,callback){
+        
+    }
+    clear(){
+    this.events={}
+    de
+    }
+}

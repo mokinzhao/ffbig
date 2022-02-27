@@ -353,3 +353,10 @@ location ~* \.(png|gif|jpg|jpeg)$ {
 ## 小结
 
 nginx 的功能非常强大，还有很多需要探索，上面的一些配置都是公司配置的真实应用（精简过了），如果您有什么意见或者建议，欢迎在下方留言...
+
+## 参考
+
+
+[前端工程师不可不知的Nginx知识](https://mp.weixin.qq.com/s?__biz=MzI2ODUxMzg4Nw==&mid=2247488918&idx=2&sn=b031b38a5b1eaab432215920d374bf64&chksm=eaef32a6dd98bbb0ba67478a0cca79c153328e9fa75041d694f345a905b895637f4a76ecffde&mpshare=1&scene=1&srcid=0922FoHYIB820YcKSRSK0V8e&sharer_sharetime=1600731806707&sharer_shareid=cc5fb7bed6648264ed4fae636925e9f8&key=0341baf40da915d5f58f3d0482eb2584e796a037e076c32c540c598bf1e0554771dd339b2369ecec9681b8d434ca9edd5da2d2a7e73983763aaca1c13b2fa6e5d043d405628af96c05979f10df5b8654d0643148bf0fa8a8b41d1ea43c099198444342ef3a979472c3682ea4dc0d4ad7cd22418bed97a406b2ed127666c7dfd5&ascene=1&uin=MTE4NTQxMDY4MQ%3D%3D&devicetype=Windows+10+x64&version=62090529&lang=zh_CN&exportkey=Acyk9XSRs7J09AKp7THgJEE%3D&pass_ticket=gbYtuAahoh2PyWdZLLQdOkOOXBG1CZg2MxAYTLiHfO9SQTEGKmd6EmKcsnZKtwnk&wx_header=0)
+
+ 
