@@ -1,7 +1,6 @@
 ---
-title: TypeScript-高级
+title: TypeScript-高级（类型体操）
 ---
-
 
 ## 声明文件编写
 
@@ -10,5 +9,5 @@ title: TypeScript-高级
 
 
 
-## 原理浅析
+
 
