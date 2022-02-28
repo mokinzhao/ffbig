@@ -4,6 +4,14 @@ title: Webpack 知识综合二
 
 ## webpack的 loader 和 plugin 区别
 
+- loader
+加载器，webpack原生只能解析js文件，
+通过配置一些加载器能加载和解析非js文件的能力
+
+- 扩展webpack，让webpack更具灵活性
+webpack构建过程中有很多事件，
+可以去监听这些事件，在合适的时机通过webpackAPI改变输出结果
+
 ## webpack 常用插件
 
 ## webpack 如何做代码拆分

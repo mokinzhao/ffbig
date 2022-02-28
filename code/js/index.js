@@ -118,22 +118,32 @@ class EventEmitter{
         this.events={}
     }
     on(eventName,callback){
-
+        if(!this.events[eventName]){
+            this.events[eventName]=[callback]
+        }else{
+            this.events[eventName].push(callback)
+        }
     }
 
     emit(eventName){
-
+        this.events[eventName]&&this.events[eventName].forEach(cb=>cb())
     }
 
     once(eventName,callback){
-
+        let fun=()=>{
+            callback();
+            this.remove(eventName,fun)
+        }
+        this.on(eventName,fun)
     }
 
     remove(eventName,callback){
-        
+        if(this.events[eventName]){
+            this.events[eventName]=this.events[eventName].filter(cb=>cb!=callback)
+        }
     }
+    
     clear(){
     this.events={}
-    de
     }
 }
