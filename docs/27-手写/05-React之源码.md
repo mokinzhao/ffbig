@@ -1,8 +1,8 @@
 ---
-title: React之常见函数
+title: React之源码
 ---
 
-## miniReact
+## mini-React
 
 ```js
 
@@ -12,19 +12,15 @@ title: React之常见函数
 
 - react的fiber为什么要用链表
 
+
+
 ## Render
 
-## Hooks
 
-### 内置Hook
 
-- useState
+## 其他API
 
-```js
-
-```
-
-- 实现memo()
+### 实现memo()
 
 ```js
 /**
@@ -52,25 +48,15 @@ function memo(func, resolver) {
 
 ```
 
-### 自定义Hook
-
-- useDrag
 
 
+## 参考
 
-
-- useDrop
+![手把手带你实现一个铂金段位的 React](https://juejin.cn/post/6978654109893132318)
 
 
 
 
 
-
-## miniRedux
-
-- useState
-
-```js
-```
 
 

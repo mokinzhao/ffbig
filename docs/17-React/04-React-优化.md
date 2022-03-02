@@ -794,4 +794,6 @@ React 在 v17 版本后已移除 User Timing 统计功能，具体原因可参�
 
 #### 参考
 
-[React 性能优化完全指南](https://mp.weixin.qq.com/s/C8_xenJWDJrqLoycXttzbA)
+- [React 性能优化完全指南](https://mp.weixin.qq.com/s/C8_xenJWDJrqLoycXttzbA)
+- [React 进阶实践指南](https://juejin.cn/book/6945998773818490884/section/6958058637042384900)
+- [浅谈React性能优化的方向](https://juejin.cn/post/6844903865926549511#heading-0)

@@ -21,7 +21,7 @@ JS 是一门动态弱类型语言
 - number
 - bigint
 - array
-- undefined 
+- undefined
 - null
 - symbol
 
