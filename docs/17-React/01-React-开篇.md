@@ -2,7 +2,23 @@
 title: React基础-开篇
 ---
 
-- 先放几张思维导图
+## 背景介绍
+
+本专栏会围绕
+
+- 基础强化
+
+- 进阶应用
+
+- 原理剖析
+
+- 生态解读
+
+- 综合扩展
+
+这几大类来全面的掌握React体系知识
+
+## 部分脑图
 
 ![](https://vp-blog-img.oss-cn-shanghai.aliyuncs.com/2021/react/2.2.0%E5%85%A8%E6%A0%88%E5%A4%A7%E5%89%8D%E7%AB%AF%E4%B9%8B%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6-React%E5%9F%BA%E7%A1%80.png)
 
@@ -14,9 +30,9 @@ title: React基础-开篇
 
 ![](https://vp-blog-img.oss-cn-shanghai.aliyuncs.com/2021/react/2.2.3%E5%85%A8%E6%A0%88%E5%A4%A7%E5%89%8D%E7%AB%AF%E4%B9%8B%E9%AB%98%E7%BA%A7%E8%BF%9B%E9%98%B6-React%E6%BA%90%E7%A0%81.png)
 
-## 概念
+## React基础概念
 
-一个用于构建用户界面的 JavaScript 库
+React 是一个用于构建用户界面的 JavaScript 库
 
 React 的中文含义是“反应”或“响应”，它描述了 React 这样一个前端框架的核心原 理:当数据发生变化时，UI 能够自动把变化反映出来。这在 React 当时出现的背景之下， 可以说是一个颠覆式的创新。
 
@@ -28,7 +44,7 @@ React 的中文含义是“反应”或“响应”，它描述了 React 这样�
 
 在 React 之前，我们需要调用 DOM 的 API 来修改 DOM 树的结构，从而改变 UI 的展 现。而在有了 React 之后，我们只需要在业务状态和 UI 状态之间建立一个绑定的关系就 行了。绑定完成后，我们就不需要再关心怎么去精细控制 UI 的变化，因为 React 会在数 据发生变化时，帮助我们完成 UI 的变化。
 
-### 核心特性
+### React核心特性
 
 - 声明式
 

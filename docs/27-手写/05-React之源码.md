@@ -48,6 +48,29 @@ function memo(func, resolver) {
 
 ```
 
+## 其他
+
+### 如何使用React.createElement?
+
+```js
+const element = (
+  <h1 className="greeting">
+    Hello, world!
+  </h1>
+)
+```
+
+- 实现
+
+```js
+const element = React.createElement(
+  'h1',
+  {className: 'greeting'},
+  'Hello, world!'
+);
+
+```
+
 
 
 ## 参考

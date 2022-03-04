@@ -20,3 +20,10 @@ title: React原理-剖析Hooks
 
 
 
+
+
+
+## 参考
+
+- [带你深入了解 useState](https://mp.weixin.qq.com/s/nYX8Lnj7uwGHAeL5rEnRRg)
+- [react-hooks 面试题大串讲](https://mp.weixin.qq.com/s/aEfkRrSNymsiXzdvpNRm5Q)
