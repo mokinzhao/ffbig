@@ -14,6 +14,43 @@ title: React扩展-版本特性
 
 ## React 17
 
+### 无新特性
+
+React v17 的发布非比寻常，因为它没有增加任何面向开发者的新特性。但是，这个版本会使得 React 自身的升级变得更加容易。
+
+值得特别说明地是，React v17 作为后续版本的 ”基石“，它让不同版本的 React 相互嵌套变得更加容易。
+
+除此之外，还会使 React 更容易嵌入到由其他技术构建的应用中。
+
+### 渐进式升级
+
+React v17 开启了 React 渐进式升级的新篇章。当你从 React 15 升级至 16 时（或者，从 16 升级到 17），你通常会一次性升级整个应用程序，这对大部分应用来说十分有效。但是，如果代码库编写于几年前，并且没有及时的维护升级，这会使得升级成本越来越高。并且，在 React 17 之前，如果在同一个页面上使用不同的 React 版本（可以这么做，但是有风险），会导致事件问题的出现，会有一些未知的风险。
+
+我们正在修复 React v17 中的许多问题。这意味着，当 React 18 或未来版本来临时，你将有更多选择。首选，当然还是一次性升级整个应用；但你还有个可选方案，渐进式升级你的应用。举个例子，你可能将大部分功能升级至 React v18，但保留部分懒加载的对话框或子路由在 React v17。
+
+但这并不意味着你必须进行渐进式升级。对于大多数应用来说，一次性升级仍是更好的选择。加载两个版本的 React，仍然不是理想方案 —— 即使其中一个版本是按需加载的。但对于那些长期未维护的大型应用来说，这意义非凡，React v17 开始让这些应用不会被轻易淘汰。
+
+我们准备了示例仓库，此示例演示了如何在必要时懒加载旧版本的 React。此示例由 Create React App 构建，使用其他工具也可以实现同样的效果。欢迎使用其他工具的小伙伴通过 PR 的形式提供 Demo。
+
+### 事件委托的变更
+
+React v17 中，React 不会再将事件处理添加到 document 上，而是将事件处理添加到渲染 React 树的根 DOM 容器中：
+
+```js
+const rootNode = document.getElementById('root');
+ReactDOM.render(<App />, rootNode);
+```
+
+在 React 16 及之前版本中，React 会对大多数事件进行 document.addEventListener() 操作。React v17 开始会通过调用 rootNode.addEventListener() 来代替。
+
+![react17-click](https://zh-hans.reactjs.org/static/bb4b10114882a50090b8ff61b3c4d0fd/31868/react_17_delegation.png)
+
+
+### 全新的 JSX 转换(无需import React)
+
+React v17 支持了全新的 JSX 转换。我们还针对 React 16.14.0，React 15.7.0 和 0.14.0 版本做了兼容。请注意，此功能完全可选，并非必须使用。之前的 JSX 转换将会继续维护，并且没有停止支持它的计划。
+
+React 17 引入了新的 JSX 编译方式，无须在组件中显式地 import React。注意需要配合 TypeScript 4.1+ 版本使用。
 
 
 ## React 18

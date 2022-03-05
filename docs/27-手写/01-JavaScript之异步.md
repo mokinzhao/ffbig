@@ -702,6 +702,8 @@ scheduler.taskStart();
 
 ### 参考链接
 
+[百行代码带你实现通过872条Promise/A+用例的Promise](https://mp.weixin.qq.com/s/A1uuU7DdBlUF-E6ZqlpOCw)
+
 [Promise知识汇总和面试情况](https://segmentfault.com/a/1190000039699000)
 
 [手把手一行一行代码教你“手写Promise“](https://juejin.cn/post/7043758954496655397#heading-1)
