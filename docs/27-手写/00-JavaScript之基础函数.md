@@ -352,19 +352,25 @@ function _instanceof (instanceObject, classFunc) {
 Object.getPrototypeOf ()：用来获取某个实例对象的原型（内部[[prototype]]属性的值，包含proto属性）
 
 ```js
-function _instanceof (instanceObject, classFunc) {
-  let classFunc = classFunc.prototype; // 取得当前类的原型
-  let proto = Object.getPrototypeOf(instanceObject); // 取得当前实例对象的原型链上的属性
-  
-  while (true) {
-    if (proto === null) { // 找到了 Object的基类 Object.prototype.__proto__
-      return false;
-    };
-    if (proto === classFunc) { // 在当前实例对象的原型链上，找到了当前类
-      return true;
+const _instanceof = (target, Fn) => {
+    // 补全代码
+        //基本数据类型的判断
+    if(target === null || typeof target !== 'object'){
+        return false
     }
-    proto = Object.getPrototypeOf(proto); // 沿着原型链__ptoto__一层一层向上查找
-  }
+        //获取第一个原型
+    let leftProto = Object.getPrototypeOf(target)
+    while(true){
+        if (leftProto === null){
+            return false
+        }
+                //和第二个原型进行比较
+        if(leftProto == Fn.prototype){
+            return true
+        }
+
+        leftProto = Object.getPrototypeOf(leftProto)
+    }
 }
 ```
 

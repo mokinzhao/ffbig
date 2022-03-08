@@ -205,38 +205,45 @@ Array.prototype.myFind = function (callback, thisArg) {
 4. 返回最终结果
 
 ```js
-Array.prototype.myReduce = function(fn) {
-    if (typeof fn !== 'function') {
-        throw new TypeError(`${fn} is not a function`);
+Array.prototype.myReduce = function (callback, initialValue) {
+    // 判断调用该API的元素是否为null
+    if (this == null) {
+        throw new TypeError('this is null or not defined')
     }
-
-    const arr = this;
-    const len = arr.length >>> 0;
-    let value;// 最终返回的值
-    let k = 0;// 当前索引
-
-    if (arguments.length >= 2) {
-        value = arguments[1];
-    } else {
-        // 当数组为稀疏数组时，判断数组当前是否有元素，如果没有索引加一
-        while (k < len && !( k in arr)) {
-            k++;
-        }
-        // 如果数组为空且初始值不存在则报错
-        if (k >= len) {
-            throw new TypeError('Reduce of empty array with no initial value');
-        }
-        value = arr[k++];
+    // 判断是否为function
+    if (typeof callback !== "function") {
+        throw new TypeError(callback + ' is not a function')
     }
-    while (k < len) {
-        if (k in arr) {
-            value = fn(value, arr[k], k, arr);
+    const arr = this
+    const len = arr.length
+    // 第二个参数
+    let accumulator = initialValue
+    let index = 0
+    // 如果第二个参数是undefined 则数组的第一个有效值
+    // 作为累加器的初始值
+    if (accumulator === undefined) {
+        // 找到数组中的第一个有效值 不一定就是arr[0]
+        while (index < len && !(index in arr)) {
+            index++
         }
-        k++;
+        if (index >= len) {
+            throw new TypeError('Reduce of empty array with no initial value')
+        }
+        // 输出第一个有效数组元素，作为累加器的第一个元素
+        accumulator = arr[index++]
     }
-
-    return value;
+    while (index < len) {
+        if (index in arr) {
+            // arr[index] 为 accumulator 的下一个元素
+            accumulator = callback.call(undefined, accumulator, arr[index], index, arr)
+        }
+        // 持续后移
+        index++
+    }
+    // 返回结果
+    return accumulator
 }
+
 ```
 
 ### flat (扁平化)
@@ -656,3 +663,4 @@ const intersection = function(...args) {
 
 [JavaScript数组去重（12种方法，史上最全）](https://segmentfault.com/a/1190000016418021)
 [js 数组详细操作方法及解析合集](https://juejin.cn/post/6844903614918459406#heading-4)
+[【神来之笔】原生 JavaScript 手写数组 API](https://juejin.cn/post/6993479920705880095#heading-14)
