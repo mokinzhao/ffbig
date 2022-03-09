@@ -8,7 +8,7 @@ title: JavaScript之数组
 
 ```js
 Array.myIsArray = function(o) {
-  returnObject.prototype.toString.call(Object(o)) === '[object Array]';
+  return Object.prototype.toString.call(Object(o)) === '[object Array]';
 };
 console.log(Array.myIsArray([])); // true
 ```
@@ -662,5 +662,7 @@ const intersection = function(...args) {
 ## 参考
 
 [JavaScript数组去重（12种方法，史上最全）](https://segmentfault.com/a/1190000016418021)
+
 [js 数组详细操作方法及解析合集](https://juejin.cn/post/6844903614918459406#heading-4)
+
 [【神来之笔】原生 JavaScript 手写数组 API](https://juejin.cn/post/6993479920705880095#heading-14)
