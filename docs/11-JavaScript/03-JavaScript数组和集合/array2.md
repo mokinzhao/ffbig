@@ -56,25 +56,31 @@ map也叫映射，也就是将原数组映射成一个新数组
 3. 除非用原有数组去承载，否则原有数组不会改变
 
 ```js
-Array.prototype.myMap = function(fn) {
-    // 判断输入的第一个参数是不是函数
-    if (typeof fn !== 'function') {
-        throw new TypeError(fn + 'is not a function');
+Array.prototype.myMap = function (callback, thisArg) {
+    // 和forEach相同需要进行两个排除
+    if (this == undefined) {
+        throw new TypeError('this is null or not defined');
     }
-    // 获取需要处理的数组内容
-    const arr = this;
-    const len = arr.length;
-    // 新建一个空数组用于装载新的内容
-    const temp = new Array(len);
-    // 对数组中每个值进行处理
+    if (typeof callback !== 'function') {
+        throw new TypeError(callback + ' is not a function');
+    }
+    // 与forEach不同的是，map会返回一个新数组
+    const ret = []
+    // 获得函数调用者
+    const arr = this
+    // 数组长度
+    let len = arr.length
+    // 对每一个元素执行回调函数
     for (let i = 0; i < len; i++) {
-        // 获取第二个参数，改变this指向
-        let result = fn.call(arguments[1], arr[i], i, arr);
-        temp[i] = result;
+        // 检查i是否在arr
+        if(i in arr) {
+            ret[i] = callback.call(thisArg, arr[i], i, arr)
+        }
     }
-    // 返回新的结果
-    return temp;
+    // 返回一个处理后的数组
+    return ret
 }
+
 ```
 
 ### filter
@@ -199,6 +205,14 @@ Array.prototype.myFind = function (callback, thisArg) {
 ```
 
 ### reduce
+
+- 使用
+
+```js
+const arr = [1, 2, 3]
+const res = arr.reduce((prev, cur) => prev + cur)
+console.log(res); // 6
+```
 
 不同于迭代方法，reduce是一种归并方法，归并并不是对每一项都执行目标函数，可以概括成以下几步：
 

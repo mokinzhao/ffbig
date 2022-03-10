@@ -2,16 +2,14 @@
 title: 微前端之SingleSpa
 ---
 
-### single-spa 微前端四大特性
+## single-spa 微前端四大特性
 
 - 受路由控制渲染的子应用（applications）
 - 不受路由控制的组件（parcels）
 - 非渲染组件，应用间通信逻辑（utility modules）
 - root config 作为子应用通信的路由配置,所有子应用的特殊处理情况都是需要在 root config 做处理的
 
-### 微前端优缺点
-
-#### 优点
+## 优点
 
 - 增量升级（影响范围小）
 
@@ -23,25 +21,253 @@ title: 微前端之SingleSpa
 
 - 团队自治 （沟通成本小）
 
-#### 缺点
+## 缺点
 
-- 有效的负载变大
+1. 对微应用的侵入性太强
 
-微前端 的概念，使我们的每一个功能，成为了一个独立的 应用 ，这样会导致我们的依赖项出现大量的重复，对于用户来说，是需要做多次无意义的资源下载，这样其实是不友好的，但是针对该问题，目前有一种方案就是重复的依赖构建独立的资源包进行下载，这样好像是可以避免掉重复性资源的加载问题，但随之而来的两个不可避免的问题就出现了：
+single-spa 采用 JS Entry 的方式接入微应用。微应用改造一般分为三步：
 
-在 a 页面 可能不需要 b 页面 的相应资源，但是 c 页面 需要，我们又不能针对这种依赖关系做详细的依赖切分，这样其实对于我们整体的工作而言，是一个很重的任务量，每一个项目都不止一个依赖包，我们不可能花很多的时间去细分每一个依赖包针对当前功能的依赖关系，这是一个非常沉重的工作量
-a 页面 可能使用的是 react 16.7 之前的版本，ui 框架 antd 使用的也是 3.x 的，这里面是没有 hooks 的；b 页面 使用的是 react 16.7 之后的版本，这时候支持 hooks ，但是 antd 还没有做更新，只能只用 3.x 版本；c 页面 使用的也是 react 16.7 以后的版本，但是 antd 更新 4.x ，它支持 hooks；这里可能会有人问，为什么不直接使用 react 16.7 版本， antd 4.x 不就行了，何必这么复杂？我们的需求不是一下子完成的，框架也是需要不断的优化实现不管开发效率还是用户体验方面的提升的，版本的控制就是我们需要面对的最大的一个问题，我们不能在同一个公共依赖包里面去做所有版本的兼容问题，这是个不现实的事情
+- 微应用路由改造，添加一个特定的前缀
+- 微应用入口改造，挂载点变更和生命周期函数导出
+- 打包工具配置更改
 
-如此来看，好像独立的资源加载好似是最好的办法，可以避免这样的问题，但是有效的负载变大存在的问题还是没有解决，其实独立的资源加载并不是错的，但是它也不是对的，只是我们一直在这个对和错之间，寻找一个边界，其实对和错是不难区分的，难区分的就是它们之间的这个边界问题，如果区分对错的边界，需要耗费我们区分对错更多的成本，那么其实当前的状态，可能就是最好的
+侵入型强其实说的就是第三点，更改打包工具的配置，使用 single-spa 接入微应用需要将微应用整个打包成一个 JS 文件，发布到静态资源服务器，然后在主应用中配置该 JS 文件的地址告诉 single-spa 去这个地址加载微应用。
 
-当然不是鼓励大家不去更精细化的区分对和错的更深层次的边界，一个中小型企业，时间成本很重要，这种边界的探测对于公司的发展来说起不到什么比较有价值的作用，反而会耽误整体的发展；反之如果是一个专门研究这方面技术的，技术协会或者大型公司的技术团体，我还是很鼓励大家做更深层次的研究的，毕竟物尽其用，人尽其才
+不说其它的，就现在这个改动就存在很大的问题，将整个微应用打包成一个 JS 文件，常见的打包优化基本上都没了，比如：按需加载、首屏资源加载优化、css 独立打包等优化措施。
 
-- 管理的复杂性
+项目发布以后出现了 bug ，修复之后需要更新上线，为了清除浏览器缓存带来的影响，一般文件名会带上 chunkcontent，微应用发布之后文件名都会发生变化，这时候还需要更新主应用中微应用配置，然后重新编译主应用然后发布，这套操作简直是不能忍受的，这也是 微前端框架 之 single-spa 从入门到精通 这篇文章中示例项目中微应用发布时的环境配置选择 development 的原因。
 
-这一块其实内容就很好说明了，管理的复杂性指的很多方面，业务方面、和开发方面等：
+2. 样式隔离问题
 
-业务方面的划分，虽然说做到了更多的细节的把控，人员的目光和方向会更精确一点，但是带来的问题就是，业务的广泛性带来的成本也会很高，老人对业务扩展的创新性是否真的能直达用户内心、新人对业务方向的熟悉性是否能符合整个产品的发展方向，这些都是在不断的业务细分的场景下会出现的问题，有的时候细不一定是好，虽然说这样可以考虑到很多的点，但是很容易因为业务的细分导致大家的目光只盯在一个点上，这样其实对于一整个产品的发展并不友好，因为有可能产品和开发讨论了很久的一个对与错的细节问题，在用户看来，并不重要，尤其是对于业务在快速增长阶段的产品来说，这更是一个噩耗
-开发方面的划分，就是一个很明显的、繁琐的一个过程，微前端 带给我们的好处上面已经说的很清楚了，但是根据每一个微应用去做划分的同时，带来的就是一个需要合理规划维护方式的技术难题：
-代码库的数量增加，是否有更好的办法去维护每一个版本的更新（CI 是一个目前来说可以解决该问题毕竟）
-每一个微应用，可能都是一个单独的仓库，那么一整个团队应该如何管理这些微应用，是否需要一定的规范性去约束每一个项目，还是天马行空的发挥各自的想象
-假设有相同的功能点，我们有一套独立的微应用组件，那么这个开发工作应该如何划分，对于组件 api 的支持应该如何去制定
+single-spa 没有做这部分的工作。一个大型的系统会有很的微应用组成，怎么保证这些微应用之间的样式互不影响？微应用和主应用之间的样式互不影响？这时只能通过约定命名规范来实现，比如应用样式以自己的应用名称开头，以应用名构造一个独立的命名空间，这个方式新系统还好说，如果是一个已有的系统，这个改造工作量可不小。
+
+3. JS 隔离
+
+这部分工作 single-spa 也没有做。 JS 全局对象污染是一个很常见的现象，比如：微应用 A 在全局对象上添加了一个自己特有的属性，window.A，这时候切换到微应用 B，这时候如何保证 window 对象是干净的呢？
+
+4. 资源预加载
+
+这部分的工作 single-spa 更没做了，毕竟将微应用整个打包成一个 js 文件。现在有个需求，比如为了提高系统的用户体验，在第一个微应用挂载完成后，需要让浏览器在后台悄悄的加载其它微应用的静态资源，这个怎么实现呢？
+
+5. 应用间通信
+
+这部分工作 single-spa 没做，它只在注册微应用时给微应用注入一些状态信息，后续就不管了，没有任何通信的手段，只能用户自己去实现
+
+
+## 手写single-spa框架
+
+```js
+// 实现子应用的注册、挂载、切换、卸载功能
+
+/**
+ * 子应用状态
+ */
+// 子应用注册以后的初始状态
+const NOT_LOADED = 'NOT_LOADED'
+// 表示正在加载子应用源代码
+const LOADING_SOURCE_CODE = 'LOADING_SOURCE_CODE'
+// 执行完 app.loadApp，即子应用加载完以后的状态
+const NOT_BOOTSTRAPPED = 'NOT_BOOTSTRAPPED'
+// 正在初始化
+const BOOTSTRAPPING = 'BOOTSTRAPPING'
+// 执行 app.bootstrap 之后的状态，表是初始化完成，处于未挂载的状态
+const NOT_MOUNTED = 'NOT_MOUNTED'
+// 正在挂载
+const MOUNTING = 'MOUNTING'
+// 挂载完成，app.mount 执行完毕
+const MOUNTED = 'MOUNTED'
+const UPDATING = 'UPDATING'
+// 正在卸载
+const UNMOUNTING = 'UNMOUNTING'
+// 以下三种状态这里没有涉及
+const UNLOADING = 'UNLOADING'
+const LOAD_ERROR = 'LOAD_ERROR'
+const SKIP_BECAUSE_BROKEN = 'SKIP_BECAUSE_BROKEN'
+
+// 存放所有的子应用
+const apps = []
+
+/**
+ * 注册子应用
+ * @param {*} appConfig = {
+ *    name: '',
+ *    app: promise function,
+ *    activeWhen: location => location.pathname.startsWith(path),
+ *    customProps: {}
+ * }
+ */
+export function registerApplication (appConfig) {
+  apps.push(Object.assign({}, appConfig, { status: NOT_LOADED }))
+  reroute()
+}
+
+// 启动
+let isStarted = false
+export function start () {
+  isStarted = true
+}
+
+function reroute () {
+  // 三类 app
+  const { appsToLoad, appsToMount, appsToUnmount } = getAppChanges()
+  if (isStarted) {
+    performAppChanges()
+  } else {
+    loadApps()
+  }
+
+  function loadApps () {
+    appsToLoad.map(toLoad)
+  }
+
+  function performAppChanges () {
+    // 卸载
+    appsToUnmount.map(toUnmount)
+    // 初始化 + 挂载
+    appsToMount.map(tryToBoostrapAndMount)
+  }
+}
+
+/**
+ * 挂载应用
+ * @param {*} app 
+ */
+async function tryToBoostrapAndMount(app) {
+  if (shouldBeActive(app)) {
+    // 正在初始化
+    app.status = BOOTSTRAPPING
+    // 初始化
+    await app.bootstrap(app.customProps)
+    // 初始化完成
+    app.status = NOT_MOUNTED
+    // 第二次判断是为了防止中途用户切换路由
+    if (shouldBeActive(app)) {
+      // 正在挂载
+      app.status = MOUNTING
+      // 挂载
+      await app.mount(app.customProps)
+      // 挂载完成
+      app.status = MOUNTED
+    }
+  }
+}
+
+/**
+ * 卸载应用
+ * @param {*} app 
+ */
+async function toUnmount (app) {
+  if (app.status !== 'MOUNTED') return app
+  // 更新状态为正在卸载
+  app.status = MOUNTING
+  // 执行卸载
+  await app.unmount(app.customProps)
+  // 卸载完成
+  app.status = NOT_MOUNTED
+  return app
+}
+
+/**
+ * 加载子应用
+ * @param {*} app 
+ */
+async function toLoad (app) {
+  if (app.status !== NOT_LOADED) return app
+  // 更改状态为正在加载
+  app.status = LOADING_SOURCE_CODE
+  // 加载 app
+  const res = await app.app()
+  // 加载完成
+  app.status = NOT_BOOTSTRAPPED
+  // 将子应用导出的生命周期函数挂载到 app 对象上
+  app.bootstrap = res.bootstrap
+  app.mount = res.mount
+  app.unmount = res.unmount
+  app.unload = res.unload
+  // 加载完以后执行 reroute 尝试挂载
+  reroute()
+  return app
+}
+
+/**
+ * 将所有的子应用分为三大类，待加载、待挂载、待卸载
+ */
+function getAppChanges () {
+  const appsToLoad = [],
+    appsToMount = [],
+    appsToUnmount = []
+  
+  apps.forEach(app => {
+    switch (app.status) {
+      // 待加载
+      case NOT_LOADED:
+        appsToLoad.push(app)
+        break
+      // 初始化 + 挂载
+      case NOT_BOOTSTRAPPED:
+      case NOT_MOUNTED:
+        if (shouldBeActive(app)) {
+          appsToMount.push(app)
+        } 
+        break
+      // 待卸载
+      case MOUNTED:
+        if (!shouldBeActive(app)) {
+          appsToUnmount.push(app)
+        }
+        break
+    }
+  })
+  return { appsToLoad, appsToMount, appsToUnmount }
+}
+
+/**
+ * 应用需要激活吗 ？
+ * @param {*} app 
+ * return true or false
+ */
+function shouldBeActive (app) {
+  try {
+    return app.activeWhen(window.location)
+  } catch (err) {
+    console.error('shouldBeActive function error', err);
+    return false
+  }
+}
+
+// 让子应用判断自己是否运行在基座应用中
+window.singleSpaNavigate = true
+// 监听路由
+window.addEventListener('hashchange', reroute)
+window.history.pushState = patchedUpdateState(window.history.pushState)
+window.history.replaceState = patchedUpdateState(window.history.replaceState)
+/**
+ * 装饰器，增强 pushState 和 replaceState 方法
+ * @param {*} updateState 
+ */
+function patchedUpdateState (updateState) {
+  return function (...args) {
+    // 当前url
+    const urlBefore = window.location.href;
+    // pushState or replaceState 的执行结果
+    const result = Reflect.apply(updateState, this, args)
+    // 执行updateState之后的url
+    const urlAfter = window.location.href
+    if (urlBefore !== urlAfter) {
+      reroute()
+    }
+    return result
+  }
+}
+
+```
+
+
+
+
+
+## 参考
+
+[微前端框架 之 single-spa 从入门到精通](https://juejin.cn/post/6862661545592111111#heading-72)
+
+

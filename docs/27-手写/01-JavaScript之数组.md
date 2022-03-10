@@ -253,6 +253,24 @@ Array.prototype.myReduce = function (callback, initialValue) {
 Array.prototype.flat1 = function () {
     return this.reduce((acc, val) => acc.concat(val), []);
 }
+
+// 使用堆栈stack
+Array.prototype.flat5 = function(deep = 1) {
+    const stack = [...this];
+    const result = [];
+    while (stack.length > 0) {
+        const next = stack.pop();
+        if (Array.isArray(next)) {
+            stack.push(...next);
+        } else {
+            result.push(next);
+        }
+    }
+    
+    // 反转恢复原来顺序
+    return result.reverse();
+}
+
 // 使用reduce + concat + isArray +recursivity
 Array.prototype.flat2 = function (deep = 1) {
     const flatDeep = (arr, deep = 1) => {
@@ -295,22 +313,7 @@ Array.prototype.flat4 = function (deep = 1) {
 
     return result;
 }
-// 使用堆栈stack
-Array.prototype.flat5 = function(deep = 1) {
-    const stack = [...this];
-    const result = [];
-    while (stack.length > 0) {
-        const next = stack.pop();
-        if (Array.isArray(next)) {
-            stack.push(...next);
-        } else {
-            result.push(next);
-        }
-    }
-    
-    // 反转恢复原来顺序
-    return result.reverse();
-}
+
 ```
 
 ### Sort(排序)

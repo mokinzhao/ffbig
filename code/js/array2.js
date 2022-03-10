@@ -131,3 +131,21 @@ Array.prototype._findIndex=function(callback,thisArg){
     }
     return -1
 }
+
+Array.prototype._flat1=function(){
+    return this.reduce((acc,val)=>acc.concat(val),[])
+}
+
+Array.prototype._flat2=function(){
+    const stack=[...this]
+    const result=[]
+    while(stack.length>0){
+        const next=stack.pop();
+        if(Array.isArray(next)){
+            stack.push(...next)
+        }else{
+            result.push(next)
+        }
+    }
+    return result.reverse()
+}

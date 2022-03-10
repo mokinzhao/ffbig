@@ -20,43 +20,58 @@ const debounce = (fn, delay = 1000) => {
     }, delay);
   };
 };
+
+// 使用
+document.body.addEventListener('mousemove',debounce((e)=>{
+  console.log(this,e,'mousemove-debounce')
+},1000))
 ```
 
 ### 节流(throttle)
 
 函数节流指的是规定某个时间内只能执行一次函数
 
-```js
-//- 定时器
-const throttle = (fn, delay) => {
-  let timer = null;
-  return () => {
-    if (!timer) {
-      timer = setTimeout(() => {
-        timer = null;
-        fn.apply(this, arguments);
-      }, delay);
-    }
-  };
-};
+- 定时器
 
-//时间戳
-const throttle = (fn, wait = 300) => {
-    let prev = 0
-    let result
+```js
+/**
+ * 
+ * 当触发事件的时候，我们设置一个定时器，再触发事件的时候，如果定时器存在，就不执行，
+ * 直到定时器执行，然后执行函数，清空定时器。
+ */
+function throttle(callback, wait) {
+    let timer
     return function(...args) {
-        let now = +new Date()
-        if(now - prev > wait) {
-            prev = now
-            return result = fn.apply(this, ...args)
+        if(!timer) {
+            timer = setTimeout(()=>{
+                timer = null
+                callback.call(this,args)
+            },wait)
         }
     }
 }
-/*
-方法	使用时间戳	使用定时器
-开始触发时	立刻执行	n秒后执行
-停止触发后	不再执行事件	继续执行一次事件
+
+```
+
+- 时间戳
+
+```js
+// 时间戳方式
+/**
+使用时间戳，当触发事件的时候，我们取出当前的时间戳，然后减去之前的时间戳(最一开始值设为 0 )，
+如果大于设置的时间周期，就执行函数，然后更新时间戳为当前的时间戳，如果小于，就不执行。
 */
+function throttle(callback, wait) {
+    let start = 0
+    return function(...args) {
+        const now = +new Date()
+        if(now-start >= wait ) {
+            callback.call(this,args)
+            start = now
+        }
+
+    }
+}
 ```
 
 ### 函数克里化
