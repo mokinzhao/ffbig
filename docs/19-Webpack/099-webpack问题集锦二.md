@@ -28,8 +28,7 @@ webpack构建过程中有很多事件，
 
 ## Webpack bundle、chunk、module的区别
 
-
-
 ## 参考
 
-![](https://juejin.cn/post/7023242274876162084#heading-2)
+[透过分析 webpack 面试题，构建 webpack5.x 知识体系](https://juejin.cn/post/7023242274876162084#heading-2)
+

@@ -109,6 +109,6 @@ React 18 将在明年与新的 React Native 架构（可用 React 18 特性）�
 
 ## 参考链接
 
-[React 18 中新的 Suspense SSR 架构](https://mp.weixin.qq.com/s/XY0ko6MFy0ag3e_QGF6JDg)
+[React18 中新的 Suspense SSR 架构](https://mp.weixin.qq.com/s/XY0ko6MFy0ag3e_QGF6JDg)
 
-
+[React18 这次是真的来了](https://mp.weixin.qq.com/s/doYHRP5_uepSGBTZPPiNqg)

@@ -24,9 +24,7 @@ title: React扩展-框架对比
 
 ## Solid
 
-
-
-
+[Solid.js 就是我理想中的 React](https://mp.weixin.qq.com/s/0sGJ9r_9C9EPzliEkUuyTg)
 
 ### Svelte
 
