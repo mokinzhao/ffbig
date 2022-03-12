@@ -204,3 +204,7 @@ cookies、localstorage、sessionstorage、Web SQL、IndexedDB
 6. [picture 元素-MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/picture)
 
 ---
+
+## 其他问题
+
+[高频面试题之HTML](https://juejin.cn/post/6905294475539513352#heading-1)

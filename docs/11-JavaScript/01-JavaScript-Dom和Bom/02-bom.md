@@ -1,5 +1,5 @@
 ---
-title: Javascript-Bom
+title: Javascript-BOM
 ---
 
 ![2019-06-20-06-00-27](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d6400a65100b471e9805cc9982996e3a~tplv-k3u1fbpfcp-zoom-1.image)

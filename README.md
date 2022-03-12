@@ -22,6 +22,8 @@
 
 ## 项目大纲
 
+![](https://vp-blog-img.oss-cn-shanghai.aliyuncs.com/2021/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E5%85%A8%E6%99%AF%E5%9B%BE%20%282%29.png)
+
 ![](./docs/.vuepress/public/outline.png)
 
 ![](https://vp-blog-img.oss-cn-shanghai.aliyuncs.com/MindMaping/JavaScript.png)
