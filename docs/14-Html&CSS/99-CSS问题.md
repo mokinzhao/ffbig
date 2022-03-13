@@ -1,8 +1,6 @@
 ---
-title: CSS基础
+title: CSS问答
 ---
-
-# CSS 基础
 
 - [CSS 选择器的优先级是怎样的？✨](#css选择器的优先级是怎样的？✨)
 - [link 和@import 的区别？](#link和@import的区别？)
@@ -409,3 +407,7 @@ web 应用有不同设备尺寸和分辨率，这时需要响应式界面设计�
 1. [盒模型](https://segmentfault.com/a/1190000014801021)
 
 ---
+
+## 参考
+
+[CSS面试题合集](https://www.one-tab.com/page/SzN5kj7PQCyIkcu8WFT71w)

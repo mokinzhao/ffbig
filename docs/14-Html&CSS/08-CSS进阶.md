@@ -7,15 +7,17 @@ title: CSS进阶
 
 - [为什么要使用flex布局?](https://juejin.cn/post/7063823914136256543)
 
-## 屏幕适配
+## 移动端适配
 
+- viewport
+
+- rem/media query
+
+- 设计上：隐藏/折行/自适应
 
 - [移动端适配解决方案](https://juejin.cn/post/7057156620320505863)
 
-
-
 - [移动端适配解决方案二](https://juejin.cn/post/7061866685166256142)
-
 
 ## CSS3中有哪些新特性
 
@@ -116,4 +118,6 @@ title: CSS进阶
 
 ## 参考
 
-[CSS面试题合集](https://www.one-tab.com/page/-6bQF-f8T4qaJnGgUq0hoA)
+- [你所不知道的CSS篇 【强烈建议收藏】](https://mp.weixin.qq.com/s?__biz=MzkwODIwMDY2OQ==&mid=2247488418&idx=1&sn=9a5fa7ccdbcbd205a1ad8854d6d7346e&source=41#wechat_redirect)
+
+- [CSS面试题合集](https://www.one-tab.com/page/SzN5kj7PQCyIkcu8WFT71w)

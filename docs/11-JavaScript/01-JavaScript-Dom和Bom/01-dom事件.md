@@ -150,3 +150,7 @@ alert("W3C Hello");
 - mousemove、mouseout 这样的事件，虽然有事件冒泡，但是只能不断通过位置去计算定位，对性能消耗高，不适合事件委托
 
 ---
+
+## 自定义事件
+
+CustomEvent

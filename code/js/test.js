@@ -1,117 +1,43 @@
-/*
- * @Author: mokinzhao
- * @Date: 2021-05-26 10:10:49
- * @Description:
- */
-
-//防抖
-function debounce(fn, dealy) {
-  let timer = null;
-  return function (params) {
-    if (timer) {
-      clearTimeout(timer);
+class LRUCache{
+    constructor(capacity){
+        this.capacity=capacity
+        this.map=new Map()
     }
-    timer = setTimeout(() => {
-      fn.apply(this, arguments);
-    }, dealy);
-  };
-}
 
-//防抖
-const debounce = function (fn, dealy) {
-  let timer = null;
-  return function () {
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-      fn.apply(this, arguments);
-    }, dealy);
-  };
-};
-
-// 节流
-function thottle(fn, dealy) {
-  let timer = null;
-  return function () {
-    if (!timer) {
-      timer = setTimeout(() => {
-        fn.apply(this, arguments);
-        timer = null;
-      }, dealy);
-    }
-  };
-}
-
-//节流
-const thottle = function (fn, dealy) {
-  let timer = null;
-  return function () {
-    if (timer) {
-      clearTimeout()
-    }
-      timer = setTimeout(() => {
-        fn.apply(this, arguments);
-        timer = null;
-      }, dealy);
-  };
-};
-
-const debounce =function (dealy,fn) {
-    let timer=null
-    return function () {
-        if(timer){
-            clearTimeout(timer)
+    get(key){
+        if(this.map.has(key)){
+            const temp=this.map.get(key)
+            this.map.delete(key)
+            this.map.set(temp)
+            return temp
         }
-        setTimeout(() => {
-            fn.apply(this,arguments)
-        }, dealy);
+        return -1
+
     }
-}
 
-const debounce =function (dealy,fun){
-    let timer =null
-    return function () {
-        if(timer)clearTimeout(timer)
-        timer=setTimeout(() => {    
-            fun.apply(this,arguments)
-        }, dealy);
-    }
-}
+    set(key,val){
+        if(this.map.has(key)) this.map.delete(key)
 
-
-const throttle =function (timeout,fun){
-    let timer =null
-    return function () {
-        if(!timer){
-            timer=setTimeout(() => {
-                fun.apply(this,arguments)
-                timer=null
-            }, timeout);
+        else if  (this.map.size>=this.capacity) {
+            this.map.delete(this.map.keys().next().value)
         }
+        this.map.set(key,val)
+    }
+    clear(){
+        this.map.clear()
     }
 }
 
-// 函数柯理化
-function curry(func) {
-    return function curried(...args){
-        if(args.length>=func.length){
-            return func.apply(this,args)
-        }
-        return function(...args2){
-            return curried.apply(this,args.concat(args2))
-        }
-    }
-}
 
-function sum(a,b,c){
-    return a+b+c
-}
-
-const curriedSum =curry(sum)
-console.log(curriedSum(1,2,3))
-console.log(curriedSum(1)(2)(3))
-console.log(curriedSum(1)(2,3))
-
-
-
+const cache= new LRUCache(2)
+cache.set('1',1)
+cache.set('2',2)
+console.log(cache.get('1'))
+cache.set('3',3)
+console.log(cache.get('2'))
+cache.set('4',4)
+console.log(cache.get('1'))
+console.log(cache.get('3'))
+console.log(cache.get('4'))
+cache.clear()
+console.log(cache.get('4'))
