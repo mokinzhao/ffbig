@@ -24,4 +24,9 @@ title: CI/CD
 
 - <4> deploy阶段
 
-deploy也就是部署阶段，也就是把刚才bulid阶段生成的生产代码，部署到生产访问的服务器上。这里又具体有以下两部分工作要做 
+deploy也就是部署阶段，也就是把刚才bulid阶段生成的生产代码，部署到生产访问的服务器上。这里又具体有以下两部分工作要做
+
+
+## 参考
+
+- [GitLab CI 打造一条自己的流水线](https://mp.weixin.qq.com/s/jvZWWtpsWP7gt9eL7OkSPg)
