@@ -3,6 +3,7 @@ title: CSS基础二
 ---
 
 # 布局
+
 ## 常用布局方式
 
 - table 表格布局
@@ -12,6 +13,8 @@ title: CSS基础二
 - inline-block布局
 
 - flexbox 布局
+
+- grid 网格布局
 
 ## 布局属性
 
@@ -27,10 +30,29 @@ title: CSS基础二
 
 ### position
 
-- static
-- relative
 - absolute
-- fixed (固定位置)
+
+生成绝对定位的元素，相对于static定位以外的一个父元素进行定位。元素的位置通过left、top、right、bottom属性进行规定。
+
+- relative
+
+生成相对定位的元素，相对于其原来的位置进行定位。元素的位置通过left、top、right、bottom属性进行规定。
+
+- fixed
+
+生成绝对定位的元素，指定元素相对于屏幕视⼝（viewport）的位置来指定元素位置。元素的位置在屏幕滚动时不会改变，⽐如回到顶部的按钮⼀般都是⽤此定位⽅式。
+
+- static默认值
+
+没有定位，元素出现在正常的文档流中，会忽略 top, bottom, left, right 或者 z-index 声明，块级元素从上往下纵向排布，⾏级元素从左向右排列。
+
+- inherit
+
+规定从父元素继承position属性的值
+
+- sticky
+
+粘性定位的元素是依赖于用户的滚动，在 position:relative 与 position:fixed 定位之间切换。它的行为就像 position:relative; 而当页面滚动超出目标区域时，它的表现就像 position:fixed;，它会固定在目标位置。元素定位表现为在跨越特定阈值前为相对定位，之后为固定定位。这个特定阈值指的是 top, right, bottom 或 left 之一，换言之，指定 top, right, bottom 或 left 四个阈值其中之一，才可使粘性定位生效。否则其行为与相对定位相
 
 ## FLexBox布局
 
@@ -44,6 +66,8 @@ title: CSS基础二
 ### 缺点
 
 浏览器兼容问题
+
+
 
 ## FLoat 布局
 
@@ -90,7 +114,5 @@ title: CSS基础二
 
 
 ## 推荐阅读
-
-[1.5 万字 CSS 基础拾遗（核心知识、常见需求）](https://juejin.cn/post/6941206439624966152)
 
 [总结了 42 种前端常用布局方案【建议收藏】](https://mp.weixin.qq.com/s/b4hxbgWIBw0K6ateW-7uEQ)

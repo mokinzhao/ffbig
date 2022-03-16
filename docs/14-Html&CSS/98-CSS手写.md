@@ -95,7 +95,7 @@ div{
   }
 ```
 
-## 用CSS创建一个三角形
+## 三角形
 
 - 设置透明, 隐藏其中三个三角形
 
@@ -111,13 +111,131 @@ div{
 - 先将所有边框设为透明, 然后需要哪边再对其设置颜色
 
 ```css
-.box{
-	width:0px;
-	height:0px;
-	border: 50px solid transparent;
-	border-left:50px solid #ef4848;
+div {
+    width: 0;
+    height: 0;
+    border-bottom: 50px solid red;
+    border-right: 50px solid transparent;
+    border-left: 50px solid transparent;
+}
+
+```
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/531c6c250dd8446fb0f264e7b3df6fba~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp)
+
+## 扇形
+
+```css
+div{
+    border: 100px solid transparent;
+    width: 0;
+    height: 0;
+    border-radius: 100px;
+    border-top-color: red;
 }
 ```
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/db5e46aea0ce4805a0c2bbec2743546e~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp)
+
+## 宽高自适应正方形
+
+- 利用vw来实现：
+
+```css
+.square {
+  width: 10%;
+  height: 10vw;
+  background: tomato;
+}
+
+```
+
+- 利用元素的margin/padding百分比是相对父元素width的性质来实现：
+
+```css
+.square {
+  width: 20%;
+  height: 0;
+  padding-top: 20%;
+  background: orange;
+}
+
+```
+
+## 画一条0.5px的线
+
+- 采用transform: scale()的方式，该方法用来定义元素的2D 缩放转换：
+
+```css
+transform: scale(0.5,0.5);
+```
+
+- 采用meta viewport的方式
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=0.5, minimum-scale=0.5, maximum-scale=0.5"/>
+
+```
+
+这样就能缩放到原来的0.5倍，如果是1px那么就会变成0.5px。viewport只针对于移动端，只在移动端上才能看到效果
+
+## 解决1px问题
+
+- 直接写 0.5px
+
+```css
+#container[data-device="2"] {
+  border:0.5px solid #333
+}
+```
+
+- 伪元素先放大后缩小
+
+```css
+#container[data-device="2"] {
+    position: relative;
+}
+#container[data-device="2"]::after{
+      position:absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      content:"";
+      transform: scale(0.5);
+      transform-origin: left top;
+      box-sizing: border-box;
+      border: 1px solid #333;
+    }
+}
+
+```
+
+- viewport 缩放来解决（不推荐）
+
+```js
+const scale = 1 / window.devicePixelRatio;
+// 这里 metaEl 指的是 meta 标签对应的 Dom
+metaEl.setAttribute('content', `width=device-width,user-scalable=no,initial-scale=${scale},maximum-scale=${scale},minimum-scale=${scale}`);
+
+```
+
+这样解决了，但这样做的副作用也很大，整个页面被缩放了。这时 1px 已经被处理成物理像素大小，这样的大小在手机上显示边框很合适。但是，一些原本不需要被缩小的内容，比如文字、图片等，也被无差别缩小掉了
+
+
+## 设置小于12px字体
+
+- 使用Webkit的内核的-webkit-text-size-adjust的私有CSS属性
+
+只要加了-webkit-text-size-adjust:none;字体大小就不受限制了。但是chrome更新到27版本之后就不可以用了。所以高版本chrome谷歌浏览器已经不再支持-webkit-text-size-adjust样式，所以要使用时候慎用。
+
+- 使用css3的transform缩放属性-webkit-transform:scale(0.5)
+
+使用css3的transform缩放属性-webkit-transform:scale(0.5); 注意-webkit-transform:scale(0.75);收缩的是整个元素的大小，这时候，如果是内联元素，必须要将内联元素转换成块元素，可以使用display：block/inline-block/...；
+
+- 使用图片
+
+如果是内容固定不变情况下，使用将小于12px文字内容切出做图片，这样不影响兼容也不影响美观。
 
 ## 实现三栏布局
 
