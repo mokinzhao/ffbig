@@ -105,3 +105,8 @@ function main(entry = "./src/index.js", output = "./dist.js") {
 }
 main();
 ```
+
+## 参考
+
+[手写webpack核心原理，再也不怕面试官问我webpack原理](https://juejin.cn/post/6854573217336541192)
+

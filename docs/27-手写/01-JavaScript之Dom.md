@@ -4,6 +4,65 @@ title: JavaScript之Dom和Bom
 
 ## DOM
 
+## 实现一个事件委托
+
+请补全JavaScript代码，要求如下：
+
+1. 给"ul"标签添加点击事件
+2. 当点击某"li"标签时，该标签内容拼接"."符号。如：某"li"标签被点击时，该标签内容为".."
+注意：
+1. 必须使用DOM0级标准事件（onclick）
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8>
+    </head>
+    <body>
+    	<ul>
+            <li>.</li>
+            <li>.</li>
+            <li>.</li>
+        </ul>
+
+        <script type="text/javascript">
+            // 补全代码
+            document.querySelector('ul').onclick = function(e) {
+              e.target.innerText += '.'
+        }
+
+        </script>
+    </body>
+</html>
+```
+
+- 核心： 区别target和currentTarget
+
+    - target表示当前触发事件的元素
+    - currentTarget是绑定处理函数的元素
+
+只有当事件处理函数绑定在自身的时候，target才会和currentTarget一样
+
+- 参考答案
+
+根据题目要求，需要在“ul”标签上添加事件代理，即添加点击事件。当“li”被点击时，事件捕获到该标签并且向上冒泡直到找到拥有点击事件的标签，核心步骤有：
+给“ul”添加点击事件
+
+1. 在点击事件函数中获取到点击事件“event”
+2. 判断触发该点击事件的“event”目标是否为“li”标签
+3. 如果是“li”标签，则修改该标签的内容
+
+```js
+document.querySelector('ul').onclick = event => {
+    event = event || window.event
+    if(event.target.nodeName.toLowerCase() === 'li') {
+        event.target.innerText += '.'
+    }
+}
+```
+
+
 ### 实现一个可以拖拽的DIV
 
 ```js

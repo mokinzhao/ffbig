@@ -126,7 +126,7 @@ myCar.hooks.calculateRoutes.promise("i", "love", "tapable").then(
 
 运行结果
 
-```
+```js
 WarningLampPlugin
 Accelerating to hello
 tapPromise to ilovetapable

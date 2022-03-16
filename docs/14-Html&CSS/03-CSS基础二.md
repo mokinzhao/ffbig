@@ -1,7 +1,8 @@
 ---
-title: CSS基础二布局
+title: CSS基础二
 ---
 
+# 布局
 ## 常用布局方式
 
 - table 表格布局
@@ -88,8 +89,8 @@ title: CSS基础二布局
 - media query
 
 
-## 参考
+## 推荐阅读
 
 [1.5 万字 CSS 基础拾遗（核心知识、常见需求）](https://juejin.cn/post/6941206439624966152)
 
-
+[总结了 42 种前端常用布局方案【建议收藏】](https://mp.weixin.qq.com/s/b4hxbgWIBw0K6ateW-7uEQ)
