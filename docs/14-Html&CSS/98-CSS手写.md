@@ -95,6 +95,12 @@ div{
   }
 ```
 
+5. grid + justify-content + align-content
+6. grid + justify-items + align-content
+7. grid + justify-items + align-items
+8. grid + place-items: center
+9. grid + place-content: center
+
 ## 三角形
 
 - 设置透明, 隐藏其中三个三角形
@@ -181,6 +187,28 @@ transform: scale(0.5,0.5);
 
 ## 解决1px问题
 
+- 通过伪类和 transform 实现（相对完美）
+
+```js
+.scale-1px-bottom {
+    position: relative;
+    border:none;
+}
+.scale-1px-bottom::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: #000;
+    width: 100%;
+    height: 1px;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+```
+
 - 直接写 0.5px
 
 ```css
@@ -211,6 +239,7 @@ transform: scale(0.5,0.5);
 
 ```
 
+
 - viewport 缩放来解决（不推荐）
 
 ```js
@@ -222,6 +251,7 @@ metaEl.setAttribute('content', `width=device-width,user-scalable=no,initial-scal
 
 这样解决了，但这样做的副作用也很大，整个页面被缩放了。这时 1px 已经被处理成物理像素大小，这样的大小在手机上显示边框很合适。但是，一些原本不需要被缩小的内容，比如文字、图片等，也被无差别缩小掉了
 
+- [7种方法解决移动端Retina屏幕1px边框问题](https://www.jianshu.com/p/7e63f5a32636)
 
 ## 设置小于12px字体
 

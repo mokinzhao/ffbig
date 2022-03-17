@@ -74,11 +74,13 @@ ul ol li .red {
 
 > 还有一些靠绝对定位把元素移到可视区域外，或者用 clip-path 进行裁剪的操作过于 Hack，就不提了。
 
-## em\px\rem 区别？
+## em\px\rem\vw\wh 区别？
 
 - px：绝对单位，页面按精确像素展示。
 - em：相对单位，基准点为父节点字体的大小，如果自身定义了 font-size 按自身来计算（浏览器默认字体是 16px），整个页面内 1em 不是一个固定的值。
 - rem：相对单位，可理解为”root em”, 相对根节点 html 的字体大小来计算，CSS3 新加属性，chrome/firefox/IE9+支持
+- vw: viewport width 视口的宽度 1vw=1%
+- vh: viewport height
 
 ## 块级元素水平居中的方法？
 
@@ -201,9 +203,28 @@ CSS 中的 z-index 属性控制重叠元素的垂直叠加顺序，默认元素�
 
 ## 清除浮动有哪些方法？
 
-- 空 div 方法：`<div style="clear:both;"></div>`
-- Clearfix 方法：上文使用.clearfix 类已经提到
-- overflow: auto 或 overflow: hidden 方法，使用 BFC
+不清楚浮动会发生高度塌陷：浮动元素父元素高度自适应（父元素不写高度时，子元素写了浮动后，父元素会发生高度塌陷）
+
+- clear清除浮动（添加空div法）在浮动元素下方添加空div,并给该元素写css样式：{clear:both;height:0;overflow:hidden;}
+- 给浮动元素父级设置高度
+- 父级同时浮动（需要给父级同级元素添加浮动）
+- 父级设置成inline-block，其margin: 0 auto居中方式失效
+- 给父级添加overflow:hidden 清除浮动方法
+- 万能清除法 after伪类 清浮动（现在主流方法，推荐使用）
+
+```css
+.float_div:after{
+  content:".";
+  clear:both;
+  display:block;
+  height:0;
+  overflow:hidden;
+  visibility:hidden;
+}
+.float_div{
+  zoom:1
+}
+```
 
 > 在 flex 已经成为布局主流之后，浮动这种东西越来越少见了，毕竟它的副作用太大
 
@@ -320,11 +341,19 @@ BFC 是指**一个独立的渲染区域，只有 Block-level Box 参与， 它�
 
 BFC 触发条件:
 
-- 根元素，即 HTML 元素
+- 根元素，即 HTML 元素，HTML 就是一个 BFC
 - position: fixed/absolute
 - float 不为 none
 - overflow 不为 visible
 - display 的值为 inline-block、table-cell、table-caption
+
+### BFC 的特性
+
+- 内部的 Box 会在垂直方向上一个接一个的放置
+- 垂直方向上的距离由 margin 决定
+- bfc 的区域不会与 float 的元素区域重叠
+- 计算 bfc 的高度时，浮动元素也参与计算
+- bfc 就是页面上的一个独立容器，容器里面的子元素不会影响外面元素。
 
 ### 作用是什么？
 
@@ -393,6 +422,13 @@ translate()是 transform 的一个值。改变 transform 或 opacity 不会触�
 web 应用有不同设备尺寸和分辨率，这时需要响应式界面设计来满足复杂的布局需求，Flex 弹性盒模型的优势在于开发人员只是声明布局应该具有的行为，而不需要给出具体的实现方式，浏览器负责完成实际布局，当布局涉及到不定宽度，分布对齐的场景时，就要优先考虑弹性盒布局
 
 > 具体用法移步阮一峰的[flex 语法](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)、[flex 实战](http://www.ruanyifeng.com/blog/2015/07/flex-examples.html)，讲得非常通俗易懂，而且我们一两句话说不清楚。
+
+## BFC 与 IFC 区别 ？
+
+BFC 是块级格式上下文，IFC 是行内格式上下文：
+
+内部的 Box 会水平放置
+水平的间距由 margin，padding，border 决定
 
 ## 关于 CSS 的动画与过渡问题
 

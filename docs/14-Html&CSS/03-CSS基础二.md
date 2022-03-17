@@ -22,11 +22,11 @@ title: CSS基础二
 
 ### display
 
-- block
-- inline
-- inline-block
-- flex
-- table
+- 块级盒子：display 为 block、list-item、table、flex、grid、flow-root
+
+- 行内级盒子：display 为 inline、inline-block、inline-table
+
+所有块级盒子都会参与 BFC，呈现垂直排列；而所有行内级盒子都参会 IFC，呈现水平排列。
 
 ### position
 

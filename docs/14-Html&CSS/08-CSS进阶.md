@@ -124,7 +124,18 @@ title: CSS进阶
 
 简单来说，使用 @media 查询，可以针对不同的媒体类型定义不同的样式。@media 可以针对不同的屏幕尺寸设置不同的样式，特别是需要设置设计响应式的页面，@media 是非常有用的。当重置浏览器大小的过程中，页面也会根据浏览器的宽度和高度重新渲染页面。
 
+## 关于 CSS 的动画与过渡问题
 
+animation、transition、transform、translate 这几个属性要搞清楚：
+
+- animation：用于设置动画属性，他是一个简写的属性，包含6个属性
+- transition：用于设置元素的样式过度，和animation有着类似的效果，但细节上有很大的不同
+- transform：用于元素进行旋转、缩放、移动或倾斜，和设置样式的动画并没有什么关系
+- translate：translate只是transform的一个属性值，即移动，除此之外还有 scale 等
+
+[深入理解 CSS 动画 animation](https://www.cnblogs.com/xiaohuochai/p/5391663.html)
+
+[深入理解 CSS 过渡 transition](https://www.cnblogs.com/xiaohuochai/p/5347930.html)
 
 ## 参考
 

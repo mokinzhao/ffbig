@@ -79,6 +79,16 @@ border
 
 处理多个浏览器的兼容性问题
 
+## 格式化上下文
+
+格式化上下文（Formatting Context）是 CSS2.1 规范中的一个概念，大概说的是页面中的一块渲染区域，规定了渲染区域内部的子元素是如何排版以及相互作用的。
+
+不同类型的盒子有不同格式化上下文，大概有这 4 类：
+
+- BFC (Block Formatting Context) 块级格式化上下文；
+- IFC (Inline Formatting Context) 行内格式化上下文；
+- FFC (Flex Formatting Context) 弹性格式化上下文；
+- GFC (Grid Formatting Context) 格栅格式化上下文
 
 ## 问题集锦
 
