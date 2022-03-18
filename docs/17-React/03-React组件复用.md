@@ -657,7 +657,7 @@ ReactDOM.render(<App />, document.getElementById("app"));
 
 使用这个模式，你可以将 **任何** HOC 替换一个具有 render prop 的一般组件。这点我们可以证明！😅
 
-### Render Props > HOCs
+### Render Props > HOC
 
 一个更将强有力的，能够证明 render prop 比 HOC 要强大的证据是，任何 HOC 都能使用 render prop 替代，反之则不然。下面的代码展示了使用一个一般的、具有 render prop 的 `<Mouse>` 组件来实现的 `withMouse` HOC：
 

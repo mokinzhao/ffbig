@@ -1,5 +1,5 @@
 ---
-title: 私有npm仓库
+title: 搭建私有npm仓库
 ---
 
 ## 私有npm仓库的优点

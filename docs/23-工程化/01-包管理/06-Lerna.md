@@ -16,3 +16,8 @@ title: Lerna
 
  npm 私服
 - verdaccio
+
+
+## 推荐阅读
+
+[Lerna 运行流程剖析](https://mp.weixin.qq.com/s/qYK-4WABULffy5tRV9T46A)
