@@ -48,3 +48,5 @@ Controller 拦截器
 ## 参考
 
 [Nest.js 用了 Express 但也没完全用](https://mp.weixin.qq.com/s/qcy5sL0sV6wnxif8EEBrMQ)
+
+[Nest.js 是如何实现 AOP 架构的？](https://mp.weixin.qq.com/s/fs7EPC8lzOABHhj3ayS0Jw)

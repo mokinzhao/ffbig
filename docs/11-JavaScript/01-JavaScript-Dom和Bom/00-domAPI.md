@@ -124,6 +124,6 @@ console.log(collection.length);
 我们通过 console.log 可以看到集合的大小为 0。之后我们添加了一个 class 为 winter 的 div，这时候我们再看集合，可以发现，集合中出现了新添加的元素。
 这说明浏览器内部是有高速的索引机制，来动态更新这样的集合的。所以，尽管 querySelector 系列的 API 非常强大，我们还是应该尽量使用 getElement 系列的 API。
 
-### 文章参考
+## 文章参考
 
 [JavaScript 操作 DOM 常用的 API](https://juejin.cn/post/6844903604445249543#heading-31)

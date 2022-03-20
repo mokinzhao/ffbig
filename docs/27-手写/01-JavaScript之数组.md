@@ -205,6 +205,8 @@ Array.prototype.myFind = function (callback, thisArg) {
 4. 返回最终结果
 
 ```js
+
+
 Array.prototype.myReduce = function (callback, initialValue) {
     // 判断调用该API的元素是否为null
     if (this == null) {
@@ -214,34 +216,13 @@ Array.prototype.myReduce = function (callback, initialValue) {
     if (typeof callback !== "function") {
         throw new TypeError(callback + ' is not a function')
     }
-    const arr = this
-    const len = arr.length
-    // 第二个参数
-    let accumulator = initialValue
-    let index = 0
-    // 如果第二个参数是undefined 则数组的第一个有效值
-    // 作为累加器的初始值
-    if (accumulator === undefined) {
-        // 找到数组中的第一个有效值 不一定就是arr[0]
-        while (index < len && !(index in arr)) {
-            index++
-        }
-        if (index >= len) {
-            throw new TypeError('Reduce of empty array with no initial value')
-        }
-        // 输出第一个有效数组元素，作为累加器的第一个元素
-        accumulator = arr[index++]
-    }
-    while (index < len) {
-        if (index in arr) {
-            // arr[index] 为 accumulator 的下一个元素
-            accumulator = callback.call(undefined, accumulator, arr[index], index, arr)
-        }
-        // 持续后移
-        index++
-    }
-    // 返回结果
-    return accumulator
+    let ret=initialValue || 0
+    const arr=this
+    for(let i=0;i<arr.length;i++){
+        ret=callback.call(null,ret,arr[i],i,arr)
+     }
+    return ret
+
 }
 
 ```

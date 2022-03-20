@@ -168,7 +168,7 @@ if (!Array.isArray) {
 
 数组的基本概念到这里基本讲得差不多了，下面我们就来看看让人眼花缭乱的 30 多个数组的基本方法。
 
-### 改变自身的9个方法
+## 改变自身的9个方法
 
 基于 ES6，会改变自身值的方法一共有 9 个,分别为 pop、push、reverse、shift、sort、splice、unshift,以及两个 ES6 新增的方法 copyWithin 和 fill。
 
@@ -311,7 +311,7 @@ var merge = function (nums1, m, nums2, n) {
 
 改变数组自身的 9 个方法理解起来并不复杂，只要你对上面这些代码理解了，并且多加实践就够了，因此就讲解到这里。下面我们再来看看那些不改变自身的方法都是怎么使用的。
 
-#### 不改变自身的方法
+## 不改变自身的9个方法
 
 基于 ES7，不会改变自身的方法也有 9 个，分别为 concat、join、slice、toString、toLocaleString、indexOf、lastIndexOf、未形成标准的 toSource，以及 ES7 新增的方法 includes。
 
@@ -387,7 +387,7 @@ console.log(array.includes(NaN)); // true
 
 不改变数组自身的 9 个方法到这里也基本回顾差不多了，下面我们接着看看数组遍历的方法都是怎么用的。
 
-#### 数组遍历的方法
+## 数组遍历的12个方法
 
 基于 ES6，不会改变自身的遍历方法一共有 12 个，分别为 forEach、every、some、filter、map、reduce、reduceRight，以及 ES6 新增的方法 entries、find、findIndex、keys、values。
 
@@ -610,3 +610,7 @@ arr.reduce(function (prev, current, index, array) {
 - 所有删除元素的方法，比如 pop、shift、splice 一律返回删除的元素，或者返回删除的多个元素组成的数组；
 
 - 部分遍历方法，比如 forEach、every、some、filter、map、find、findIndex，它们都包含 function(value,index,array){} 和 thisArg 这样两个形参。
+
+## 推荐阅读
+
+[【干货】js 数组详细操作方法及解析合集](https://juejin.cn/post/6844903614918459406#heading-4)

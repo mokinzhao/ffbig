@@ -2,7 +2,6 @@
 title: CSS进阶
 ---
 
-
 ## FLex布局深入
 
 - [为什么要使用flex布局?](https://juejin.cn/post/7063823914136256543)
@@ -24,6 +23,8 @@ title: CSS进阶
 - rem/media query
 
 - 设计上：隐藏/折行/自适应
+
+- [2022 年移动端适配方案指南 — 全网最新最全](https://juejin.cn/post/7046169975706353701)
 
 - [移动端适配解决方案](https://juejin.cn/post/7057156620320505863)
 
@@ -126,12 +127,18 @@ title: CSS进阶
 
 ## 关于 CSS 的动画与过渡问题
 
-animation、transition、transform、translate 这几个属性要搞清楚：
+1. animation、transition、transform、translate 这几个属性要搞清楚：
 
 - animation：用于设置动画属性，他是一个简写的属性，包含6个属性
 - transition：用于设置元素的样式过度，和animation有着类似的效果，但细节上有很大的不同
 - transform：用于元素进行旋转、缩放、移动或倾斜，和设置样式的动画并没有什么关系
 - translate：translate只是transform的一个属性值，即移动，除此之外还有 scale 等
+
+2. transition和animation的区别
+
+- transition是过度属性，强调过度，它的实现需要触发一个事件（比如鼠标移动上去，焦点，点击等）才执行动画。它类似于flash的补间动画，设置一个开始关键帧，一个结束关键帧。
+
+- animation是动画属性，它的实现不需要触发事件，设定好时间之后可以自己执行，且可以循环一个动画。它也类似于flash的补间动画，但是它可以设置多个关键帧（用@keyframe定义）完成动画。
 
 [深入理解 CSS 动画 animation](https://www.cnblogs.com/xiaohuochai/p/5391663.html)
 

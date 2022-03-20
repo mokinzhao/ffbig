@@ -215,12 +215,12 @@ TCP的拥塞控制机制主要是以下四种机制：
 - 如果接收方应用程序读数据的速度能够与数据到达的速度一样快，接收方将在每一确认中发送一个正的窗口通告。
 - 如果发送方操作的速度快于接收方，接收到的数据最终将充满接收方的缓冲区，导致接收方通告一个零窗口 。发送方收到一个零窗口通告时，必须停止发送，直到接收方重新通告一个正的窗口。
 
-
 ---
 
-## 参考
+## 推荐阅读
 
-1. [饿了么面试](https://github.com/ElemeFE/node-interview/blob/master/sections/zh-cn/network.md#net)
-2. [TCP](https://hit-alibaba.github.io/interview/basic/network/TCP.html)
+1. [(神三元)TCP协议灵魂之问，巩固你的网路底层基础](https://juejin.cn/post/6844904070889603085#heading-27)
 
----
+2. [饿了么面试](https://github.com/ElemeFE/node-interview/blob/master/sections/zh-cn/network.md#net)
+
+3. [TCP](https://hit-alibaba.github.io/interview/basic/network/TCP.html)

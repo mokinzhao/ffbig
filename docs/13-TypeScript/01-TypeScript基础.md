@@ -295,7 +295,9 @@ interface 只能定义一个对象
 
 ### 类型别名(type)
 
-### TypeScript 文章推荐
+### 推荐阅读
+
+- [「1.9W字总结」一份通俗易懂的 TS 教程，入门 + 实战！](https://juejin.cn/post/7068081327857205261)
 
 - 深入理解 TypeScript <https://jkchao.github.io/typescript-book-chinese/#why>
 
