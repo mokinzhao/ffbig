@@ -22,5 +22,11 @@ title: TypeScript-面试题
 
 
 
+## 参考
+
+[TypeScript面试题及答案收录[不断更新]](https://juejin.cn/post/6999985372440559624)
+
+[「面试题」TypeScript](https://juejin.cn/post/6988763249982308382)
+
 
 

@@ -332,3 +332,5 @@ console.log(square.area);
 [做完这 48 道题彻底弄懂 JS 继承](https://juejin.cn/post/6844904098941108232#heading-38)
 
 [JS 继承的 六 种实现方式](https://juejin.cn/post/6844903929763856397#heading-7)
+
+[前端必知必会ES5、ES6的7种继承](https://juejin.cn/post/6844903889553063949#heading-0)

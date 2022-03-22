@@ -392,6 +392,62 @@ function race(promises){
 - 接收一个Promise 数组，数组中如有非Promise项，则此项当做成功
 - 把每一个Promise的结果，集合成数组，返回
 
+- 应用
+
+```js
+const promise1 = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise1");
+      //   reject("error promise1 ");
+    }, 3000);
+  });
+};
+const promise2 = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise2");
+      //   reject("error promise2 ");
+    }, 1000);
+  });
+};
+const promise3 = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      //   resolve("promise3");
+      reject("error promise3 ");
+    }, 2000);
+  });
+};
+
+//  Promise.all 会走到catch里面
+Promise.all([promise1(), promise2(), promise3()])
+  .then((res) => {
+    console.log(res); 
+  })
+  .catch((error) => {
+    console.log("error", error); // error promise3 
+  });
+  
+// Promise.allSettled 不管有没有错误，三个的状态都会返回
+Promise.allSettled([promise1(), promise2(), promise3()])
+  .then((res) => {
+    console.log(res);  
+    // 打印结果 
+    // [
+    //    {status: 'fulfilled', value: 'promise1'}, 
+    //    {status: 'fulfilled',value: 'promise2'},
+    //    {status: 'rejected', reason: 'error promise3 '}
+    // ]
+  })
+  .catch((error) => {
+    console.log("error", error); 
+  });
+
+```
+
+- 实现
+
 ```js
 function allSettled(promises){
     return new Promise((resolve,reject)=>{
@@ -428,6 +484,48 @@ function allSettled(promises){
 - 接收一个Promise数组，数组中如有非Promise项，则此项当做成功
 - 如果有一个Promise成功，则返回这个成功结果
 - 如果所有Promise都失败，则报错
+
+
+- 应用
+
+```js
+const promise1 = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise1");
+      //  reject("error promise1 ");
+    }, 3000);
+  });
+};
+const promise2 = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise2");
+      // reject("error promise2 ");
+    }, 1000);
+  });
+};
+const promise3 = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise3");
+      // reject("error promise3 ");
+    }, 2000);
+  });
+};
+Promise.any([promise1(), promise2(), promise3()])
+  .then((first) => {
+    // 只要有一个请求成功 就会返回第一个请求成功的
+    console.log(first); // 会返回promise2
+  })
+  .catch((error) => {
+    // 所有三个全部请求失败 才会来到这里
+    console.log("error", error);
+  });
+
+```
+
+- 实现
 
 ```js
 function any (promises){
@@ -530,7 +628,6 @@ Promise.reject(123).finally((data) => {
 })
 
 ```
-
 
 - 代码实现
 

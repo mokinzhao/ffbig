@@ -1,5 +1,5 @@
 ---
-title: Proxy和DefineProperty优劣对比
+title: Proxy VS DefineProperty
 ---
 
 ## 前言

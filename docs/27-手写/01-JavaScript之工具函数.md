@@ -160,6 +160,21 @@ console.log(obj1); // { person: { name: 'wade', age: 41 }, sports: 'basketball' 
 
 ```
 
+- for 循环
+
+```js
+    const _shallowClone = target => {
+                // 补全代码
+               const obj={}
+               for(const key in target){
+                   if(target.hasOwnProperty(key)){
+                       obj[key]=target[key]
+                   }
+               }
+                return obj
+            }
+```
+
 - 展开运算符...
 
 展开运算符是一个 es6 / es2015特性，它提供了一种非常方便的方式来执行浅拷贝，这与 Object.assign ()的功能相同。

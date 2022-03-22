@@ -1,13 +1,7 @@
 ---
-title: Javascript-Map/Set
+title: Set/WeakSet&Map/WeakMap
 ---
 
-## Map 与 WeakMap
-
-
-
-
-## Set 与 WeakSet
 
 
 
