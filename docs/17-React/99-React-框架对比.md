@@ -4,29 +4,50 @@ title: React扩展-框架对比
 
 ## VS Vue
 
-
 ### 技术区别
 
 - 设计理念
 
+react 一个渐进式的UI库
+
+Vue 响应式
+
+- 渲染机制
+
+react ：单向数据流，基于 Fiber 架构，异步可中断更新，
+
+Vue2.x 基于 Object.DefineProperty
+
+Vue3.x 基于Proxy
+
+监听劫持对象，响应式操作DomDiff算法
+
+- Diff算法不一样
+
 
 ### 生态区别
 
+- 作者
 
+React:faceBook
 
+Vue：尤雨稀为主的团队
 
+- React 生态强大 阿里、字节等大厂React技术栈偏多
+
+- Vue 中小厂使用的多一些，上手简单方便。有一揽子解决方案
+
+### 推荐阅读
+
+- [阿里三面：灵魂拷问——有react fiber，为什么不需要vue fiber？](https://mp.weixin.qq.com/s?__biz=Mzg2Nzc0NzQ3OQ==&mid=2247484417&idx=1&sn=d0e84f484fc88b67ebcc36d179b8eff8&chksm=ceb797f9f9c01eefeaa817c0634c68ec6b05c844ac8370aee05b6424011fa4c5da42b9aa28ab&scene=178&cur_album_id=2279444241133240321#rd)
 
 ## Preact
-
-
-
-
 
 ## Solid
 
 [Solid.js 就是我理想中的 React](https://mp.weixin.qq.com/s/0sGJ9r_9C9EPzliEkUuyTg)
 
-### Svelte
+## Svelte
 
 在《Stack Overflow 于 2021 年准备的最新调查》中，71.47% 的受访者将 Svelte 选为最受欢迎的框架，领先于 React.js 的 69.28% 和 Vue 的 64.41%。而在 JS 现状 2020 调查 中，Svelte 在用户满意度 89%、兴趣度 66% 均取得了第一的成绩表现。Svelte 从一诞生，就用来对标 React/Vue 等框架，我们也看到了关于 Svelte 与 React 的争论，看到了 19 年尤大回复的《如何看待 Svelte 这个前端框架》以及 21 年 vue-Svelte-size-analysis 评测，足见 Svelte 的发展态势。
 
@@ -57,40 +78,41 @@ title: React扩展-框架对比
 
 ## VS Angular
 
-1. 体系结构
+- 体系结构
 
 React : 只有 MVC 中的 View
 
 Angular: 完整的 MVC
 
-2. 渲染
+- 渲染
+
 可以在服务器端渲染
 
 客户端渲染
 
-3. DOM
+- DOM
+
 使用 virtual DOM
 
 使用 real DOM
 
-4. 数据绑定
+- 数据绑定
 
 单向数据绑定
 
 双向数据绑定
 
-5. 调试
+- 调试
 
 编译时调试
 
 运行时调试
 
-6. 作者
+- 作者
 
 Facebook
 
 Google
-
 
 ## 参考
 

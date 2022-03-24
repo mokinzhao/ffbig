@@ -23,7 +23,10 @@ WebRTC (Web Real-Time Communications) 是一项实时通讯技术，它允许网
 
 当然 WebRTC 也是支持中间媒体服务器的，有些场景下确实少不了服务器转发。我们这篇只探讨点对点的模式，旨在帮助大家更容易的了解并上手 WebRTC。
 
-## 参考
+## 推荐阅读
+
+[浅谈WebRTC技术原理与应用-ELab](https://mp.weixin.qq.com/s/cviG0xFTTpmXeNO8nJaIIg)
 
 [音视频通信加餐 —— WebRTC一肝到底](https://mp.weixin.qq.com/s/6vzPGwoqJCgiA7NMjwOUWw)
+
 

@@ -15,3 +15,6 @@ title: APM平台
 
 
 
+## 推荐阅读
+
+[深入浅出前端监控](https://mp.weixin.qq.com/s/I9tTlYjKmnfrpyc6hibY1Q)

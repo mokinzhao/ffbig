@@ -56,6 +56,10 @@ title: React原理-问答汇总
 
 ## 其他
 
+### 懒加载（lazy）实现原理
+
+- [深入理解React：懒加载（lazy）实现原理](https://juejin.cn/post/6844904191853494280)
+
 ### React的异常捕获原理是什么？
 
 ### React的设计理念？

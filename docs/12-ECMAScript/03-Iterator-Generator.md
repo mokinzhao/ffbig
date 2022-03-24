@@ -1,5 +1,5 @@
 ---
-title: 迭代器（Iterator）/ 生成器（Generator）
+title: Iterator/Generator
 ---
 
 迭代器（Iterator）是一种迭代的机制，为各种不同的数据结构提供统一的访问机制。任何数据结构只要内部有 Iterator 接口，就可以完成依次迭代操作。
@@ -26,4 +26,3 @@ a.next() // {value: 7, done: false}
 a.next() // {value: 9, done: false}
 a.next() // {value: undefined, done: true}
 ```
-

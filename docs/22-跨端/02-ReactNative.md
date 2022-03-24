@@ -266,7 +266,6 @@ RN 会把应用的 JS 代码（包括依赖的 framework）编译成一个 buddl
 - UI thread：这个可以看作是主线程，可以看作是 UI Manager 线程，负责页面的交互和控件绘制逻辑。
 - Shadow thread: 这个线程是负责 Native 布局，提供给 yoga 引擎使用。
 
-
 ## 参考
 
 - [React Native 原理与实践](https://juejin.cn/post/6916452544956858382)
