@@ -67,3 +67,12 @@ React 还可以使用 Node 进行服务器渲染，或使用 React Native 开发
 ## React不足
 
  React 并不是一个一揽子框架，比如路由一类的功能，React 团队更希望交给社区来解决。所以导致在技术选型与学习使用上有比较高的成本。但也正因为社区蓬勃发展，非官方的一揽子解决方案还是有的，比如 DvaJS、React-coat 等填补了生态位的缺失。所以 React 也是一个使用者上限与下限差距极大的框架。
+
+
+
+## 推荐阅读
+
+[一份 2.5k star 的《React 开发思想纲领》](https://mp.weixin.qq.com/s/IrsqQxU7-IPh0S8HerJOsw)
+
+
+

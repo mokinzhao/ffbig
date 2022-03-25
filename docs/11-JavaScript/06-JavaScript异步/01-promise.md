@@ -2,6 +2,36 @@
 title: Javascript异步-Promise
 ---
 
+
+## 特性
+
+- 对象的状态不受外界影响。promise对象代表一个异步操作，有三种状态，pending（进行中）、fulfilled（已成功）、rejected（已失败）。只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态，这也是promise这个名字的由来——“承诺”；
+
+- 一旦状态改变就不会再变，任何时候都可以得到这个结果。promise对象的状态改变，只有两种可能：从pending变为fulfilled，从pending变为rejected。这时就称为resolved（已定型）。如果改变已经发生了，你再对promise对象添加回调函数，也会立即得到这个结果。这与事件（event）完全不同，事件的特点是：如果你错过了它，再去监听是得不到结果的。
+
+- Promise.then 会返回一个新的Promise 支持链式调用
+
+## 缺点
+
+- 无法取消Promise，一旦新建它就会立即执行，无法中途取消。
+- 如果不设置回调函数，Promise内部抛出的错误，不会反应到外部。
+- 当处于pending状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）
+
+## 基本使用
+
+```js
+const promise = new Promise(function(resolve, reject) {
+  // ... some code
+  if (/* 异步操作成功 */){
+    resolve(value);
+  } else {
+    reject(error);
+  }
+});
+
+```
+
+
 ## 实现Promise/A+规范的Promise
 
 - Promise/A+规范
@@ -649,9 +679,8 @@ Promise.prototype.finally = function (callback) {
 
 ## 参考链接
 
-[Promise知识汇总和面试情况](https://segmentfault.com/a/1190000039699000)
+- [Promise知识汇总和面试情况](https://segmentfault.com/a/1190000039699000)
 
-[手把手一行一行代码教你“手写Promise“](https://juejin.cn/post/7043758954496655397#heading-1)
+- [手把手一行一行代码教你“手写Promise“](https://juejin.cn/post/7043758954496655397#heading-1)
 
-[来45道Promise面试题一次爽到底(1.1w字用心整理)](https://mp.weixin.qq.com/s?__biz=MzkzNTIwNTAwOA==&mid=2247487580&idx=1&sn=373b4c4a33e6597cfd77381de4444acc&
-source=41#wechat_redirect)
+- [来45道Promise面试题一次爽到底(1.1w字用心整理)](https://mp.weixin.qq.com/s?__biz=MzkzNTIwNTAwOA==&mid=2247487580&idx=1&sn=373b4c4a33e6597cfd77381de4444acc&source=41#wechat_redirect)

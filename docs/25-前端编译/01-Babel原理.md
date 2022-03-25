@@ -39,7 +39,7 @@ const add = (a, b) => a + b;
 
 我们用 babel 解析后便是这种形式:
 
-```
+```js
 {
   "type": "File",
   "start": 0,
