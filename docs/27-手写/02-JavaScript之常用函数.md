@@ -389,6 +389,65 @@ function treeToList(data) {
 
 ```
 
+## 模拟document.findById
+
+```js
+const object={id:'1',children:[{id:'2',children:[{id:'3',children:[]}]}]}
+const search = function(obj,targetId) {
+    let result=null
+    function dfs(obj){
+        if(obj.id==targetId){
+            result =obj
+        }else if (obj.children){
+            obj.children.forEach((val)=>{
+                if(val.id==targetId){
+                    result= val
+                }else{
+                    dfs(val,targetId)
+                }   
+            })
+        }
+    }
+    dfs(obj)
+    return result
+};
+
+console.log('res',search(object,'3'))
+
+```
+
+## 版本号比较
+
+```js
+function compareVersion(v1, v2) {
+  v1 = v1.split('.')
+  v2 = v2.split('.')
+  const len = Math.max(v1.length, v2.length)
+ // 调整两个版本号位数相同
+  while (v1.length < len) {
+    v1.push('0')
+  }
+  while (v2.length < len) {
+    v2.push('0')
+  }
+  // 循环判断每位数的大小
+  for (let i = 0; i < len; i++) {
+    const num1 = parseInt(v1[i])
+    const num2 = parseInt(v2[i])
+
+    if (num1 > num2) {
+      return 1
+    } else if (num1 < num2) {
+      return -1
+    }
+  }
+
+  return 0
+}
+
+compareVersion('1.11.0', '1.9.9') // 1
+```
+
 ## 大数相加
 
 - 题目描述
@@ -483,6 +542,40 @@ const formatPrice = (number) => {
 }
 
 console.log(formatPrice(123456789.3343)) // 123,456,789.3343
+
+```
+
+- 方法二
+
+把数字转换成字符串后，打散为数组，再从末尾开始，逐个把数组中的元素插入到新数组（result）的开头。每插入一个元素，counter就计一次数（加1），当counter为3的倍数时，就插入一个逗号，但是要注意开头（i为0时）不需要逗号。最后通过调用新数组的join方法得出结果。
+
+```js
+
+function toThousands(num) {
+    var result = [ ], counter = 0;
+    num = (num || 0).toString().split('');
+    for (var i = num.length - 1; i >= 0; i--) {
+        counter++;
+        result.unshift(num[i]);
+        if (!(counter % 3) && i != 0) { result.unshift(','); }
+    }
+    return result.join('');
+}
+
+```
+
+- 方法三
+
+```js
+function toThousands(num) {
+    var num = (num || 0).toString(), result = '';
+    while (num.length > 3) {
+        result = ',' + num.slice(-3) + result;
+        num = num.slice(0, num.length - 3);
+    }
+    if (num) { result = num + result; }
+    return result;
+}
 
 ```
 

@@ -100,3 +100,4 @@ Socket.io不是Websocket，它只是将Websocket和轮询 （Polling）机制以
 
 - [前端架构师破局技能，NodeJS 落地 WebSocket 实践](https://juejin.cn/post/7038491693997359117)
 
+- [2万字长文肝了一个实时聊天室，只为让她学会websocket](https://mp.weixin.qq.com/s/5xMt7LRsY3kOiXrt0YnSVQ)

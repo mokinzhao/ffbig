@@ -45,7 +45,6 @@ ReactDOM.render(<App />, rootNode);
 
 ![react17-click](https://zh-hans.reactjs.org/static/bb4b10114882a50090b8ff61b3c4d0fd/31868/react_17_delegation.png)
 
-
 ### 全新的 JSX 转换(无需import React)
 
 React v17 支持了全新的 JSX 转换。我们还针对 React 16.14.0，React 15.7.0 和 0.14.0 版本做了兼容。请注意，此功能完全可选，并非必须使用。之前的 JSX 转换将会继续维护，并且没有停止支持它的计划。
@@ -105,8 +104,6 @@ React 17 只在事件回调中 batching，React 18 则会对任何来源的 setS
 
 React 18 将在明年与新的 React Native 架构（可用 React 18 特性）一起发布。
 
-
-
 ## 参考链接
 
 - [React18 中新的 Suspense SSR 架构](https://mp.weixin.qq.com/s/XY0ko6MFy0ag3e_QGF6JDg)
@@ -115,4 +112,4 @@ React 18 将在明年与新的 React Native 架构（可用 React 18 特性）�
 
 - [小推理：React18比老版React更优秀的一个地方](https://mp.weixin.qq.com/s/PXPcnDMNkMLeJFcXJAoM9w)
 
-
+- [React 18 超全升级指南](https://mp.weixin.qq.com/s/0jrUACojPH-dC0bQyOb5vA)

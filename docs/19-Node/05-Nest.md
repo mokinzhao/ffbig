@@ -44,8 +44,9 @@ Controller 拦截器
 
 
 
+## 推荐阅读
 
-## 参考
+[这可能是你看过最全的 「NestJS」 教程了](https://juejin.cn/post/7078847428455530526)
 
 [Nest.js 用了 Express 但也没完全用](https://mp.weixin.qq.com/s/qcy5sL0sV6wnxif8EEBrMQ)
 
