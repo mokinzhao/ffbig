@@ -1,5 +1,5 @@
 ---
-title: React原理-VirtualDom&&DiffPath
+title: React原理-VirtualDom&DiffPath
 ---
 
 ## VirtualDom是什么？
@@ -128,17 +128,18 @@ Fiber 机制下节点与树分别采用 FiberNode 与 FiberTree 进行重构。F
 
 Fiber 机制下，整个更新过程由 current 与 workInProgress 两株树双缓冲完成。当 workInProgress 更新完成后，通过修改 current 相关指针指向的节点，直接抛弃老树，虽然非常简单粗暴，却非常合理。
 
-
 ## 其他框架Dom diff算法
 
 ### Vue
 
 - Vue 2.0 因为使用了 snabbdom，所以整体思路与 React 相同。
+    - 双端比较 O(n^2)
     - 但在元素对比时，如果新旧两个元素是同一个元素，且没有设置 key 时，snabbdom 在 diff 子元素中会一次性对比旧节点、新节点及它们的首尾元素四个节点，以及验证列表是否有变化。
 
 - Vue 3.0 整体变化不大，依然没有引入 Fiber 等设计，也没有时间切片等功能.
     - 加入了静态 标记
-    
+    - 最长递增子序列 O(nlgn)～O(n^2)
+
 ### Preact
 
 在众多的 React-like 框架中，Preact 适用范围最广，生命力最强。它以仅 3kb 的小巧特点应用于对体积追求非常极致的场景。也正因为体积受限，Preact 在 diff 算法上做了裁剪。
@@ -156,4 +157,3 @@ Fiber 机制下，整个更新过程由 current 与 workInProgress 两株树双�
 ## 推荐阅读
 
 [ 与其他框架相比，React 的 diff 算法有何不同？-拉钩教育](https://kaiwu.lagou.com/course/courseInfo.htm?courseId=566#/detail/pc?id=5800)
-

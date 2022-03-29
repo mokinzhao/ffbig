@@ -24,7 +24,22 @@ Vue3.x 基于Proxy
 
 - Diff算法不一样
 
-Vu3 有静态标记
+1. Vue2 首尾4指针，两端向中间移动对比O(n^2)
+2. Vue3 有静态标记
+3. Vue3 使用最长递增子序列 O(nlgn)～O(n^2)
+
+
+- 有Hooks，但是细节不一样
+
+1. Vue Hooks 只能在'setup'周期内使用
+
+vue3 的组件里， setup 是作为一个早于 “created” 的生命周期存在的，无论如何，在一个组件的渲染过程中只会进入一次。
+
+2. React Hooks 只能在函数组件里使用
+
+React函数组件 则完全不同，如果没有被 memorized，它们可能会被不停地触发，不停地进入并执行方法，因此需要开销的心智相比于vue其实是更多的。
+
+
 
 - 其他
 
@@ -41,6 +56,10 @@ Vu3 有静态标记
 2. 数据改变，前者响应式，后者手动setState
 3. React单向绑定，Vue双向绑定
 4. React状态管理工具Redux、Mobx，Vue状态管理工具Vuex
+5. react 可以使用 hoc,vue 使用mixins
+6. Vue 通过 getter/setter 以及一些函数的劫持，能精确知道数据变化，不需要特别的优化就能达到很好的性能
+
+React 默认是通过比较引用的方式进行的，如果不优化（PureComponent/shouldComponentUpdate）可能导致大量不必要的vDOM的重新渲染。这是因为 Vue 使用的是可变数据，而React更强调数据的不可变。
 
 ### 生态区别
 
@@ -134,4 +153,8 @@ Google
 
 ## 参考
 
-[框架究竟解决了啥问题？我们可以脱离它们吗](https://mp.weixin.qq.com/s/J_Fs2jrhOsGdAxlBnJKYCw)
+- [框架究竟解决了啥问题？我们可以脱离它们吗](https://mp.weixin.qq.com/s/J_Fs2jrhOsGdAxlBnJKYCw)
+
+- [图解Diff算法——Vue篇](https://mp.weixin.qq.com/s/8M-pJdKjF6bx5ijtSFKIcw)
+
+- [浅谈：为什么vue和react都选择了Hooks?](https://mp.weixin.qq.com/s/4OhVrsslUfwlIejx-2DA6w)

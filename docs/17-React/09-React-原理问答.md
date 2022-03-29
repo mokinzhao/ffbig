@@ -58,6 +58,8 @@ title: React原理-问答汇总
 
 ### 类组件与函数组件有什么异同？
 
+![vs](https://s0.lgstatic.com/i/image/M00/7E/CE/CgqCHl_PXDiAO20DAABdvYlGsmA577.png)
+
 - 相同点
 
 组件是 React 可复用的最小代码片段，它们会返回要在页面中渲染的 React 元素。也正因为组件是 React 的最小编码单位，所以无论是函数组件还是类组件，在使用方式和最终呈现效果上都是完全一致的。
@@ -100,6 +102,10 @@ props和state是普通的 JS 对象。虽然它们都包含影响渲染输出的
 6. 当所有节点都 doWork 完成后，会触发 commitRoot 方法，React 进入 commit 阶段。
 在 commit 阶段中，React 会根据前面为各个节点打的 Tag，一次性更新整个 dom 元素
 
+<br/>
+<img src="./img/process.png" />
+<br/>
+
 ## Reconciler&Fiber
 
 ### 什么是fiber？fiber架构解决了什么问题？
@@ -121,6 +127,9 @@ props和state是普通的 JS 对象。虽然它们都包含影响渲染输出的
 ## Scheduler&TimeSlice
 
 ### 异步调度原理？
+
+
+
 
 ### React 为什么不用setTimeout？
 

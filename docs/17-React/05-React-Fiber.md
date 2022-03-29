@@ -9,6 +9,20 @@ React 16 之前 ，`reconcilation`  算法实际上是递归，想要中断递�
 
 `Fiber`：**一种将 `recocilation` （递归 diff），拆分成无数个小任务的算法；它随时能够停止，恢复。停止恢复的时机取决于当前的一帧（16ms）内，还有没有足够的时间允许计算。**
 
+- React Fiber 又称为纤程可以理解为：
+
+    React内部实现的一套状态更新机制。支持任务不同优先级，可中断与恢复，并且恢复后可以复用之前的中间状态。
+
+- Fiber包含三层含义：
+
+    - 作为架构来说，之前React15的Reconciler采用递归的方式执行，数据保存在递归调用栈中，所以被称为stack Reconciler。React16的Reconciler基于Fiber节点实现，被称为Fiber Reconciler。
+
+    - 作为静态的数据结构来说，每个Fiber节点对应一个React element，保存了该组件的类型（函数组件/类组件/原生组件...）、对应的DOM节点等信息。
+
+    - 作为动态的工作单元来说，每个Fiber节点保存了本次更新中该组件改变的状态、要执行的工作（需要被删除/被插入页面中/被更新...）。
+
+
+
 ## 你对 Time Slice 的理解?
 
 **时间分片**
@@ -51,10 +65,12 @@ React 16 之前 ，`reconcilation`  算法实际上是递归，想要中断递�
 
 ## 问答环节
 
-::: warning 问
-react的fiber为什么要用链表?
-:::
 
-::: tip 答
+### react的fiber为什么要用链表?
 
-:::
+
+
+## 推荐阅读
+
+[面试官问：React 为什么要使用 Fiber 架构 ？](https://mp.weixin.qq.com/s/4F_1G3zfmO8mxUgVw1HlyQ)
+
