@@ -9,7 +9,10 @@ title: React原理-Scheduler&TimeSlice
 
 ## 时间切片（TimeSlice）
 
-### requestIdleCallback
+
+## requestIdleCallback
+
+
 
 ## 问答环节
 

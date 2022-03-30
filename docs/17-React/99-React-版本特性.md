@@ -10,7 +10,11 @@ title: React扩展-版本特性
 
 ## React 16+
 
+- 引入Fiber架构
 
+- 引入Hooks
+
+- 废弃了三个生命周期方法
 
 ## React 17
 
@@ -50,7 +54,6 @@ ReactDOM.render(<App />, rootNode);
 React v17 支持了全新的 JSX 转换。我们还针对 React 16.14.0，React 15.7.0 和 0.14.0 版本做了兼容。请注意，此功能完全可选，并非必须使用。之前的 JSX 转换将会继续维护，并且没有停止支持它的计划。
 
 React 17 引入了新的 JSX 编译方式，无须在组件中显式地 import React。注意需要配合 TypeScript 4.1+ 版本使用。
-
 
 ## React 18
 

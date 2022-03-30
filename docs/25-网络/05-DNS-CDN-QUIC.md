@@ -153,3 +153,8 @@ CDN和DNS有着密不可分的联系，先来看一下DNS的解析域名过程�
 
 [QUIC——快速UDP网络连接协议](https://mp.weixin.qq.com/s/W0ExnM3bU6VOwelJVABR5w)
 
+
+
+## 推荐阅读
+
+[前端同学需要了解的DNS与CDN知识](https://mp.weixin.qq.com/s/6oA4SXvC868JnW7hp4_CcQ)
