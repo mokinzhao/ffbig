@@ -4,6 +4,18 @@ title: CSS进阶
 
 ## FLex布局深入
 
+### FLex 缩写语法
+
+- flex:initial表示默认的flex状态，无需专门设置，适合小控件元素的分布布局，或者某一项内容动态变化的布局；
+- flex:0适用场景较少，适合设置在替换元素的父元素上；
+- flex:none适用于不换行的内容固定或者较少的小控件元素上，如按钮。
+- flex:1适合等分布局；
+- flex:auto适合基于内容动态适配的布局；
+
+- [flex:0 flex:1 flex:none flex:auto应该在什么场景下使用？](https://www.zhangxinxu.com/wordpress/2020/10/css-flex-0-1-none/)
+
+### 推荐阅读
+
 - [为什么要使用flex布局?](https://juejin.cn/post/7063823914136256543)
 
 - [Flex布局\弹性布局--面试题](https://juejin.cn/post/6881565341856563213)

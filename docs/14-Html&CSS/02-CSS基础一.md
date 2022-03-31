@@ -1,5 +1,5 @@
 ---
-title: CSS基础一
+title: CSS基础-选择器
 ---
 
 # 选择器
