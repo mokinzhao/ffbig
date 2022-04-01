@@ -2,9 +2,9 @@
 title: Node多线程
 ---
 
-### Node 实现多线程
+## Node 实现多线程
 
-#### Node.js 是如何工作的
+### Node.js 是如何工作的
 
 Node.js 使用两种线程：event loop 处理的主线程和 worker pool 中的几个辅助线程。
 
@@ -31,7 +31,7 @@ console.log(content.toString());
 
 在需要对数据进行复杂的计算时（如 AI、机器学习或大数据）无法真正有效地使用 Node.js，因为操作阻塞了主（且唯一）线程，使服务器无响应。在 Node.js v10.5.0 发布之前就是这种情况，在这一版本增加了对多线程的支持。
 
-#### 简介：worker_threads
+### 简介：worker_threads
 
 worker_threads 模块允许我们创建功能齐全的多线程 Node.js 程序。
 
@@ -102,7 +102,7 @@ worker.on("message", (data) => {});
 
 现在让我们来看看如何在线程之间共享数据。
 
-#### 在线程之间交换数据
+### 在线程之间交换数据
 
 要将数据发送到另一个线程，可以用 port.postMessage() 方法。它的原型如下：
 
@@ -123,7 +123,7 @@ port 对象可以是 parentPort，也可以是 MessagePort 的实例 —— 稍�
 
 由于能够复制类型化数组，该算法可以在线程之间共享内存。
 
-#### 在线程之间共享内存
+### 在线程之间共享内存
 
 人们可能会说像 cluster 或 child_process 这样的模块在很久以前就开始使用线程了。这话对，也不对。
 
@@ -183,13 +183,13 @@ worker.postMessage({});
 
 共享一个整数数组固然很好，但我们真正感兴趣的是共享对象 —— 这是存储信息的默认方式。不幸的是，没有 SharedObjectBuffer 或类似的东西，但我们可以自己创建一个类似的结构。
 
-#### transferList 参数
+### transferList 参数
 
 transferList 中只能包含 ArrayBuffer 和 MessagePort。一旦它们被传送到另一个线程，就不能再次被传送了；因为内存里的内容已经被移动到了另一个线程。
 
 目前，还不能通过 transferList（可以使用 child_process 模块）来传输网络套接字。
 
-#### 创建通信渠道
+### 创建通信渠道
 
 线程之间的通信是通过 port 进行的，port 是 MessagePort 类的实例，并启用基于事件的通信。
 
@@ -245,7 +245,7 @@ parentPort.on("message", (data) => {
 
 请注意，在后面的例子中，为了简便起见，我用了 parentPort。
 
-#### 使用 worker 的两种方式
+### 使用 worker 的两种方式
 
 可以通过两种方式使用 worker。第一种是生成一个 worker，然后执行它的代码，并将结果发送到父线程。通过这种方法，每当出现新任务时，都必须重新创建一个工作者。
 
@@ -283,7 +283,7 @@ parentPort.on("message", (data: any) => {
 });
 ```
 
-#### worker_threads 模块中可用的重要属性
+### worker_threads 模块中可用的重要属性
 
 worker_threads 模块中有一些可用的属性：
 
@@ -322,7 +322,7 @@ console.log(workerData.property);
 
 现在我们知道了技术细节，接下来实现一些东西并在实践中检验学到的知识。
 
-#### 实现 setTimeout
+### 实现 setTimeout
 
 setTimeout 是一个无限循环，顾名思义，用来检测程序运行时间是否超时。它在循环中检查起始时间与给定毫秒数之和是否小于实际日期。
 
@@ -378,6 +378,6 @@ const id = uuidv4();
 }
 ```
 
-#### 参考
+## 参考
 
 -[Node.js 多线程完全指南](https://segmentfault.com/a/1190000018660861)

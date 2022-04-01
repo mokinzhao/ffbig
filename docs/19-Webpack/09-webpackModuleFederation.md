@@ -16,7 +16,6 @@ title: Webpack ModuleFederation
 5. 用户 import 远程模块时调用 app1.get(moduleName) 通过 Jsonp 懒加载远程模块，然后缓存在全局对象 window['webpackChunk' + appName]
 6. 通过 webpack_require 读取缓存中的模块，执行用户回调
 
-
 ## 参考
 
 [解密Webpack5的Module Federation](https://mp.weixin.qq.com/s/wTOiubS5fm_UAQFaz1d6yg)

@@ -154,6 +154,26 @@ SSR 是指在服务端完成网页的渲染，在服务端完成页面模板、�
 页面按需预先渲染的收益是十分显著的，经数据统计，目标页面的平均网页加载耗时 iOS 从 2500ms 降低到了 231ms ，Android 从 2803ms 降低到了 628ms。
 
 
+
+## 总结
+
+- 预置离线包
+
+注意离线包命中率和兜底策略
+
+- 预加载（Webview预初始化）
+
+注意内存占用的情况
+
+- 请求前置/并行请求
+
+- 预渲染/骨架屏/NSR
+
+- WebView池化技术
+
 ## 参考
 
-![互联网大厂是如何做移动端性能优化的？](https://kaiwu.lagou.com/course/courseInfo.htm?courseId=1310#/detail/pc?id=8834)
+[H5 秒开方案总结](https://blog.csdn.net/Androiddddd/article/details/122326615?spm=1001.2101.3001.6650.12&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-12.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-12.pc_relevant_default&utm_relevant_index=18)
+
+[互联网大厂是如何做移动端性能优化的？](https://kaiwu.lagou.com/course/courseInfo.htm?courseId=1310#/detail/pc?id=8834)
+
