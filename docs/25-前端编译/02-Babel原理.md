@@ -1,5 +1,5 @@
 ---
-title: Babel 原理
+title: Babel原理
 ---
 
 # 如何写一个 babel

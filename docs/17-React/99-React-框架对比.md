@@ -145,11 +145,18 @@ Google
 
 2. SvelteKit 正式发布 beta 版。SvelteKit 是基于 Svelte 开发的 web 应用框架，类似于基于 Vue.js 开发的 Nuxt.js 框架。它继承了服务端渲染 SSR，路由，支持
 
+- 与React框架的区别
+    - 编译型
+    - 无虚拟Dom
+    - 代码更简洁
+    - 真正的reactivity
+
 - 总结
 
 虽然我们看到 Svelte 深受开发者的喜欢，但是到目前为止，仍然很难看到有大型应用在使用 Svelte，其性能优势、体积优势等并没有在大型应用中得到验证。由于 React/Vue/Angular 先入为主，尤其是在大公司，已经有非常完备成体系的配套方案，成熟的体系基本上很难去改动，后起之秀也很难有如 React 等框架活跃的社区，Svelte 要走的路还是很长。但是我们观察到，包括阿里、字节、腾讯等大公司也都在新业务中尝试使用 Svelte 开发，在中小型应用、h5 应用、Web Components 等方面确实有它的优势所在，也值得尝试。尽管 Svelte 有很多优势，但想以一己之力挑战 React/Vue/Angular 的江湖地位，目前来看还是需要静待标杆大型应用，静待各大大公司推出基于 Svelte 开发的 UI 库，或许 Svelte 大放异彩的时机就会到来。
 
-[一文详解 Svelte](https://mp.weixin.qq.com/s/pUCk75aKfyvCSyT28HpwKQ)
+- [一文详解 Svelte](https://mp.weixin.qq.com/s/pUCk75aKfyvCSyT28HpwKQ)
+- [Svelte 原理浅析与评测](https://juejin.cn/post/7044387319352131597)
 
 ## 参考
 

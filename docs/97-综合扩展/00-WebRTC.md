@@ -25,7 +25,7 @@ WebRTC (Web Real-Time Communications) 是一项实时通讯技术，它允许网
 
 ## 推荐阅读
 
-[浅谈WebRTC技术原理与应用-ELab](https://mp.weixin.qq.com/s/cviG0xFTTpmXeNO8nJaIIg)
+[浅谈WebRTC技术原理与应用-ELab](https://juejin.cn/post/7049971140474699789)
 
 [音视频通信加餐 —— WebRTC一肝到底](https://mp.weixin.qq.com/s/6vzPGwoqJCgiA7NMjwOUWw)
 

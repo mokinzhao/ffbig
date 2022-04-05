@@ -32,7 +32,18 @@ module.exports = {
   markdown: {
     lineNumbers: true, // 代码块显示行号
   },
-  plugins: ["autobar",'@vuepress/medium-zoom'],
+  plugins: ["autobar",'@vuepress/medium-zoom',["vuepress-plugin-nuggets-style-copy", {
+    copyText: "复制代码",
+    tip: {
+        content: "复制成功"
+    }
+ }],[
+    'copyright',
+    {
+      authorName: 'MokinZhao', // 选中的文字将无法被复制
+      minLength: 30, // 如果长度超过  30 个字符
+    },
+  ]],
   themeConfig: {
     sidebarDepth: 2, // e'b将同时提取markdown中h2 和 h3 标题，显示在侧边栏上。
     lastUpdated: "Last Updated", // 文档更新时间：每个文件git最后提交的时间

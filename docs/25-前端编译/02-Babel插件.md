@@ -1,5 +1,5 @@
 ---
-title: 如何开发Babel插件
+title: Babel插件
 ---
 
 # 如何开发 Babel 插件
