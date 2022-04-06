@@ -1,5 +1,5 @@
 ---
-title: React原理-问答汇总
+title: React扩展-问答汇总
 ---
 
 ## Component
@@ -242,3 +242,5 @@ props和state是普通的 JS 对象。虽然它们都包含影响渲染输出的
 - [「2021」高频前端面试题汇总之React篇（上）](https://juejin.cn/post/6941546135827775525#heading-27)
 
 - [「2021」高频前端面试题汇总之React篇（下）](https://juejin.cn/post/6940942549305524238#heading-1)
+
+- [React 开发必须知道的 34 个技巧【近1W字】](https://juejin.cn/post/6844903993278201870)

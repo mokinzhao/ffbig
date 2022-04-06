@@ -14,10 +14,9 @@ title: React原理-Reconciler&Fiber
 
 3. 导致渲染卡顿/卡死、交互长时间无响应
 
-## Fiber Reconciler（React16）
+### Fiber Reconciler（React16）
 
 Fiber Reconciler 是一种基于浏览器的**单线程调度算法**.
-
 
 ## Fiber
 
@@ -37,10 +36,7 @@ React 16 之前 ，`reconcilation`  算法实际上是递归，想要中断递�
 
     - 作为静态的数据结构来说，每个Fiber节点对应一个React element，保存了该组件的类型（函数组件/类组件/原生组件...）、对应的DOM节点等信息。
 
-    - 作为动态的工作单元来说，每个Fiber节点保存了本次更新中该组件改变的状态、要执行的工作（需要被删除/被插入页面中/被更新...）。
-
-
-
+    - 作为动态的工作单元来说，每个Fiber节点保存了本次更新中该组件改变的状态、要执行的工作（需要被删除/被插入页面中/被更新...）
 
 ## 执行顺序
 
