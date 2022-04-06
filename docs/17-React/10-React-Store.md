@@ -117,6 +117,8 @@ redux 异步流中间件其实有很多,但是当下主流的异步中间件只�
 
 ## Recoil
 
+[Recoil实现原理浅析-异步请求](https://juejin.cn/post/7069965341777985549)
+
 ### 推荐阅读
 
 [React下一代状态管理库——recoil](https://juejin.cn/post/7006253866610229256)

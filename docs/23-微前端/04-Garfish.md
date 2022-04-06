@@ -30,7 +30,7 @@ title: 微前端之Garfish
 
 [字节跳动是如何落地微前端的](https://juejin.cn/post/7016911648656982024#heading-32)
 
-[字节跳动Garfish微前端实现原理](https://mp.weixin.qq.com/s/OIdrqLk-opQBDY2Wyw5gJw)
+[字节跳动Garfish微前端实现原理](https://juejin.cn/post/7021112021785509925)
 
 
 

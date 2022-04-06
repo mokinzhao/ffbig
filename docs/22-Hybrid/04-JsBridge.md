@@ -2,7 +2,7 @@
 title: JsBridge原理
 ---
 
-### 一、什么是 JSBridge
+## 一、什么是 JSBridge
 
 ---
 
@@ -18,7 +18,7 @@ title: JsBridge原理
 H5 与 Native 交互如下图：
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2019062410483862.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3l1emhlbmdmZWk3,size_16,color_FFFFFF,t_70)
 
-#### 二、JSBridge 的实现原理
+## 二、JSBridge 的实现原理
 
 ---
 
@@ -26,15 +26,15 @@ JavaScript 是运行在一个单独的 JS Context 中（例如，WebView 的 Web
 
 在 JSBridge 的设计中，可以把前端看做 RPC 的客户端，把 Native 端看做 RPC 的服务器端，从而 JSBridge 要实现的主要逻辑就出现了：通信调用（Native 与 JS 通信） 和句柄解析调用。
 
-#### 三、JSBridge 的通信原理
+## 三、JSBridge 的通信原理
 
 ---
 
-##### 1.JavaScript 调用 Native 的方式
+### 1.JavaScript 调用 Native 的方式
 
 主要有两种：注入 API 和 拦截 URL SCHEME。
 
-###### 1.1 注入 API
+#### 1.1 注入 API
 
 注入 API 方式的主要原理是，通过 WebView 提供的接口，向 JavaScript 的 Context（window）中注入对象或者方法，让 JavaScript 调用时，直接执行相应的 Native 代码逻辑，达到 JavaScript 调用 Native 的目的。
 
@@ -84,7 +84,7 @@ JavaScript 是运行在一个单独的 JS Context 中（例如，WebView 的 Web
     window.webkit.messageHandlers.nativeBridge.postMessage(message);
 ```
 
-###### 1.2 拦截 URL SCHEME
+### 1.2 拦截 URL SCHEME
 
 解释一下 URL SCHEME：URL SCHEME 是一种类似于 url 的链接，是为了方便 app 直接互相调用设计的，形式和普通的 url 近似，主要区别是 protocol 和 host 一般是自定义的。
 
@@ -110,7 +110,7 @@ JavaScript 是运行在一个单独的 JS Context 中（例如，WebView 的 Web
 
 因此：JavaScript 调用 Native 推荐使用注入 API 的方式
 
-##### 2.Native 调用 JavaScript 的方式
+### 2.Native 调用 JavaScript 的方式
 
 相比于 JavaScript 调用 Native， Native 调用 JavaScript 较为简单，直接执行拼接好的 JavaScript 代码即可。
 
@@ -128,7 +128,7 @@ JavaScript 是运行在一个单独的 JS Context 中（例如，WebView 的 Web
     [wkWebView evaluateJavaScript:javaScriptString completionHandler:completionHandler];
 ```
 
-#### 四、JSBridge 接口实现
+## 四、JSBridge 接口实现
 
 ---
 
@@ -179,13 +179,13 @@ window.JSBridge = {
 
 \***\*Native 调用 JavaScript\*\*** 也同样简单，直接自动生成一个唯一的 ResponseId，并存储句柄，然后和 data 一起发送给前端即可。
 
-#### 五、JSBridge 的引用
+## 五、JSBridge 的引用
 
 ---
 
 对于 JSBridge 的引用，常用有如下两种方式，但各有利弊。
 
-##### 1.由 Native 端进行注入
+### 1.由 Native 端进行注入
 
 注入方式和 Native 调用 JavaScript 类似，直接执行桥的全部代码。
 
@@ -197,7 +197,7 @@ window.JSBridge = {
 
 > 注入时机不确定，需要实现注入失败后重试的机制，保证注入的成功率，同时 JavaScript 端在调用接口时，需要优先判断 JSBridge 是否已经注入成功。
 
-##### 2.由 JavaScript 端引用
+### 2.由 JavaScript 端引用
 
 直接与 JavaScript 一起执行。
 
@@ -208,3 +208,7 @@ window.JSBridge = {
 它的缺点是：
 
 > 如果桥的实现方式有更改，JSBridge 需要兼容多版本的 Native Bridge 或者 Native Bridge 兼容多版本的 JSBridge。
+
+## 推荐阅读
+
+[JSBridge原理解析-字节ADFE](https://juejin.cn/post/6981388210580488206#heading-10)

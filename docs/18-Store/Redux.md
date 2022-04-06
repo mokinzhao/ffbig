@@ -1228,4 +1228,6 @@ function c(count) {
 
 你再看 redux 流程图，是不是大彻大悟了？<br />[](https://link.juejin.im?target=https%3A%2F%2Fuser-images.githubusercontent.com%2F12526493%2F48312444-8ff2e100-e5e9-11e8-844a-48ffd9933265.png)<br />[![](https://cdn.nlark.com/yuque/0/2019/webp/128853/1564750024043-bb461692-4aff-483a-a21d-657701930260.webp#align=left&display=inline&height=671&originHeight=671&originWidth=1240&size=0&status=done&width=1240)](https://link.juejin.im?target=https%3A%2F%2Fuser-images.githubusercontent.com%2F12526493%2F48312444-8ff2e100-e5e9-11e8-844a-48ffd9933265.png)<br />
 
----
+## 推荐阅读
+
+[Redux通关简洁攻略 -- 看这一篇就够了！](https://juejin.cn/post/7019185205336342542)
