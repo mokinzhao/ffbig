@@ -2,9 +2,6 @@
 title: Next原理
 ---
 
-
-
-
 ## 参考
 
 [Next.js实践](https://nextjs-in-action-cn.taonan.lu)

@@ -6,7 +6,7 @@ DOM API 是最早被设计出来的一批 API，也是用途最广的 API，所�
 
 DOM 指的是文档对象模型，它指的是把文档当做一个对象，这个对象主要定义了处理网页内容的方法和接口。
 
-### DOM API 介绍
+## DOM API 介绍
 
 首先我们先来讲一讲什么叫做文档对象模型。顾名思义，文档对象模型是用来描述文档，这里的文档，是特指 HTML 文档（也用于 XML 文档，但是本课不讨论 XML）。同时它又是一个“对象模型”，这意味着它使用的是对象这样的概念来描述 HTML 文档。说起 HTML 文档，这是大家最熟悉的东西了，我们都知道，HTML 文档是一个由标签嵌套而成的树形结构，因此，DOM 也是使用树形的对象模型来描述一个 HTML 文档。DOM API 大致会包含 4 个部分。
 
@@ -17,7 +17,7 @@ DOM 指的是文档对象模型，它指的是把文档当做一个对象，这�
 
 事件相关 API 和事件模型，我们会用单独的课程讲解，所以我们本篇文章重点会为你介绍节点和遍历相关 API。DOM API 数量很多，我希望给你提供一个理解 DOM API 设计的思路，避免单靠机械的方式去死记硬背。
 
-#### 节点
+### 节点
 
 DOM 的树形结构所有的节点有统一的接口 Node，我们按照继承关系，给你介绍一下节点的类型。
 ![2019-06-20-06-00-27](https://static001.geekbang.org/resource/image/6e/f6/6e278e450d8cc7122da3616fd18b9cf6.png)
@@ -35,7 +35,7 @@ ProcessingInstruction: <?a 1?>
 
 我们在编写 HTML 代码并且运行后，就会在内存中得到这样一棵 DOM 树，HTML 的写法会被转化成对应的文档模型，而我们则可以通过 JavaScript 等语言去访问这个文档模型。这里我们每天都需要用到，要重点掌握的是：Document、Element、Text 节点。DocumentFragment 也非常有用，它常常被用来高性能地批量添加节点。因为 Comment、DocumentType 和 ProcessingInstruction 很少需要运行时去修改和操作，所以有所了解即可。
 
-#### Node
+### Node
 
 Node 是 DOM 树继承关系的根节点，它定义了 DOM 节点在 DOM 树上的操作，首先，Node 提供了一组属性，来表示它在 DOM 树中的关系，它们是：
 
@@ -46,7 +46,7 @@ Node 是 DOM 树继承关系的根节点，它定义了 DOM 节点在 DOM 树上
 - nextSibling
 - previousSibling
 
-#### 操作 dom
+## 操作 dom
 
 从命名上，我们可以很清晰地看出，这一组属性提供了前、后、父、子关系，有了这几个属性，我们可以很方便地根据相对位置获取元素。当然，Node 中也提供了操作 DOM 树的 API，主要有下面几种。
 
@@ -74,7 +74,7 @@ Node 是 DOM 树继承关系的根节点，它定义了 DOM 节点在 DOM 树上
 - isSameNode 检查两个节点是否是同一个节点，实际上在 JavaScript 中可以用“===”。
 - cloneNode 复制一个节点，如果传入参数 true，则会连同子元素做深拷贝。
 
-#### 创建
+### 创建
 
 DOM 标准规定了节点必须从文档的 create 方法创建出来，不能够使用原生的 JavaScript 的 new 运算。于是 document 对象有这些方法。
 
@@ -86,7 +86,7 @@ DOM 标准规定了节点必须从文档的 create 方法创建出来，不能�
 - createDocumentFragment
 - createDocumentType
 
-#### Element 与 Attribute
+### Element 与 Attribute
 
 Node 提供了树形结构上节点相关的操作。而大部分时候，我们比较关注的是元素。Element 表示元素，它是 Node 的子类。元素对应了 HTML 中的标签，它既有子节点，又有属性。
 所以 Element 子类中，有一系列操作属性的方法。我们需要注意，对 DOM 而言，Attribute 和 Property 是完全不同的含义，只有特性场景下，两者才会互相关联（这里在后面我会详细讲解，今天的文章里我就不展开了）。首先，我们可以把元素的 Attribute 当作字符串来看待，这样就有以下的 API：
@@ -100,7 +100,7 @@ Node 提供了树形结构上节点相关的操作。而大部分时候，我们
 - setAttributeNode
   此外，如果你喜欢 property 一样的访问 attribute，还可以使用 attributes 对象，比如 document.body.attributes.class = “a” 等效于 document.body.setAttribute(“class”, “a”)。
 
-#### 查找元素
+### 查找元素
 
 document 节点提供了查找元素的能力。比如有下面的几种。
 
