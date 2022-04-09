@@ -389,7 +389,7 @@ function treeToList(data) {
 
 ```
 
-## 模拟document.findById
+## 模拟Document.findById
 
 ```js
 const object={id:'1',children:[{id:'2',children:[{id:'3',children:[]}]}]}
