@@ -2,7 +2,7 @@
 title: Node多线程
 ---
 
-## Node 实现多线程
+## Node 多线程
 
 ### Node.js 是如何工作的
 
@@ -16,6 +16,7 @@ Node.js 使用两种线程：event loop 处理的主线程和 worker pool 中的
 
 基于这两种机制，我们可以编写如下代码：
 
+```js
 fs.readFile(path.join(\_\_dirname, './package.json'), (err, content) => {
 if (err) {
 return null;
@@ -23,6 +24,8 @@ return null;
 
 console.log(content.toString());
 });
+```
+
 前面提到的 fs 模块告诉工作池使用其中一个线程来读取文件的内容，并在完成后通知事件循环。然后事件循环获取提供的回调函数，并用文件的内容执行它。
 
 以上是非阻塞代码的示例，我们不必同步等待某事的发生。只需告诉工作池去读取文件，并用结果去调用提供的函数即可。由于工作池有自己的线程，因此事件循环可以在读取文件时继续正常执行。

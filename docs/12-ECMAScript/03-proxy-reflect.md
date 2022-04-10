@@ -37,3 +37,7 @@ FooBarObserver.open = true // FooBar is open!!!
 ```
 
 当然也不是什么都可以被代理的，如果对象带有configurable: false 跟writable: false 属性，则代理失效。
+
+## 推荐阅读
+
+[为什么Proxy一定要配合Reflect使用？](https://juejin.cn/post/7080916820353351688)

@@ -210,10 +210,12 @@ Warning: useLayoutEffect does nothing on the server的错误, because its effect
 该错误的大概意思是建议 useLayoutEffect不能使用在非浏览器环境下无法正常执行，不能有效执行服务端前置渲染的数据格式。也有人建议在非浏览器环境使用 useEffect，在浏览器环境使用 useLayoutEffect。
 
 
-
 作者查Antd-mobile GitHub issue 看到Antd-mobile官方已注意到此问题https://github.com/ant-design/ant-design-mobile/issues/4730
 
 ![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8385a01a39aa4b4587a36240e0ff109d~tplv-k3u1fbpfcp-watermark.image?)
 目前官方仍没有非常妥善的解决方式，但不影响正常使用
 
 
+## 参考
+
+[Next.js实践](https://nextjs-in-action-cn.taonan.lu)

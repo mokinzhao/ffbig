@@ -28,6 +28,14 @@ webpack构建过程中有很多事件，
 
 ## Webpack bundle、chunk、module的区别
 
+## hash/chunkhash/contenthash 的区别
+
+- hash 反映了项目的构建版本，因此同一次构建过程中生成的 hash 都是一样的。换句话说，如果项目里某个模块发生更改，触发项目的重新构建，那么文件的 hash 值将会相应地改变。如果使用 hash 策略，存在一个问题：即使某个模块的内容压根没有改变，但是重新构建后会产生一个新的 hash 值，使得缓存命中率较低。
+
+- 针对以上问题，chunkhash 和 contenthash 就不一样了，chunkhash 会根据入口文件（Entry）进行依赖解析。
+
+- contenthash 则会根据文件具体内容，生成 hash 值。
+
 ## 推荐阅读
 
 [透过分析 webpack 面试题，构建 webpack5.x 知识体系](https://juejin.cn/post/7023242274876162084#heading-2)
@@ -35,3 +43,5 @@ webpack构建过程中有很多事件，
 [webpack 十连问你能接住几题](https://juejin.cn/post/7002839760792190989#heading-9)
 
 [Webpack5核心打包原理全流程解析](https://juejin.cn/post/7031546400034947108)
+
+[面试官：webpack原理都不会？](https://juejin.cn/post/6859538537830858759#heading-21)

@@ -91,6 +91,17 @@ props和state是普通的 JS 对象。虽然它们都包含影响渲染输出的
 3. 原生事件中是同步
 4. setTimeout 中是同步
 
+setState 并非真异步，只是看上去像异步。在源码中，通过 isBatchingUpdates 来判断
+setState 是先存进 state 队列还是直接更新，如果值为 true 则执行异步操作，为 false 则直接更新。
+那么什么情况下 isBatchingUpdates 会为 true 呢？在 React 可以控制的地方，就为 true，比如在 React 生命周期事件和合成事件中，都会走合并操作，延迟更新的策略。
+
+但在 React 无法控制的地方，比如原生事件，具体就是在 addEventListener 、setTimeout、setInterval 等事件中，就只能同步更新。
+一般认为，做异步设计是为了性能优化、减少渲染次数，React 团队还补充了两点。
+保持内部一致性。如果将 state 改为同步更新，那尽管 state 的更新是同步的，但是 props不是。
+启用并发更新，完成异步渲染。
+
+- setState 是同步还是异步的核心关键点：更新队列。
+
 ### setState 后发生了什么？
 
 1. 在 setState 的时候，React 会为当前节点创建一个 updateQueue 的更新列队。
@@ -114,6 +125,20 @@ props和state是普通的 JS 对象。虽然它们都包含影响渲染输出的
 ### 不同fiber之间如何建立区别和联系？
 
 ### React的调和流程是什么？
+
+React 的渲染过程大致一致，但协调并不相同，以 React 16 为分界线，分为 Stack Reconciler 和 Fiber Reconciler。这里的协调从狭义上来讲，特指 React 的 diff 算法，广义上来讲，有时候也指 React 的 reconciler 模块，它通常包含了 diff 算法和一些公共逻辑。
+
+回到 Stack Reconciler 中，Stack Reconciler 的核心调度方式是递归。调度的基本处理单位是事务，它的事务基类是 Transaction，这里的事务是 React 团队从后端开发中加入的概念。在 React 16 以前，挂载主要通过 ReactMount 模块完成，更新通过 ReactUpdate 模块完成，模块之间相互分离，落脚执行点也是事务。
+
+在 React 16 及以后，协调改为了 Fiber Reconciler。它的调度方式主要有两个特点，第一个是协作式多任务模式，在这个模式下，线程会定时放弃自己的运行权利，交还给主线程，通过requestIdleCallback 实现。第二个特点是策略优先级，调度任务通过标记 tag 的方式分优先级执行，比如动画，或者标记为 high 的任务可以优先执行。Fiber Reconciler的基本单位是 Fiber，Fiber 基于过去的 React Element 提供了二次封装，提供了指向父、子、兄弟节点的引用，为 diff 工作的双链表实现提供了基础。
+
+在新的架构下，整个生命周期被划分为 Render 和 Commit 两个阶段。Render 阶段的执行特点是可中断、可停止、无副作用，主要是通过构造 workInProgress 树计算出 diff。以 current 树为基础，将每个 Fiber 作为一个基本单位，自下而上逐个节点检查并构造 workInProgress 树。这个过程不再是递归，而是基于循环来完成。
+
+在执行上通过 requestIdleCallback 来调度执行每组任务，每组中的每个计算任务被称为 work，每个 work 完成后确认是否有优先级更高的 work 需要插入，如果有就让位，没有就继续。优先级通常是标记为动画或者 high 的会先处理。每完成一组后，将调度权交回主线程，直到下一次 requestIdleCallback 调用，再继续构建 workInProgress 树。
+
+在 commit 阶段需要处理 effect 列表，这里的 effect 列表包含了根据 diff 更新 DOM 树、回调生命周期、响应 ref 等。
+
+但一定要注意，这个阶段是同步执行的，不可中断暂停，所以不要在 componentDidMount、componentDidUpdate、componentWiilUnmount 中去执行重度消耗算力的任务。
 
 ### 两大阶段commit 和render 都做了哪些事情？
 
@@ -244,3 +269,5 @@ props和state是普通的 JS 对象。虽然它们都包含影响渲染输出的
 - [「2021」高频前端面试题汇总之React篇（下）](https://juejin.cn/post/6940942549305524238#heading-1)
 
 - [React 开发必须知道的 34 个技巧【近1W字】](https://juejin.cn/post/6844903993278201870)
+
+- [React知识点梳理](https://mp.weixin.qq.com/s/GTTm260AvNdEib671RDufg)

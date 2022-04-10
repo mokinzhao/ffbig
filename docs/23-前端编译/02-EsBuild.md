@@ -81,4 +81,6 @@ Esbuild 与 SWC 在性能上是在一个量级的，这里通过仓库的例子 
 
 [前端构建新世代，Esbuild 原来还能这么玩！](https://juejin.cn/post/7049147751866564621)
 
+[快速上手 Esbuild](https://mp.weixin.qq.com/s/TKcfBTMJgtBrz4doEwyytg)
+
 [深度：使用Esbuild为你的构建提速](https://mp.weixin.qq.com/s/7MR1raMmafEELiC9qTSaYQ)
