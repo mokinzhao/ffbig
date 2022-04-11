@@ -44,7 +44,6 @@ requestAnimationFrame 的回调会在每一帧确认执行, 属于高优先级�
 我们看到的页面是浏览器一帧一帧绘制出来的, 通常 FPS 在 60 的时候是比较流畅的, 而 FPS 比较低的时候就会感觉到卡顿.
 :::
 
-
 ## 推荐阅读
 
 [实现 React requestIdleCallback 调度能力](https://juejin.cn/post/7021506472232583199)

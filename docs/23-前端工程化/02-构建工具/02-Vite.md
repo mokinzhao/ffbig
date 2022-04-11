@@ -18,7 +18,6 @@ Vite有如下特点：
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e4af911f09d442b2a711bcea101c2fd7~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp)
 
-
 ### VS Webpack
 
 Webpack是近年来使用量最大，同时社区最完善的前端打包构建工具，新出的5.x版本对构建细节进行了优化，在部分场景下打包速度提升明显。Webpack在启动时，会先构建项目模块的依赖图，如果在项目中的某个地方改动了代码，Webpack则会对相关的依赖重新打包，随着项目的增大，其打包速度也会下降。
@@ -33,7 +32,27 @@ Snowpack 首次提出利用浏览器原生ESM能力的打包工具，其理念�
 
 两者较大的区别是在需要bundle打包的时候Vite 使用 Rollup 内置配置，而 Snowpack 通过其他插件将其委托给 Parcel/``webpack。
 
+## 核心原理
 
+1. 当声明一个 script标签类型为 module 时,如
+
+```js
+  <script type="module" src="/src/main.js"></script>
+
+```
+
+2. 当浏览器解析资源时，会往当前域名发起一个GET请求main.js文件
+
+```js
+// main.js
+import { createApp } from 'vue'
+import App from './App.vue'
+createApp(App).mount('#app')
+```
+
+3. 请求到了main.js文件，会检测到内部含有import引入的包，又会import 引用发起HTTP请求获取模块的内容文件，如App.vue、vue文件
+
+**Vite**其核心原理是利用浏览器现在已经支持ES6的import,碰见import就会发送一个HTTP请求去加载文件，Vite启动一个 koa 服务器拦截这些请求，并在后端进行相应的处理将项目中使用的文件通过简单的分解与整合，然后再以ESM格式返回返回给浏览器。Vite整个过程中没有对文件进行打包编译，做到了真正的按需加载，所以其运行速度比原始的webpack开发编译速度快出许多！
 
 ## 参考
 

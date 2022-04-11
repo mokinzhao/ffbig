@@ -133,4 +133,6 @@ CSS、Html、JS
 4. 关闭Mutation
 5. 计算首屏时间
 
+## 参考
 
+[得物AppH5秒开优化实战](https://mp.weixin.qq.com/s/23ZFPK4CaCkinwpZ3SG9Rw)
