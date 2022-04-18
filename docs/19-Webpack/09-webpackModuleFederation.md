@@ -4,9 +4,6 @@ title: Webpack ModuleFederation
 
 # webpack的模块联邦
 
-
-
-
 ## 原理浅析
 
 1. 下载并执行 remoteEntry.js，挂载入口点对象到 window.app1，他有两个函数属性，init 和 get。init 方法用于初始化作用域对象 initScope，get 方法用于下载 moduleMap 中导出的远程模块。

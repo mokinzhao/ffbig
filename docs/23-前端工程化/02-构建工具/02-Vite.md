@@ -54,9 +54,11 @@ createApp(App).mount('#app')
 
 **Vite**其核心原理是利用浏览器现在已经支持ES6的import,碰见import就会发送一个HTTP请求去加载文件，Vite启动一个 koa 服务器拦截这些请求，并在后端进行相应的处理将项目中使用的文件通过简单的分解与整合，然后再以ESM格式返回返回给浏览器。Vite整个过程中没有对文件进行打包编译，做到了真正的按需加载，所以其运行速度比原始的webpack开发编译速度快出许多！
 
-## 参考
+## 推荐阅读
 
 - [深入理解Vite核心原理](https://juejin.cn/post/7064853960636989454#heading-6)
 - [下一代前端开发利器——Vite（原理源码解析）](https://mp.weixin.qq.com/s/Y8wkrnkZxT6PdWJ_4jgV5A)
 - [把 Vite 接入到 Webpack 项目里了！？](https://mp.weixin.qq.com/s/uBlKxIEhX5Hz0oe5xkVkQw)
 - [深入浅出 Vite](https://juejin.cn/book/7050063811973218341)
+
+- [前端框架源码解读之Vite](https://mp.weixin.qq.com/s/_w1b04nsEZk1AfaKDiRiUg)

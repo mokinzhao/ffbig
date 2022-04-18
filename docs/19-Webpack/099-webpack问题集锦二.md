@@ -45,3 +45,5 @@ webpack构建过程中有很多事件，
 [Webpack5核心打包原理全流程解析](https://juejin.cn/post/7031546400034947108)
 
 [面试官：webpack原理都不会？](https://juejin.cn/post/6859538537830858759#heading-21)
+
+[webpack loader 与plugin 开发实战 —— 点击 vue 页面元素跳转到对应的 vscode 代码](https://mp.weixin.qq.com/s/hqcl2-4G63GSRoUroRNstg)

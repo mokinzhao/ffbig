@@ -44,6 +44,21 @@ Cookie是由客户端保存的小型文本文件，其内容为一系列的键�
 
 ![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9da8d16bb13047baae811587bb54d885~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp)
 
+## 任务类型分述
+
+- CPU 密集型，如压缩、转译等环节，可能的优化有：
+使用更高效算法：优化空间小；
+压榨 V8 性能：如参考 Crankshaft Bailout 或 TurboFan Bailout；
+多核并行计算：受到进程通信开销制约；
+使用其他语言实现⁵：受到跨语言通信制约；
+- I/O 密集型，包括：
+文件读写：利用 bundleless 减少本地文件读取量；此外 Node.js 默认异步 API 使得此类任务能足够快，优化空间小；
+进程通信：序列化/反序列化开销较大，共享内存的 worker_threads 尚不稳定⁶，此外线程启动有损耗；
+跨语言通信：2018 年，napi-rs 1.0 发布，Node.js 调用 rust 有了更高效简单的方式⁷；
+- GPU 密集型，前端场景较少⁸，包括：
+机器学习：如使用 NVIDIA RAPIDS API 的 node-rapids；
+图像处理：如 GPU.js。
+
 ## 推荐阅读
 
 [「查缺补漏」送你18道浏览器面试题](https://juejin.cn/post/6854573215830933512)

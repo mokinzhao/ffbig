@@ -46,4 +46,6 @@ requestAnimationFrame 的回调会在每一帧确认执行, 属于高优先级�
 
 ## 推荐阅读
 
+[深入理解 scheduler 原理](https://juejin.cn/post/7087933643821154312)
+
 [实现 React requestIdleCallback 调度能力](https://juejin.cn/post/7021506472232583199)
