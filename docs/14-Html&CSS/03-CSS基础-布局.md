@@ -114,7 +114,150 @@ title: CSS基础-布局
 
 ### 两栏布局
 
+1. float+calc()函数完成左列定宽右列自适应
+
+```css
+.left {
+  /* 左边列开启浮动 */
+  float: left;
+}
+.right {
+  /* 右边列开启浮动 */
+  float: left;
+  /* 宽度减去左列的宽度 */
+  width: calc(100% - 200px);
+}
+```
+
+2. float+margin-left完成左列定宽右列自适应
+
+```css
+.left {
+  /* 左边列开启浮动 */
+  float: left;
+}
+.right {
+  /* 通过外边距的方式使该容器的左边有200px */
+  margin-left: 200px;
+}
+```
+
+3. absolute+margin-left完成左列定宽右列自适应
+
+```css
+.left {
+  /* 开启定位脱离文档流 */
+  position: absolute;
+}
+.right {
+  /* 通过外边距的方式使该容器的左边有200px */
+  margin-left: 200px;
+}
+```
+
+4. Flex方案
+
+```css
+.container {
+  display: flex;
+}
+.right {
+  flex: 1;
+  /* flex: 1; 表示 flex-grow: 1; 即该项占所有剩余空间 */
+}
+```
+
+5. Grid方案
+
+```css
+.container {
+  display: grid;
+  /* 将其划分为两行，其中一列有本身宽度决定， 一列占剩余宽度*/
+  grid-template-columns: auto 1fr;
+}
+```
+
 ### 三栏布局
+
+1. 通过float实现(一)
+
+```css
+.left {
+  /* 1. 左列容器开启左浮动 */
+  float: left;
+}
+.content {
+  /* 自适应元素设置 overflow 会创建一个BFC 完成自适应 */
+  overflow: hidden;
+}
+.right {
+  /* 2. 右列容器开启右浮动 */
+  float: right;
+}
+
+```
+
+2. 通过float实现(二)
+
+```css
+.left {
+  /* 1. 左列容器开启左浮动 */
+  float: left;
+}
+.content {
+  /* 3. 使中间自适应的宽度为父级容器减去两个定宽的列 */
+  width: calc(100%-400px);
+}
+.right {
+  /* 2. 右列容器开启右浮动 */
+  float: right;
+}
+```
+
+3. 通过position实现
+
+```css
+.left {
+  /* 1. 左右两列脱离文档流，并通过偏移的方式到达自己的区域 */
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.content {
+  /* 2. 使中间自适应的宽度为父级容器减去两个定宽的列 */
+  width: calc(100%-400px);
+  /* 3. 通过外边距将容器往内缩小 */
+  margin-right: 200px;
+  margin-left: 200px;
+}
+.right {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+```
+
+4. Flex方案
+
+```css
+.container {
+  display: flex;
+}
+.right {
+  flex: 1;
+  /* flex: 1; 表示 flex-grow: 1; 即该项占所有剩余空间 */
+}
+```
+
+5. Grid方案
+
+```css
+.container {
+  display: grid;
+  /* 将其划分为两行，其中一列有本身宽度决定， 一列占剩余宽度*/
+  grid-template-columns: auto 1fr auto;
+}
+```
 
 ## 推荐阅读
 

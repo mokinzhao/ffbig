@@ -10,7 +10,6 @@ title: React-Native
 
 在 React Native 中，原生端和 JavaScript 交互是通过 Bridge 进行的，Bridge 的作用就是给 React Native 内嵌的 JS Engine 提供原生接口的扩展供 JS 调用。所有的本地存储、图片资源访问、图形图像绘制、3D 加速、网络访问、震动效果、NFC、原生控件绘制、地图、定位、通知等都是通过 Bridge 封装成 JS 接口以后注入 JS Engine 供 JS 调用。理论上，任何原生代码能实现的效果都可以通过 Bridge 封装成 JS 可以调用的组件和方法, 以 JS 模块的形式提供给 RN 使用。
 
-
 - 发送事件到 JavaScript
 
 原生模块可以在没有被调用的情况下往 JavaScript 发送事件通知。最简单的办法就是通过RCTDeviceEventEmitter，这可以通过ReactContext来获得对应的引用，像这样：
@@ -253,7 +252,6 @@ RN 会把应用的 JS 代码（包括依赖的 framework）编译成一个 buddl
 
 提前做好 RN 基础建设，打包编译和热更新流程，尽量和 Hybrid 下的基建体系保持统一。
 
-
 ## 原理浅析
 
 ### RN有三个线程
@@ -273,3 +271,7 @@ RN 会把应用的 JS 代码（包括依赖的 framework）编译成一个 buddl
 - [2022 年 React Native 的全新架构更新](https://juejin.cn/post/7063738658913779743)
 
 - [RN 性能优化三部曲](https://supercodepower.com/react-native-performance-native)
+
+- [前端搞跨端跨栈|刘芳-如何在 toB 业务中用 RN 开发 APP](https://www.yuque.com/zaotalk/posts/c10-1)
+
+- [React Native原理之跨端通信机制-网易云音乐](https://juejin.cn/post/7069687439949824031#heading-8)

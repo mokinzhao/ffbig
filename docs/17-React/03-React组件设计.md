@@ -117,3 +117,5 @@ src
 ## 推荐阅读
 
 [面试官(6): 写过『通用前端组件』吗?](https://juejin.cn/post/6844903847874265101#heading-14)
+
+[在鹅厂的 React 轮播动画极致探索](https://mp.weixin.qq.com/s/xhabGkiaqjF6RIj0Qx0Gpg)
