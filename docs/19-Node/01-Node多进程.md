@@ -1,10 +1,10 @@
 ---
-title: Node多进程
+title: Node多进程与集群
 ---
 
 ## 多进程
 
-### cluster
+## 集群（cluster）
 
 ## 推荐阅读
 

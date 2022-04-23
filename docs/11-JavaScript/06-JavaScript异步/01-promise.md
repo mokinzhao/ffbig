@@ -2,6 +2,23 @@
 title: Javascript异步-Promise
 ---
 
+## 背景
+
+- HOF高阶函数
+
+一个函数返回一个函数，这个函数称为高阶函数
+
+```js
+// 方式一
+function(){
+    return function(){}
+}
+//方式二
+function fn(cb){
+    cb()
+}
+fn(()=>{})
+```
 
 ## 特性
 
