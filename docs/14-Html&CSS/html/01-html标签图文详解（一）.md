@@ -972,7 +972,7 @@ aaa/../bbb/1.jpg
 （2）网络路径。举例：
 
 ```html
-<img src="http://api.ffbig.cn/wchatp.jpeg" />
+<img src="http://api.ffbig.com/wchatp.jpeg" />
 ```
 
 大家打开上面的 img 中的链接，扫一扫，可能有惊喜哦。

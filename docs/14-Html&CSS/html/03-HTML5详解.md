@@ -823,4 +823,4 @@ H5 可以直接在标签里添加自定义属性，**但必须以 `data-` 开头
 
 扫一扫，你将发现另一个全新的世界，而这将是一场美丽的意外：
 
-![](http://api.ffbig.cn/wchatp.jpeg)
+![](http://api.ffbig.com/wchatp.jpeg)
