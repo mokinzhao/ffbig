@@ -72,3 +72,5 @@ React 并不是一个一揽子框架，比如路由一类的功能，React 团�
 ## 推荐阅读
 
 [一份 2.5k star 的《React 开发思想纲领》](https://mp.weixin.qq.com/s/IrsqQxU7-IPh0S8HerJOsw)
+
+[86张脑图，一口气看完 React 🎉](https://juejin.cn/post/7085145274200358949)

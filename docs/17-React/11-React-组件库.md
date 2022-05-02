@@ -13,6 +13,11 @@ title: React生态-UI组件库
 ### 组件库实现换肤能力
 
 
+### 虚拟滚动列表
+
+- react-virtualized(old)
+
+- [react-window(new)](https://react-window.vercel.app/#/examples/list/fixed-size)
 
 ## 第三方组件库
 
