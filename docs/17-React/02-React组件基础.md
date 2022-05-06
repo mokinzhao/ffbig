@@ -368,7 +368,7 @@ React.useEffect(()=>{
 ## 问答环节
 
 ::: warning 问
-React 中类组件和函数组件有什么异同?
+React 类组件和函数组件有什么异同?
 :::
 
 ::: tip 答

@@ -21,7 +21,7 @@ module.exports = {
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?89be3d514ec18b88f3530b7ecf868937";
+      hm.src = "https://hm.baidu.com/hm.js?7cce883071b4e15eb7f6c12bad2eb0d9";
       var s = document.getElementsByTagName("script")[0]; 
       s.parentNode.insertBefore(hm, s);
     })();
@@ -32,10 +32,21 @@ module.exports = {
   markdown: {
     lineNumbers: true, // 代码块显示行号
   },
-  plugins: ["autobar",'@vuepress/medium-zoom'],
+  plugins: ["autobar",'@vuepress/medium-zoom',["vuepress-plugin-nuggets-style-copy", {
+    copyText: "复制代码",
+    tip: {
+        content: "复制成功"
+    }
+ }],[
+    'copyright',
+    {
+      authorName: 'MokinZhao', // 选中的文字将无法被复制
+      minLength: 30, // 如果长度超过  30 个字符
+    },
+  ]],
   themeConfig: {
     sidebarDepth: 2, // e'b将同时提取markdown中h2 和 h3 标题，显示在侧边栏上。
-    lastUpdated: "Last Updated", // 文档更新时间：每个文件git最后提交的时间
+    // lastUpdated: "Last Updated", // 文档更新时间：每个文件git最后提交的时间
     // sidebar: "auto",
     nav: [
       // { text: "Vue", link: "/20-VUE/" }, // 内部链接 以docs为根目录

@@ -7,20 +7,24 @@ title: HTTP协议
 - Http1.0 到 Http1.1
   主要实现了对 TCP 链接的复用
 
-Http/1.0: 每一对 HTTP 请求和响应都需要打开一个单独的 TCP 连接
-Http/1.0: 引入了持久连接的概念，通过设置 Connection 头部为 keep-alive 的方式
+1. Http/1.0: 每一对 HTTP 请求和响应都需要打开一个单独的 TCP 连接
+2. Http/1.0: 引入了持久连接的概念，通过设置 Connection 头部为 keep-alive 的方式
 
 - Http1.1 到 Http2.0
   主要实现了多个请求到复用
 
-Http/2.0： 1.通过将 Http 消息拆分为独立的帧，进行交错发送 2.对 Http 头部进行了二进制编码 3.还实现了 Header 压缩、服务端主动推送、流优先级等能力
+- Http/2.0：
+    1. 通过将 Http 消息拆分为独立的帧，进行交错发送
+    2. 对 Http 头部进行了二进制编码
+    3. 还实现了 Header 压缩、
+    4. 服务端主动推送、流优先级等能力
 
 - Http2.0、 到 Http3.0
   主要实现了基于 UDP 协议、更快的传输
 
-Http/3.0: 使用了基于 UDP 的 QUIC 协议，实现了又快又可靠的传输
-UDP：没有错误检查内容，更快地实现通信
-QUIC：负责合并纠错、重建丢失的数据
+- Http/3.0: 使用了基于 UDP 的 QUIC 协议，实现了又快又可靠的传输
+    1. UDP：没有错误检查内容，更快地实现通信
+    2. QUIC：负责合并纠错、重建丢失的数据
 
 ## HTTP 有哪些方法？
 
@@ -401,12 +405,18 @@ http 的整个流程，涉及 tcp/ip 协议
 
 ---
 
-## 参考
+### 参考
 
 - 图解 HTTP
 - HTTP 权威指南
 - [HTTP 缓存策略](https://foofish.net/http-cache-policy.html)
+
+## 推荐阅读
+
 - [神三元-HTTP灵魂之问，巩固你的 HTTP 知识体系](https://juejin.cn/post/6844904100035821575)
+
 - [天天-「查缺补漏」巩固你的HTTP知识体系](https://juejin.cn/post/6857287743966281736#heading-38)
 
----
+- [探秘HTTPS](https://juejin.cn/post/7091914252700614664)
+
+

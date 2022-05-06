@@ -2,6 +2,53 @@
 title: Javascript异步-Promise
 ---
 
+## 背景
+
+- HOF高阶函数
+
+一个函数返回一个函数，这个函数称为高阶函数
+
+```js
+// 方式一
+function(){
+    return function(){}
+}
+//方式二
+function fn(cb){
+    cb()
+}
+fn(()=>{})
+```
+
+## 特性
+
+- 对象的状态不受外界影响。promise对象代表一个异步操作，有三种状态，pending（进行中）、fulfilled（已成功）、rejected（已失败）。只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态，这也是promise这个名字的由来——“承诺”；
+
+- 一旦状态改变就不会再变，任何时候都可以得到这个结果。promise对象的状态改变，只有两种可能：从pending变为fulfilled，从pending变为rejected。这时就称为resolved（已定型）。如果改变已经发生了，你再对promise对象添加回调函数，也会立即得到这个结果。这与事件（event）完全不同，事件的特点是：如果你错过了它，再去监听是得不到结果的。
+
+- Promise.then 会返回一个新的Promise 支持链式调用
+
+## 缺点
+
+- 无法取消Promise，一旦新建它就会立即执行，无法中途取消。
+- 如果不设置回调函数，Promise内部抛出的错误，不会反应到外部。
+- 当处于pending状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）
+
+## 基本使用
+
+```js
+const promise = new Promise(function(resolve, reject) {
+  // ... some code
+  if (/* 异步操作成功 */){
+    resolve(value);
+  } else {
+    reject(error);
+  }
+});
+
+```
+
+
 ## 实现Promise/A+规范的Promise
 
 - Promise/A+规范
@@ -392,6 +439,62 @@ function race(promises){
 - 接收一个Promise 数组，数组中如有非Promise项，则此项当做成功
 - 把每一个Promise的结果，集合成数组，返回
 
+- 应用
+
+```js
+const promise1 = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise1");
+      //   reject("error promise1 ");
+    }, 3000);
+  });
+};
+const promise2 = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise2");
+      //   reject("error promise2 ");
+    }, 1000);
+  });
+};
+const promise3 = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      //   resolve("promise3");
+      reject("error promise3 ");
+    }, 2000);
+  });
+};
+
+//  Promise.all 会走到catch里面
+Promise.all([promise1(), promise2(), promise3()])
+  .then((res) => {
+    console.log(res); 
+  })
+  .catch((error) => {
+    console.log("error", error); // error promise3 
+  });
+  
+// Promise.allSettled 不管有没有错误，三个的状态都会返回
+Promise.allSettled([promise1(), promise2(), promise3()])
+  .then((res) => {
+    console.log(res);  
+    // 打印结果 
+    // [
+    //    {status: 'fulfilled', value: 'promise1'}, 
+    //    {status: 'fulfilled',value: 'promise2'},
+    //    {status: 'rejected', reason: 'error promise3 '}
+    // ]
+  })
+  .catch((error) => {
+    console.log("error", error); 
+  });
+
+```
+
+- 实现
+
 ```js
 function allSettled(promises){
     return new Promise((resolve,reject)=>{
@@ -428,6 +531,48 @@ function allSettled(promises){
 - 接收一个Promise数组，数组中如有非Promise项，则此项当做成功
 - 如果有一个Promise成功，则返回这个成功结果
 - 如果所有Promise都失败，则报错
+
+
+- 应用
+
+```js
+const promise1 = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise1");
+      //  reject("error promise1 ");
+    }, 3000);
+  });
+};
+const promise2 = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise2");
+      // reject("error promise2 ");
+    }, 1000);
+  });
+};
+const promise3 = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("promise3");
+      // reject("error promise3 ");
+    }, 2000);
+  });
+};
+Promise.any([promise1(), promise2(), promise3()])
+  .then((first) => {
+    // 只要有一个请求成功 就会返回第一个请求成功的
+    console.log(first); // 会返回promise2
+  })
+  .catch((error) => {
+    // 所有三个全部请求失败 才会来到这里
+    console.log("error", error);
+  });
+
+```
+
+- 实现
 
 ```js
 function any (promises){
@@ -531,7 +676,6 @@ Promise.reject(123).finally((data) => {
 
 ```
 
-
 - 代码实现
 
 ```js
@@ -552,9 +696,8 @@ Promise.prototype.finally = function (callback) {
 
 ## 参考链接
 
-[Promise知识汇总和面试情况](https://segmentfault.com/a/1190000039699000)
+- [Promise知识汇总和面试情况](https://segmentfault.com/a/1190000039699000)
 
-[手把手一行一行代码教你“手写Promise“](https://juejin.cn/post/7043758954496655397#heading-1)
+- [手把手一行一行代码教你“手写Promise“](https://juejin.cn/post/7043758954496655397#heading-1)
 
-[来45道Promise面试题一次爽到底(1.1w字用心整理)](https://mp.weixin.qq.com/s?__biz=MzkzNTIwNTAwOA==&mid=2247487580&idx=1&sn=373b4c4a33e6597cfd77381de4444acc&
-source=41#wechat_redirect)
+- [来45道Promise面试题一次爽到底(1.1w字用心整理)](https://mp.weixin.qq.com/s?__biz=MzkzNTIwNTAwOA==&mid=2247487580&idx=1&sn=373b4c4a33e6597cfd77381de4444acc&source=41#wechat_redirect)

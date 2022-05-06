@@ -8,7 +8,7 @@ title: JavaScript之数组
 
 ```js
 Array.myIsArray = function(o) {
-  returnObject.prototype.toString.call(Object(o)) === '[object Array]';
+  return Object.prototype.toString.call(Object(o)) === '[object Array]';
 };
 console.log(Array.myIsArray([])); // true
 ```
@@ -205,38 +205,26 @@ Array.prototype.myFind = function (callback, thisArg) {
 4. 返回最终结果
 
 ```js
-Array.prototype.myReduce = function(fn) {
-    if (typeof fn !== 'function') {
-        throw new TypeError(`${fn} is not a function`);
-    }
 
-    const arr = this;
-    const len = arr.length >>> 0;
-    let value;// 最终返回的值
-    let k = 0;// 当前索引
 
-    if (arguments.length >= 2) {
-        value = arguments[1];
-    } else {
-        // 当数组为稀疏数组时，判断数组当前是否有元素，如果没有索引加一
-        while (k < len && !( k in arr)) {
-            k++;
-        }
-        // 如果数组为空且初始值不存在则报错
-        if (k >= len) {
-            throw new TypeError('Reduce of empty array with no initial value');
-        }
-        value = arr[k++];
+Array.prototype.myReduce = function (callback, initialValue) {
+    // 判断调用该API的元素是否为null
+    if (this == null) {
+        throw new TypeError('this is null or not defined')
     }
-    while (k < len) {
-        if (k in arr) {
-            value = fn(value, arr[k], k, arr);
-        }
-        k++;
+    // 判断是否为function
+    if (typeof callback !== "function") {
+        throw new TypeError(callback + ' is not a function')
     }
+    let ret=initialValue || 0
+    const arr=this
+    for(let i=0;i<arr.length;i++){
+        ret=callback.call(null,ret,arr[i],i,arr)
+     }
+    return ret
 
-    return value;
 }
+
 ```
 
 ### flat (扁平化)
@@ -246,6 +234,24 @@ Array.prototype.myReduce = function(fn) {
 Array.prototype.flat1 = function () {
     return this.reduce((acc, val) => acc.concat(val), []);
 }
+
+// 使用堆栈stack
+Array.prototype.flat5 = function(deep = 1) {
+    const stack = [...this];
+    const result = [];
+    while (stack.length > 0) {
+        const next = stack.pop();
+        if (Array.isArray(next)) {
+            stack.push(...next);
+        } else {
+            result.push(next);
+        }
+    }
+    
+    // 反转恢复原来顺序
+    return result.reverse();
+}
+
 // 使用reduce + concat + isArray +recursivity
 Array.prototype.flat2 = function (deep = 1) {
     const flatDeep = (arr, deep = 1) => {
@@ -288,21 +294,66 @@ Array.prototype.flat4 = function (deep = 1) {
 
     return result;
 }
-// 使用堆栈stack
-Array.prototype.flat5 = function(deep = 1) {
-    const stack = [...this];
-    const result = [];
-    while (stack.length > 0) {
-        const next = stack.pop();
-        if (Array.isArray(next)) {
-            stack.push(...next);
-        } else {
-            result.push(next);
-        }
+
+```
+
+### Sort(排序)
+
+```js
+Array.prototype.sort = function (arr) {
+  //空数组或数组长度小雨2，直接返回
+  if (!arr || arr.length < 2) {
+    return arr;
+  }
+  let runs = [],
+    sortedRuns = [],
+    newRun = [arr[0]],
+    length = arr.length;
+  //划分 run 区，并存储到runs 中，这里简单的按照升序划分，没有考虑降序的run
+  for (let i = 1; i < length; i++) {
+    if (arr[i] < arr[i - 1]) {
+      runs.push(newRun);
+      newRun = [arr[i]];
+    } else {
+      newRun.push(arr[i]);
     }
-    
-    // 反转恢复原来顺序
-    return result.reverse();
+    if (length - 1 === i) {
+      runs.push(newRun);
+      break;
+    }
+  }
+  //由于仅仅是升序的run，没有涉及到run的扩充和降序的run，因此其实这里没有必要使用insertionSort来进行run自身的排序
+  for (let run of runs) {
+    insertionSort(run);
+  }
+  //合并 runs
+  sortedRuns = [];
+  for (let run of runs) {
+    sortedRuns = merge(sortedRuns, run);
+  }
+  return sortedRuns;
+};
+
+//合并两个小数组left,right 到result
+function merge(left, right) {
+  let result = [],
+    indexLeft = 0,
+    indexRight = 0;
+  while (indexLeft < left.length && indexRight < right.length) {
+    if (left[indexLeft] < right[indexRight]) {
+      result.push(left[indexLeft++]);
+    } else {
+      result.push(right[indexRight++]);
+    }
+    return result;
+  }
+  while (indexLeft < left.length) {
+    result.push(left[indexLeft++]);
+  }
+
+  while (indexRight < right.length) {
+    result.push(right[indexRight++]);
+  }
 }
 ```
 
@@ -595,4 +646,7 @@ const intersection = function(...args) {
 ## 参考
 
 [JavaScript数组去重（12种方法，史上最全）](https://segmentfault.com/a/1190000016418021)
+
 [js 数组详细操作方法及解析合集](https://juejin.cn/post/6844903614918459406#heading-4)
+
+[【神来之笔】原生 JavaScript 手写数组 API](https://juejin.cn/post/6993479920705880095#heading-14)

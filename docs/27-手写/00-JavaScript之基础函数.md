@@ -352,19 +352,25 @@ function _instanceof (instanceObject, classFunc) {
 Object.getPrototypeOf ()：用来获取某个实例对象的原型（内部[[prototype]]属性的值，包含proto属性）
 
 ```js
-function _instanceof (instanceObject, classFunc) {
-  let classFunc = classFunc.prototype; // 取得当前类的原型
-  let proto = Object.getPrototypeOf(instanceObject); // 取得当前实例对象的原型链上的属性
-  
-  while (true) {
-    if (proto === null) { // 找到了 Object的基类 Object.prototype.__proto__
-      return false;
-    };
-    if (proto === classFunc) { // 在当前实例对象的原型链上，找到了当前类
-      return true;
+const _instanceof = (target, Fn) => {
+    // 补全代码
+        //基本数据类型的判断
+    if(target === null || typeof target !== 'object'){
+        return false
     }
-    proto = Object.getPrototypeOf(proto); // 沿着原型链__ptoto__一层一层向上查找
-  }
+        //获取第一个原型
+    let leftProto = Object.getPrototypeOf(target)
+    while(true){
+        if (leftProto === null){
+            return false
+        }
+                //和第二个原型进行比较
+        if(leftProto == Fn.prototype){
+            return true
+        }
+
+        leftProto = Object.getPrototypeOf(leftProto)
+    }
 }
 ```
 
@@ -514,6 +520,39 @@ var obj = (new Function('return ' + json))();
 [JSON.parse 三种实现方式](https://github.com/youngwind/blog/issues/115)
 
 
+## 手写实现一个迭代器(Iterator)
+
+ES6迭代器具有如下特征：
+
+1. 迭代器返回一个对象；
+2. 该对象有一个 next() 方法；
+3. 调用该方法会返回一个对象；
+4. 该对象包含两个属性，value 和 done
+5. value 表示返回的值，遍历完之后一直返回 undefined;
+6. done 表示是否遍历结束。
+
+```js
+let myIterator = (arr) => {
+  let index = 0
+  return {
+    next: () => {
+      return {
+        value: arr[index++] || undefined,
+        done: index > arr.length
+      }
+    }
+  }
+}
+
+// test
+let arr = [1, 4, 'ads']
+let iteratorObj = myIterator(arr)
+console.log(iteratorObj.next()) // { value: 1, done: false }
+console.log(iteratorObj.next()) // { value: 4, done: false }
+console.log(iteratorObj.next()) // { value: 'ads', done: false }
+console.log(iteratorObj.next()) // { value: undefined, done: true }
+console.log(iteratorObj.next()) // { value: undefined, done: true }
+```
 
 ## String
 
@@ -675,6 +714,7 @@ function camelToSnake(str) {
   return str.replaceAll(reg, (_, p1, p2) => `${p1}_${p2.toLowerCase()}`)
 }
 ```
+
 
 ## ES6函数
 

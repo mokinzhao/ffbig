@@ -1,6 +1,6 @@
 ## 项目介绍
 
-- 项目地址：<http://www.ffbig.cn/>
+- 项目地址：<http://www.ffbig.com/>
 
 项目来源于博主自己的职业生涯技能总结和梳理，内容在不断充实中欢迎收藏
 全栈大前端系列总共分为 3 期：
@@ -9,7 +9,7 @@
 2. 二期学习跨端融合技术认识"大前端"
 3. 三期结合服务端技术通晓 "全栈"
 
-希望能给有需要的朋友提供学习及参考，如觉得内容不错可 start 表示鼓励，谢谢！🙏
+希望能给有需要的朋友提供学习及参考，如觉得内容不错可 star 表示鼓励，谢谢！🙏
 
 - 作者
 
@@ -21,6 +21,8 @@
 <img src="https://vp-blog-img.oss-cn-shanghai.aliyuncs.com/wchat.jpeg" width="350" height="400">
 
 ## 项目大纲
+
+![](https://vp-blog-img.oss-cn-shanghai.aliyuncs.com/2021/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF%E5%85%A8%E6%99%AF%E5%9B%BE%20%282%29.png)
 
 ![](./docs/.vuepress/public/outline.png)
 

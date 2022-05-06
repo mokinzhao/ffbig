@@ -259,4 +259,3 @@ play 函数的执行上下文伪代码如下
 
 1. [ecma 标准](http://www.ecma-international.org/ecma-262/6.0/#sec-for-statement-runtime-semantics-labelledevaluation)
 2. [JavaScript 调用栈到异步](https://www.valentinog.com/blog/engines/)
-

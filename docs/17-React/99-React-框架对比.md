@@ -2,31 +2,126 @@
 title: React扩展-框架对比
 ---
 
-## VS Vue
-
+## React VS Vue
 
 ### 技术区别
 
 - 设计理念
 
+react 一个渐进式的UI库
+
+Vue 响应式
+
+- 渲染机制
+
+react ：单向数据流，基于 Fiber 架构，异步可中断更新，
+
+Vue2.x 基于 Object.DefineProperty
+
+Vue3.x 基于Proxy
+
+监听劫持对象，响应式操作DomDiff算法
+
+- Diff算法不一样
+
+1. Vue2 首尾4指针，两端向中间移动对比O(n^2)
+2. Vue3 有静态标记
+3. Vue3 使用最长递增子序列 O(nlgn)～O(n^2)
+
+
+- 有Hooks，但是细节不一样
+
+1. Vue Hooks 只能在'setup'周期内使用
+
+vue3 的组件里， setup 是作为一个早于 “created” 的生命周期存在的，无论如何，在一个组件的渲染过程中只会进入一次。
+
+2. React Hooks 只能在函数组件里使用
+
+React函数组件 则完全不同，如果没有被 memorized，它们可能会被不停地触发，不停地进入并执行方法，因此需要开销的心智相比于vue其实是更多的。
+
+
+
+- 其他
+
+- 相同点：
+
+1. 都是单向数据流
+2. 都使用了虚拟DOM的技术
+3. 都支持SSR
+4. 组件化开发
+
+- 不同点：
+
+1. 前者template，后者JSX
+2. 数据改变，前者响应式，后者手动setState
+3. React单向绑定，Vue双向绑定
+4. React状态管理工具Redux、Mobx，Vue状态管理工具Vuex
+5. react 可以使用 hoc,vue 使用mixins
+6. Vue 通过 getter/setter 以及一些函数的劫持，能精确知道数据变化，不需要特别的优化就能达到很好的性能
+
+React 默认是通过比较引用的方式进行的，如果不优化（PureComponent/shouldComponentUpdate）可能导致大量不必要的vDOM的重新渲染。这是因为 Vue 使用的是可变数据，而React更强调数据的不可变。
 
 ### 生态区别
 
+- 作者
 
+React:faceBook
 
+Vue：尤雨稀为主的团队
 
+- React 生态强大 阿里、字节等大厂React技术栈偏多
 
-## Preact
+- Vue 中小厂使用的多一些，上手简单方便。有一揽子解决方案
 
+### 推荐阅读
 
+- [阿里三面：灵魂拷问——有react fiber，为什么不需要vue fiber？](https://mp.weixin.qq.com/s?__biz=Mzg2Nzc0NzQ3OQ==&mid=2247484417&idx=1&sn=d0e84f484fc88b67ebcc36d179b8eff8&chksm=ceb797f9f9c01eefeaa817c0634c68ec6b05c844ac8370aee05b6424011fa4c5da42b9aa28ab&scene=178&cur_album_id=2279444241133240321#rd)
 
+## React VS Angular
 
+- 体系结构
 
-## Solid
+React : 只有 MVC 中的 View
 
+Angular: 完整的 MVC
 
+- 渲染
 
+可以在服务器端渲染
 
+客户端渲染
+
+- DOM
+
+使用 virtual DOM
+
+使用 real DOM
+
+- 数据绑定
+
+单向数据绑定
+
+双向数据绑定
+
+- 调试
+
+编译时调试
+
+运行时调试
+
+- 作者
+
+Facebook
+
+Google
+
+## 其他框架
+
+### Preact
+
+### Solid
+
+[Solid.js 就是我理想中的 React](https://mp.weixin.qq.com/s/0sGJ9r_9C9EPzliEkUuyTg)
 
 ### Svelte
 
@@ -50,50 +145,23 @@ title: React扩展-框架对比
 
 2. SvelteKit 正式发布 beta 版。SvelteKit 是基于 Svelte 开发的 web 应用框架，类似于基于 Vue.js 开发的 Nuxt.js 框架。它继承了服务端渲染 SSR，路由，支持
 
+- 与React框架的区别
+    - 编译型
+    - 无虚拟Dom
+    - 代码更简洁
+    - 真正的reactivity
 
 - 总结
 
 虽然我们看到 Svelte 深受开发者的喜欢，但是到目前为止，仍然很难看到有大型应用在使用 Svelte，其性能优势、体积优势等并没有在大型应用中得到验证。由于 React/Vue/Angular 先入为主，尤其是在大公司，已经有非常完备成体系的配套方案，成熟的体系基本上很难去改动，后起之秀也很难有如 React 等框架活跃的社区，Svelte 要走的路还是很长。但是我们观察到，包括阿里、字节、腾讯等大公司也都在新业务中尝试使用 Svelte 开发，在中小型应用、h5 应用、Web Components 等方面确实有它的优势所在，也值得尝试。尽管 Svelte 有很多优势，但想以一己之力挑战 React/Vue/Angular 的江湖地位，目前来看还是需要静待标杆大型应用，静待各大大公司推出基于 Svelte 开发的 UI 库，或许 Svelte 大放异彩的时机就会到来。
 
-[一文详解 Svelte](https://mp.weixin.qq.com/s/pUCk75aKfyvCSyT28HpwKQ)
-
-## VS Angular
-
-1. 体系结构
-
-React : 只有 MVC 中的 View
-
-Angular: 完整的 MVC
-
-2. 渲染
-可以在服务器端渲染
-
-客户端渲染
-
-3. DOM
-使用 virtual DOM
-
-使用 real DOM
-
-4. 数据绑定
-
-单向数据绑定
-
-双向数据绑定
-
-5. 调试
-
-编译时调试
-
-运行时调试
-
-6. 作者
-
-Facebook
-
-Google
-
+- [一文详解 Svelte](https://mp.weixin.qq.com/s/pUCk75aKfyvCSyT28HpwKQ)
+- [Svelte 原理浅析与评测](https://juejin.cn/post/7044387319352131597)
 
 ## 参考
 
-[框架究竟解决了啥问题？我们可以脱离它们吗](https://mp.weixin.qq.com/s/J_Fs2jrhOsGdAxlBnJKYCw)
+- [框架究竟解决了啥问题？我们可以脱离它们吗](https://mp.weixin.qq.com/s/J_Fs2jrhOsGdAxlBnJKYCw)
+
+- [图解Diff算法——Vue篇](https://mp.weixin.qq.com/s/8M-pJdKjF6bx5ijtSFKIcw)
+
+- [浅谈：为什么vue和react都选择了Hooks?](https://mp.weixin.qq.com/s/4OhVrsslUfwlIejx-2DA6w)

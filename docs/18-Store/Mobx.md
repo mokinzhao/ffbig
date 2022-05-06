@@ -31,7 +31,7 @@ MobX 和 Flux、Redux 一样，都是和具体的前端框架无关的，也就�
 
 还是和上面一样，只介绍思想。具体 MobX 的使用，可以看这里。
 
-#### 对比 Redux
+## 对比 Redux
 
 我们直观地上两坨实现计数器代码：
 
@@ -117,7 +117,7 @@ import React, { Component } from 'react';import { observable, action } from 'mob
   }}export default App;
 ```
 
-#### 区别
+## 区别
 
 Redux 数据流流动很自然，可以充分利用时间回溯的特征，增强业务的可预测性；MobX 没有那么自然的数据流动，也没有时间回溯的能力，但是 View 更新很精确，粒度控制很细。
 Redux 通过引入一些中间件来处理副作用；MobX 没有中间件，副作用的处理比较自由，比如依靠 autorunAsync 之类的方法。

@@ -149,3 +149,33 @@ const add =function(a,b,c){
 const curryNums=curry(add)
 
 console.log(curryNums(1,2,3))
+
+
+
+class EventEmitter{
+    constructor(){
+        this.events={}
+    }
+    on(eventName,callback){
+        if(this.events[eventName]){
+            this.events[eventName].push(callback)
+        }
+        else{
+            this.events[eventName]=[callback]
+        }
+    }
+    emit(eventName,...arg){
+        this.events[eventName]&&this.events[eventName].forEach(cb=>cb(...arg))
+    }
+    remove(eventName,){
+        this.events[eventName]&&this.events[eventName].filter(cb=>cb!=callback)
+    }
+    once(eventName,callback){
+       let fn=function(){
+           callback()
+           this.remove(eventName,fn)
+       }
+       this.on(eventName,fn)
+    }
+
+}

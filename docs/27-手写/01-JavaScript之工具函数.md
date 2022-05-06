@@ -20,43 +20,58 @@ const debounce = (fn, delay = 1000) => {
     }, delay);
   };
 };
+
+// 使用
+document.body.addEventListener('mousemove',debounce((e)=>{
+  console.log(this,e,'mousemove-debounce')
+},1000))
 ```
 
 ### 节流(throttle)
 
 函数节流指的是规定某个时间内只能执行一次函数
 
-```js
-//- 定时器
-const throttle = (fn, delay) => {
-  let timer = null;
-  return () => {
-    if (!timer) {
-      timer = setTimeout(() => {
-        timer = null;
-        fn.apply(this, arguments);
-      }, delay);
-    }
-  };
-};
+- 定时器
 
-//时间戳
-const throttle = (fn, wait = 300) => {
-    let prev = 0
-    let result
+```js
+/**
+ * 
+ * 当触发事件的时候，我们设置一个定时器，再触发事件的时候，如果定时器存在，就不执行，
+ * 直到定时器执行，然后执行函数，清空定时器。
+ */
+function throttle(callback, wait) {
+    let timer
     return function(...args) {
-        let now = +new Date()
-        if(now - prev > wait) {
-            prev = now
-            return result = fn.apply(this, ...args)
+        if(!timer) {
+            timer = setTimeout(()=>{
+                timer = null
+                callback.call(this,args)
+            },wait)
         }
     }
 }
-/*
-方法	使用时间戳	使用定时器
-开始触发时	立刻执行	n秒后执行
-停止触发后	不再执行事件	继续执行一次事件
+
+```
+
+- 时间戳
+
+```js
+// 时间戳方式
+/**
+使用时间戳，当触发事件的时候，我们取出当前的时间戳，然后减去之前的时间戳(最一开始值设为 0 )，
+如果大于设置的时间周期，就执行函数，然后更新时间戳为当前的时间戳，如果小于，就不执行。
 */
+function throttle(callback, wait) {
+    let start = 0
+    return function(...args) {
+        const now = +new Date()
+        if(now-start >= wait ) {
+            callback.call(this,args)
+            start = now
+        }
+
+    }
+}
 ```
 
 ### 函数克里化
@@ -143,6 +158,21 @@ obj2.person.name = "wade";
 obj2.sports = 'football'
 console.log(obj1); // { person: { name: 'wade', age: 41 }, sports: 'basketball' }
 
+```
+
+- for 循环
+
+```js
+    const _shallowClone = target => {
+                // 补全代码
+               const obj={}
+               for(const key in target){
+                   if(target.hasOwnProperty(key)){
+                       obj[key]=target[key]
+                   }
+               }
+                return obj
+            }
 ```
 
 - 展开运算符...
@@ -294,32 +324,25 @@ function deepCopy(obj, cache = []) {
 #### 深拷贝(考虑Date、RegExp等对象)
 
 ```js
-const isObject = (target) => (typeof target === "object" || typeof target === "function") && target!== null;
-
-function deepClone(target, map = new WeakMap()) {
-    // 先判断该引用类型是否被 拷贝过
-    if (map.get(target)) {
-        return target;
+const _completeDeepClone = (target, map = new Map()) => {
+    // 补全代码
+    //参数如果为空
+    if(target===null) return target;
+    //参数如果不是对象类型，而是基本数据类型
+    if(typeof target!=='object') return target;
+    //参数为其他数据类型
+    const cons = target.constructor;
+    if(/^(Function|RegExp|Date|Map|Set)$/i.test(cons)){
+        return new cons(target);
+    } 
+    const cloneTarget = Array.isArray(target)? []:{};
+    //如果存在循环引用,直接返回当前循环引用的值，否则，将其加入map,
+    if(map.get(target)) return map.get(target);
+    map.set(target,cloneTarget);
+    for(let key in target){
+        cloneTarget[key] = _completeDeepClone(target[key],map)
     }
-    // 获取当前值的构造函数：获取它的类型
-    let constructor = target.constructor;
-    // 检测当前对象target是否与正则、日期格式对象匹配
-    if (/^(RegExp|Date)$/i.test(constructor.name)) {
-        // 创建一个新的特殊对象(正则类/日期类)的实例
-        return new constructor(target);  
-    }
-    if (isObject(target)) {
-        map.set(target, true);  // 为循环引用的对象做标记
-        const cloneTarget = Array.isArray(target) ? [] : {};
-        for (let prop in target) {
-            if (target.hasOwnProperty(prop)) {
-                cloneTarget[prop] = deepClone(target[prop], map);
-            }
-        }
-        return cloneTarget;
-    } else {
-        return target;
-    }
+    return cloneTarget;
 }
 
 ```
@@ -640,5 +663,45 @@ const getQueryByName = (name) => {
 // https://www.baidu.com/?name=%E5%89%8D%E7%AB%AF%E8%83%96%E5%A4%B4%E9%B1%BC&sex=boy
 
 console.log(getQueryByName('name'), getQueryByName('sex')) // 前端胖头鱼 boy
+
+```
+
+## 函数柯理化
+
+```js
+function curry(fn, args) {
+  // 获取函数需要的参数长度
+  let length = fn.length;
+
+  args = args || [];
+
+  return function() {
+    let subArgs = args.slice(0);
+
+    // 拼接得到现有的所有参数
+    for (let i = 0; i < arguments.length; i++) {
+      subArgs.push(arguments[i]);
+    }
+
+    // 判断参数的长度是否已经满足函数所需参数的长度
+    if (subArgs.length >= length) {
+      // 如果满足，执行函数
+      return fn.apply(this, subArgs);
+    } else {
+      // 如果不满足，递归返回科里化的函数，等待参数的传入
+      return curry.call(this, fn, subArgs);
+    }
+  };
+}
+
+```
+
+- es6 实现
+
+```js
+
+function curry(fn, ...args) {
+  return fn.length <= args.length ? fn(...args) : curry.bind(null, fn, ...args);
+}
 
 ```

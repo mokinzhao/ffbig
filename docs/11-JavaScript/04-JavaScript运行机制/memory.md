@@ -175,9 +175,10 @@ setInterval(replaceThing, 1000);
 
 ---
 
-参考：
+## 推荐阅读
+
+[彻底搞懂垃圾回收机制底层原理🌟](https://mp.weixin.qq.com/s/S6RfnwjhuKx4VmXN4U9a4w)
 
 [聊聊 V8 引擎的垃圾回收](https://segmentfault.com/a/1190000014383214)
-[MDN 内存管理](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Memory_Management)
 
----
+[MDN 内存管理](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Memory_Management)

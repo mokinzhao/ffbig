@@ -293,3 +293,9 @@ function asyncToGenerator(generatorFunc) {
 本文用最简单的方式实现了 asyncToGenerator 这个函数，这是 babel 编译 async 函数的核心，当然在 babel 中，generator 函数也被编译成了一个很原始的形式，本文我们直接以 generator 替代。
 
 这也是实现 promise 串行的一个很棒的模式，如果本篇文章对你有帮助，点个赞就好啦。
+
+## 推荐阅读
+
+[Async是如何被JavaScript实现的](https://juejin.cn/post/7069317318332907550)
+
+[[译] 6个Async/Await优于Promise的方面](https://zhuanlan.zhihu.com/p/26260061)

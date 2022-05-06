@@ -30,7 +30,7 @@
 
 增加 `config.module.rules` 数组中的规则对象（rule object）。
 
-```
+```js
 let webpackConfig = {
     //...
     module: {
@@ -53,7 +53,7 @@ let webpackConfig = {
 
 增加 `config.module.rules` 数组中的规则对象以及 `config.resolveLoader`。
 
-```
+```js
 let webpackConfig = {
     //...
     module: {
@@ -99,7 +99,7 @@ let webpackConfig = {
 
 我们举个例子：<br />webpack.config.js
 
-```
+```js
 {
         test: /\.js/,
         use: [
@@ -153,7 +153,7 @@ let webpackConfig = {
 
 请好好利用 `loader-utils` 包，它提供了很多有用的工具，最常用的一个就是获取传入 loader 的 options。除了 `loader-utils` 之外包还有 `schema-utils` 包，我们可以用 `schema-utils` 提供的工具，获取用于校验 options 的 JSON Schema 常量，从而校验 loader options。下面给出的例子简要地结合了上面提到的两个工具包：
 
-```
+```js
 import { getOptions } from 'loader-utils';
 import { validateOptions } from 'schema-utils';
 const schema = {
@@ -180,7 +180,7 @@ export default function(source) {
 如果我们在 loader 中用到了外部资源（也就是从文件系统中读取的资源），我们必须声明这些外部资源的信息。这些信息用于在监控模式（watch mode）下验证可缓存的 loder 以及重新编译。下面这个例子简要地说明了怎么使用 `addDependency` 方法来做到上面说的事情。
 loader.js：
 
-```
+```js
 import path from 'path';
 export default function(source) {
     var callback = this.async();
@@ -225,7 +225,7 @@ export default function(source) {
 如果你开发的 loader 只是简单包装另外一个包，那么你应该在 package.json 中将这个包设为同伴依赖（peerDependency）。这可以让应用开发者知道该指定哪个具体的版本。
 举个例子，如下所示 `sass-loader` 将 `node-sass` 指定为同伴依赖：
 
-```
+```js
 "peerDependencies": {
   "node-sass": "^4.0.0"
 }
@@ -239,7 +239,7 @@ export default function(source) {
 以上我们已经为砍柴磨好了刀，接下来，我们动手开发一个 loader。<br />如果我们要在项目开发中引用模版文件，那么压缩 html 是十分常见的需求。分解以上需求，解析模版、压缩模版其实可以拆分给两给 loader 来做（单一职责），前者较为复杂，我们就引入开源包 `html-loader`，而后者，我们就拿来练手。首先，我们给它取个响亮的名字 —— `html-minify-loader`。<br />接下来，按照之前介绍的步骤，首先，我们应该配置 `webpack.config.js` ，让 webpack 能识别我们的 loader。当然，最最开始，我们要创建 loader 的 文件 —— `src/loaders/html-minify-loader.js`。<br />于是，我们在配置文件中这样处理：
 `webpack.config.js`
 
-```
+```js
 module: {
     rules: [{
         test: /\.html$/,
@@ -255,7 +255,7 @@ resolveLoader: {
 
 接下来，我们提供示例 html 和 js 来测试 loader：<br />`src/example.html`：
 
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -273,7 +273,7 @@ resolveLoader: {
 
 `src/app.js`：
 
-```
+```js
 var html = require('./expamle.html');
 console.log(html);
 复制代码
@@ -281,7 +281,7 @@ console.log(html);
 
 好了，现在我们着手处理 `src/loaders/html-minify-loader.js`。前面我们说过，loader 也是一个 node 模块，它导出一个函数，该函数的参数是 require 的源模块，处理 source 后把返回值交给下一个 loader。所以它的 “模版” 应该是这样的：
 
-```
+```js
 module.exports = function (source) {
     // 处理 source ...
     return handledSource;
@@ -291,7 +291,7 @@ module.exports = function (source) {
 
 或
 
-```
+```js
 module.exports = function (source) {
     // 处理 source ...
     this.callback(null, handledSource)
@@ -302,7 +302,7 @@ module.exports = function (source) {
 
 > 注意：如果是处理顺序排在最后一个的 loader，那么它的返回值将最终交给 webpack 的 `require`，换句话说，它一定是一段可执行的 JS 脚本 （用字符串来存储），更准确来说，是一个 node 模块的 JS 脚本，我们来看下面的例子。
 
-```
+```js
 // 处理顺序排在最后的 loader
 module.exports = function (source) {
     // 这个 loader 的功能是把源模块转化为字符串交给 require 的调用方
@@ -313,7 +313,7 @@ module.exports = function (source) {
 
 整个过程相当于这个 loader 把源文件
 
-```
+```js
 这里是 source 模块
 复制代码
 ```
@@ -328,7 +328,7 @@ module.exports = '这里是 source 模块';
 
 然后交给 require 调用方：
 
-```
+```js
 // applySomeModule.js
 var source = require('example.js');
 console.log(source); // 这里是 source 模块
@@ -337,7 +337,7 @@ console.log(source); // 这里是 source 模块
 
 而我们本次串联的两个 loader 中，解析 html 、转化为 JS 执行脚本的任务已经交给 `html-loader` 了，我们来处理 html 压缩问题。<br />作为普通 node 模块的 loader 可以轻而易举地引用第三方库。我们使用 `minimize` 这个库来完成核心的压缩功能：
 
-```
+```js
 // src/loaders/html-minify-loader.js
 var Minimize = require('minimize');
 module.exports = function(source) {
@@ -349,7 +349,7 @@ module.exports = function(source) {
 
 当然， minimize 库支持一系列的压缩参数，比如 comments 参数指定是否需要保留注释。我们肯定不能在 loader 里写死这些配置。那么 `loader-utils` 就该发挥作用了：
 
-```
+```js
 // src/loaders/html-minify-loader.js
 var loaderUtils = require('loader-utils');
 var Minimize = require('minimize');
@@ -363,7 +363,7 @@ module.exports = function(source) {
 
 这样，我们可以在 webpack.config.js 中设置压缩后是否需要保留注释：
 
-```
+```js
 module: {
         rules: [{
             test: /\.html$/,
@@ -384,7 +384,7 @@ module: {
 
 当然，你还可以把我们的 loader 写成异步的方式，这样不会阻塞其他编译进度：
 
-```
+```js
 var Minimize = require('minimize');
 var loaderUtils = require('loader-utils');
 module.exports = function(source) {

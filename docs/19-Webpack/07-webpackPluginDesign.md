@@ -19,7 +19,7 @@
 
 事件注册相关源码如下，注册的事件维护在 \_plugins 对象中。
 
-```
+```js
 Tapable.prototype.plugin = function plugin(name, fn) {
   if(Array.isArray(name)) {
     name.forEach(function(name) {
