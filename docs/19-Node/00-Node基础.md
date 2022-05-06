@@ -1147,7 +1147,7 @@ client.on("close", () => {
 /**
  * 自定义编码解码类
  */
-class MyTransformCode {
+class MyTransform {
 	constructor() {
 		// 规定当前header总长度为4个字节
 		this.packageHeaderLen = 4;
@@ -1157,7 +1157,7 @@ class MyTransformCode {
 		this.serialLen = 2;
 	}
 
-	// 编码: writeInt16BE - 将value从指定位置写入
+	// 编码: writeInt16BE - 从指定位置写入一个有效的带符号的16位整数
 	encode(data, serialNum) {
 		const body = Buffer.form(data);
 		// 为header申请空间
@@ -1177,7 +1177,7 @@ class MyTransformCode {
 		const headerBuf = buffer.slice(0, this.packageHeaderLen);
 		const bodyBuf = buffer.slice(this.packageHeaderLen);
 
-		// readInt16BE：从指定位置开始读数据
+		// readInt16BE：从指定位置开始读取一个有效的带符号的16位整数
 		return {
 			serialNum: headerBuf.readInt16BE(),
 			bodyLength: headerBuf.readInt16BE(this.serialLen),
@@ -1195,5 +1195,124 @@ class MyTransformCode {
 	}
 }
 
-module.exports = MyTransformCode;
+module.exports = MyTransform;
+```
+
+```js
+/**
+ * 服务端
+ */
+const net = require("net");
+const MyTransform = require("./MyTransform");
+
+const server = net.createServer();
+const mt = new MyTransform();
+// 存放剩余的buffer
+let overageBuffer = null;
+server.listen(1234, "localhost");
+server.on("listening", () => {
+	console.log("服务器运行在 localhost:1234");
+});
+server.on("connection", socket => {
+	socket.on("data", chunk => {
+		if (overageBuffer) {
+			chunk = Buffer.concat(overageBuffer, chunk);
+		}
+		let packageLen = 0;
+		while ((packageLen = mt.getPackageLen(chunk))) {
+			const packageCon = chunk.slice(0, packageLen);
+			chunk = chunk.slice(packageLen);
+
+			const ret = mt.decode(packageCon);
+			socket.write(mt.encode(ret.body, ret.serialNum));
+		}
+		overageBuffer = chunk;
+	});
+});
+```
+
+```js
+/**
+ * 客户端
+ */
+const net = require("net");
+const MyTransform = require("./MyTransform");
+
+const mt = new MyTransform();
+const client = net.createConnection({
+	host: "localhost",
+	prot: 1234
+});
+client.write(mt.encode("消息01"));
+client.write(mt.encode("消息02"));
+client.write(mt.encode("消息03"));
+client.write(mt.encode("消息04"));
+client.write(mt.encode("消息05"));
+client.on("data", chunk => {
+	if (overageBuffer) {
+		chunk = Buffer.concat(overageBuffer, chunk);
+	}
+	let packageLen = 0;
+	while ((packageLen = mt.getPackageLen(chunk))) {
+		const packageCon = chunk.slice(0, packageLen);
+		chunk = chunk.slice(packageLen);
+
+		const ret = mt.decode(packageCon);
+		socket.write(mt.encode(ret.body, ret.serialNum));
+	}
+	overageBuffer = chunk;
+});
+```
+
+### 创建 HTTP 通信
+
+```js
+const http = require("http");
+// 帮助处理url路径相关
+const url = require("url");
+
+const server = http.createServer((req, res) => {
+	// 请求路径
+	console.log(req.url);
+
+	// 处理过的url: 第二个参数表示格式化输出
+	const { pathname, query } = url.parse(req.url, true);
+	console.log(pathname);
+	console.log(query);
+
+	// 请求方式
+	console.log(req.method);
+
+	// 版本号
+	console.log(req.httpVersion);
+
+	// 请求头
+	console.log(req.headers);
+
+	// 获取请求体的数据
+	const bodyArr = [];
+	req.on("data", data => {
+		arr.push(data);
+	});
+	req.on("end", () => {
+		console.log(Buffer.concat(bodyArr).toString());
+	});
+
+	// 给客户端回写数据：end()代表写入结束
+	// res.write("data");
+	// res.end();
+
+	// 等效于
+	res.end("data");
+
+	// 设置响应状态码，默认200
+	res.statusCode = 302;
+	// 设置响应头
+	res.setHeaders("Content-type", "text/html;charset=utf-8");
+	// 写入中文
+	res.end("你好啊");
+});
+server.listen(1234, () => {
+	console.log("server is start ...");
+});
 ```
